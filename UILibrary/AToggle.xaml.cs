@@ -26,8 +26,8 @@ namespace ShadowCheat.UILibrary
             _isEnabled = true;
             SwitchBorder.BorderBrush = new SolidColorBrush(EnableColor);
             SwitchBorder.Background = new SolidColorBrush(EnableTrackColor);
-            SetColorAnimation(DisableColor, EnableColor, AnimationDuration);
-            AnimObjectShift(SwitchMoving, new Thickness(2, 0, 0, 0), new Thickness(0, 0, 2, 0));
+            SwitchMoving.Background = new SolidColorBrush(EnableColor);
+            AnimObjectShift(SwitchMoving, new Thickness(0, 0, 2, 0));
         }
 
         public void DisableSwitch()
@@ -35,22 +35,14 @@ namespace ShadowCheat.UILibrary
             _isEnabled = false;
             SwitchBorder.BorderBrush = new SolidColorBrush(DisableColor);
             SwitchBorder.Background = new SolidColorBrush(DisableTrackColor);
-            SetColorAnimation(EnableColor, DisableColor, AnimationDuration);
-            AnimObjectShift(SwitchMoving, new Thickness(0, 0, 2, 0), new Thickness(2, 0, 0, 0));
+            SwitchMoving.Background = new SolidColorBrush(DisableColor);
+            AnimObjectShift(SwitchMoving, new Thickness(2, 0, 0, 0));
         }
 
-        private void SetColorAnimation(Color fromColor, Color toColor, TimeSpan duration)
-        {
-            ColorAnimation animation = new ColorAnimation(fromColor, toColor, duration);
-            SwitchMoving.Background = new SolidColorBrush(fromColor);
-            SwitchMoving.Background.BeginAnimation(SolidColorBrush.ColorProperty, animation);
-        }
-
-        private void AnimObjectShift(FrameworkElement element, Thickness from, Thickness to)
+        private void AnimObjectShift(FrameworkElement element, Thickness to)
         {
             ThicknessAnimation anim = new()
             {
-                From = from,
                 To = to,
                 Duration = AnimationDuration,
                 EasingFunction = new QuarticEase { EasingMode = EasingMode.EaseInOut }
