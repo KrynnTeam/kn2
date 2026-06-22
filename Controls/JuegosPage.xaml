@@ -19,7 +19,7 @@
                     <Trigger.EnterActions>
                         <BeginStoryboard>
                             <Storyboard>
-                                <ThicknessAnimation Duration="0:0:0.2" Storyboard.TargetProperty="BorderBrush.Thickness" To="2"/>
+                                <ThicknessAnimation Duration="0:0:0.2" Storyboard.TargetProperty="BorderThickness" To="2"/>
                                 <ColorAnimation Duration="0:0:0.2" Storyboard.TargetProperty="BorderBrush.Color" To="#FFCC0000"/>
                             </Storyboard>
                         </BeginStoryboard>
@@ -27,7 +27,7 @@
                     <Trigger.ExitActions>
                         <BeginStoryboard>
                             <Storyboard>
-                                <ThicknessAnimation Duration="0:0:0.25" Storyboard.TargetProperty="BorderBrush.Thickness" To="1"/>
+                                <ThicknessAnimation Duration="0:0:0.25" Storyboard.TargetProperty="BorderThickness" To="1"/>
                                 <ColorAnimation Duration="0:0:0.25" Storyboard.TargetProperty="BorderBrush.Color" To="#FF3D1A1A"/>
                             </Storyboard>
                         </BeginStoryboard>
@@ -53,7 +53,7 @@
                    Foreground="#FFA0A0A0" FontFamily="Segoe UI" Margin="0,4,0,0"/>
 
         <!-- Game grid -->
-        <ScrollViewer Grid.Row="3" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+        <ScrollViewer Grid.Row="3" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Disabled">
             <WrapPanel HorizontalAlignment="Left">
                 <!-- Shooter placeholder 1 -->
                 <Border Style="{StaticResource GameCard}">

@@ -49,6 +49,20 @@ namespace ShadowCheat
             InitializeFeatures();
             ShowOverlay();
             AttachNavAnimations();
+            PlayEntranceAnimation();
+        }
+
+        private void PlayEntranceAnimation()
+        {
+            MainBorder.Opacity = 0;
+            MainBorder.RenderTransformOrigin = new Point(0.5, 0.5);
+            var scale = new ScaleTransform(0.92, 0.92);
+            MainBorder.RenderTransform = scale;
+            var fade = new DoubleAnimation(0, 1, TimeSpan.FromMilliseconds(500)) { EasingFunction = new QuarticEase { EasingMode = EasingMode.EaseOut } };
+            MainBorder.BeginAnimation(UIElement.OpacityProperty, fade);
+            var grow = new DoubleAnimation(0.92, 1.0, TimeSpan.FromMilliseconds(500)) { EasingFunction = new QuarticEase { EasingMode = EasingMode.EaseOut } };
+            scale.BeginAnimation(ScaleTransform.ScaleXProperty, grow);
+            scale.BeginAnimation(ScaleTransform.ScaleYProperty, grow);
         }
 
         private void AttachNavAnimations()
@@ -231,9 +245,30 @@ namespace ShadowCheat
         private void AnimateDashboardHeader(string menuName)
         {
             if (!DashboardInfo.TryGetValue(menuName, out var info)) return;
+
+            void SlideElement(FrameworkElement el)
+            {
+                el.RenderTransformOrigin = new Point(0, 0.5);
+                el.RenderTransform = new TranslateTransform(0, 0);
+                var sb = new Storyboard();
+                var slide = new DoubleAnimation { From = 12, To = 0, Duration = TimeSpan.FromMilliseconds(350), EasingFunction = new QuarticEase { EasingMode = EasingMode.EaseOut } };
+                Storyboard.SetTarget(slide, el);
+                Storyboard.SetTargetProperty(slide, new PropertyPath("(UIElement.RenderTransform).(TranslateTransform.X)"));
+                sb.Children.Add(slide);
+                var fade = new DoubleAnimation { From = 0, To = 1, Duration = TimeSpan.FromMilliseconds(350), EasingFunction = new QuarticEase { EasingMode = EasingMode.EaseOut } };
+                Storyboard.SetTarget(fade, el);
+                Storyboard.SetTargetProperty(fade, new PropertyPath("Opacity"));
+                sb.Children.Add(fade);
+                sb.Begin();
+            }
+
             DashTitle.Text = info.title;
             DashDesc.Text = info.desc;
             DashIcon.Text = info.icon;
+
+            SlideElement(DashTitle);
+            SlideElement(DashDesc);
+            SlideElement(DashIcon);
         }
 
         private void InitializeMenuControl(string menuName, UserControl control)
@@ -291,39 +326,48 @@ namespace ShadowCheat
         private void UpdateTabStyles(int activeIndex)
         {
             var tabs = new[] { Menu1B, Menu2B, Menu3B, Menu4B, Menu5B };
+            var sliderTop = 19 + activeIndex * 62;
+
+            if (SliderBar.Opacity < 0.5)
+            {
+                SliderBar.Opacity = 0;
+                Animator.Fade(SliderBar);
+            }
+
+            var currentMargin = SliderBar.Margin;
+            var anim = new ThicknessAnimation(
+                new Thickness(0, currentMargin.Top, 0, 0),
+                new Thickness(0, sliderTop, 0, 0),
+                TimeSpan.FromMilliseconds(350))
+            { EasingFunction = new QuarticEase { EasingMode = EasingMode.EaseInOut } };
+            SliderBar.BeginAnimation(FrameworkElement.MarginProperty, anim);
+
             for (int i = 0; i < tabs.Length; i++)
             {
                 var btn = tabs[i];
                 if (btn.Template == null) continue;
-                var activeBar = btn.Template.FindName("ActiveBar", btn) as Border;
                 var btnBg = btn.Template.FindName("BtnBg", btn) as Border;
                 var textBlocks = FindVisualChildren<TextBlock>(btn);
 
                 if (i == activeIndex)
                 {
-                    if (activeBar != null)
-                    {
-                        activeBar.Opacity = 0;
-                        Animator.Fade(activeBar);
-                    }
                     if (btnBg != null)
                     {
                         var current = (btnBg.Background as SolidColorBrush)?.Color ?? Colors.Transparent;
                         var target = Color.FromArgb(0x18, 0xCC, 0x00, 0x00);
                         btnBg.Background = new SolidColorBrush(current);
-                        Animator.ColorTo(btnBg, "Background.Color", current, target, 300);
+                        Animator.ColorTo(btnBg, "Background.Color", current, target, 350);
                     }
                     foreach (var tb in textBlocks)
                     {
                         var current = (tb.Foreground as SolidColorBrush)?.Color ?? Colors.Gray;
                         var target = ((SolidColorBrush)FindResource("NeonTextPrimary")).Color;
                         tb.Foreground = new SolidColorBrush(current);
-                        Animator.ColorTo(tb, "Foreground.Color", current, target, 300);
+                        Animator.ColorTo(tb, "Foreground.Color", current, target, 350);
                     }
                 }
                 else
                 {
-                    if (activeBar != null) activeBar.Opacity = 0;
                     if (btnBg != null) btnBg.Background = Brushes.Transparent;
                     foreach (var tb in textBlocks)
                         tb.Foreground = (SolidColorBrush)FindResource("NeonTextMuted");
@@ -381,7 +425,7 @@ namespace ShadowCheat
             else toggle.DisableSwitch();
         }
 
-        public void ApplyThemeColor(System.Windows.Media.Color color)
+        public void ApplyThemeColor(Color color)
         {
             GradientThemeStop.Color = color;
         }

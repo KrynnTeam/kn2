@@ -101,7 +101,23 @@
                     </Border>
 
                     <!-- Nav buttons -->
-                    <StackPanel Grid.Row="1" Margin="0,14,0,0">
+                    <Grid Grid.Row="1" Margin="0,14,0,0">
+                        <!-- Sliding active bar indicator (overlays buttons) -->
+                        <Border x:Name="SliderBar" Width="3" Height="24" HorizontalAlignment="Left"
+                                VerticalAlignment="Top" CornerRadius="0,3,3,0" Opacity="0"
+                                IsHitTestVisible="False" Margin="0,19,0,0">
+                            <Border.Background>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                    <GradientStop Offset="0" Color="#FFCC0000"/>
+                                    <GradientStop Offset="1" Color="#FF8B0000"/>
+                                </LinearGradientBrush>
+                            </Border.Background>
+                            <Border.Effect>
+                                <DropShadowEffect Color="#CC0000" Opacity="0.6" BlurRadius="6" ShadowDepth="0"/>
+                            </Border.Effect>
+                        </Border>
+
+                        <StackPanel>
                         <!-- Inicio -->
                         <Button x:Name="Menu1B" Tag="HomePage" Width="80" Height="62"
                                 BorderThickness="0" Background="Transparent" Click="MenuSwitch" Cursor="Hand">
@@ -262,6 +278,7 @@
                             <Button.ToolTip><ToolTip Content="Acerca de" FontFamily="Segoe UI" FontSize="11"/></Button.ToolTip>
                         </Button>
                     </StackPanel>
+                    </Grid>
 
                     <!-- Bottom controls -->
                     <StackPanel Grid.Row="2" Margin="0,0,0,12">
