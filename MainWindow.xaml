@@ -352,37 +352,45 @@
                                 </LinearGradientBrush>
                             </Border.Background>
                         </Border>
-                        <Button x:Name="Minimize" Content="&#xE921;" Width="80" Height="36"
+                        <Button x:Name="Minimize" Width="80" Height="36"
                                 Background="Transparent" BorderBrush="{x:Null}"
                                 Foreground="{StaticResource NeonTextMuted}" FontFamily="Segoe MDL2 Assets"
                                 Padding="0" BorderThickness="0" FontSize="10" Click="Minimize_Click" Cursor="Hand">
-                            <Button.Style>
-                                <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
-                                    <Setter Property="Background" Value="Transparent"/>
-                                    <Style.Triggers>
+                            <Button.Template>
+                                <ControlTemplate TargetType="Button">
+                                    <Border x:Name="Bg" Background="Transparent" CornerRadius="6">
+                                        <TextBlock Text="&#xE921;" FontFamily="Segoe MDL2 Assets" FontSize="10"
+                                                   Foreground="{TemplateBinding Foreground}"
+                                                   HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                    <ControlTemplate.Triggers>
                                         <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter Property="Background" Value="#10FF0000"/>
-                                            <Setter Property="Foreground" Value="{StaticResource NeonTextPrimary}"/>
+                                            <Setter TargetName="Bg" Property="Background" Value="#22CC0000"/>
+                                            <Setter Property="Foreground" Value="#FFF0EBF5"/>
                                         </Trigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Button.Style>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Button.Template>
                         </Button>
-                        <Button x:Name="Exit" Content="&#xE8BB;" Width="80" Height="36"
+                        <Button x:Name="Exit" Width="80" Height="36"
                                 Background="Transparent" BorderBrush="{x:Null}"
                                 Foreground="{StaticResource NeonTextMuted}" FontFamily="Segoe MDL2 Assets"
                                 Padding="0" BorderThickness="0" FontSize="10" Click="Exit_Click" Cursor="Hand">
-                            <Button.Style>
-                                <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
-                                    <Setter Property="Background" Value="Transparent"/>
-                                    <Style.Triggers>
+                            <Button.Template>
+                                <ControlTemplate TargetType="Button">
+                                    <Border x:Name="Bg" Background="Transparent" CornerRadius="6">
+                                        <TextBlock Text="&#xE8BB;" FontFamily="Segoe MDL2 Assets" FontSize="10"
+                                                   Foreground="{TemplateBinding Foreground}"
+                                                   HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                    <ControlTemplate.Triggers>
                                         <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter Property="Background" Value="#22CC0000"/>
+                                            <Setter TargetName="Bg" Property="Background" Value="#22CC0000"/>
                                             <Setter Property="Foreground" Value="#FFFF2020"/>
                                         </Trigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </Button.Style>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Button.Template>
                         </Button>
                     </StackPanel>
 

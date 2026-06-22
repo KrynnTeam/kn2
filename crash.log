@@ -6,6 +6,5 @@ System.InvalidOperationException: El subproceso que realiza la llamada no puede 
    at ShadowCheat.MainWindow.UpdateOverlay() in C:\Users\gg260\Documents\GitHub\kn2\MainWindow.xaml.cs:line 130
    at ShadowCheat.MainWindow.<ShowOverlay>b__25_1(Object s, EventArgs e) in C:\Users\gg260\Documents\GitHub\kn2\MainWindow.xaml.cs:line 104
    at System.Windows.Threading.DispatcherTimer.FireTick()
-   at System.Windows.Threading.DispatcherTimer.<>c.<Restart>b__21_0(Object state)
    at System.Windows.Threading.ExceptionWrapper.InternalRealCall(Delegate callback, Object args, Int32 numArgs)
    at System.Windows.Threading.ExceptionWrapper.TryCatchWhen(Object source, Delegate callback, Object args, Int32 numArgs, Delegate catchHandler)
