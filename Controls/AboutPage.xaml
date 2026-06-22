@@ -4,8 +4,174 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" Background="Transparent">
-    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-        <TextBlock Text="About KN2" FontSize="24" FontWeight="Bold" Foreground="White"
-                   HorizontalAlignment="Center"/>
-    </StackPanel>
+    <ScrollViewer VerticalScrollBarVisibility="Auto" Background="Transparent">
+        <StackPanel Margin="28,24,28,24">
+            <!-- ===== HEADER CARD ===== -->
+            <Border Background="#0F0F1A" BorderBrush="#FF2A2A40" BorderThickness="1"
+                    CornerRadius="14" Padding="28" Margin="0,0,0,16">
+                <Border.Effect>
+                    <DropShadowEffect Color="#000000" Opacity="0.4" BlurRadius="16" ShadowDepth="4"/>
+                </Border.Effect>
+                <StackPanel HorizontalAlignment="Center">
+                    <Border Background="#1A1A2E" BorderBrush="#FF2A2A40" BorderThickness="1"
+                            CornerRadius="6" Padding="14,4" HorizontalAlignment="Center" Margin="0,0,0,16">
+                        <TextBlock Text="KN2 v1.0.0"
+                                   FontFamily="{StaticResource AtkinsonHyperlegible}"
+                                   FontSize="10" Foreground="#FFB44CFF" FontWeight="SemiBold"/>
+                    </Border>
+                    <Border Width="72" Height="72" CornerRadius="20" HorizontalAlignment="Center" Margin="0,0,0,16">
+                        <Border.Background>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                <GradientStop Offset="0" Color="#FF00A8FF"/>
+                                <GradientStop Offset="1" Color="#FF8B5CF6"/>
+                            </LinearGradientBrush>
+                        </Border.Background>
+                        <Border.Effect>
+                            <DropShadowEffect Color="#FF00A8FF" Opacity="0.4" BlurRadius="20" ShadowDepth="0"/>
+                        </Border.Effect>
+                        <TextBlock Text="K" FontFamily="Segoe UI" Foreground="White" FontSize="28"
+                                   FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                    <TextBlock Text="KN2" FontFamily="{StaticResource AtkinsonHyperlegible}" FontSize="28"
+                               FontWeight="Bold" Foreground="White" HorizontalAlignment="Center" Margin="0,0,0,4"/>
+                    <TextBlock Text="Universal AI-Powered Aim Assist"
+                               FontFamily="{StaticResource AtkinsonHyperlegible}"
+                               FontSize="12" Foreground="#FF8880A0" HorizontalAlignment="Center" Margin="0,0,0,4"/>
+                    <TextBlock Text="Built with .NET 9 + WPF + Material Design 3"
+                               FontFamily="{StaticResource AtkinsonHyperlegible}"
+                               FontSize="10" Foreground="#FF554C70" HorizontalAlignment="Center"/>
+                </StackPanel>
+            </Border>
+
+            <!-- ===== SYSTEM SPECS ===== -->
+            <Border Background="#0F0F1A" BorderBrush="#FF2A2A40" BorderThickness="1"
+                    CornerRadius="14" Padding="24" Margin="0,0,0,16">
+                <Border.Effect>
+                    <DropShadowEffect Color="#000000" Opacity="0.4" BlurRadius="12" ShadowDepth="3"/>
+                </Border.Effect>
+                <StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,16">
+                        <Border Width="28" Height="28" CornerRadius="8" Background="#1200A8FF" Margin="0,0,10,0">
+                            <TextBlock Text="&#xE99A;" FontFamily="Segoe MDL2 Assets" FontSize="12"
+                                       Foreground="#FF00A8FF" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <TextBlock Text="System Specifications"
+                                   FontFamily="{StaticResource AtkinsonHyperlegible}"
+                                   FontSize="13" FontWeight="SemiBold" Foreground="White" VerticalAlignment="Center"/>
+                    </StackPanel>
+                    <TextBlock x:Name="AboutSpecs" Text="Loading..."
+                               FontFamily="{StaticResource AtkinsonHyperlegible}"
+                               FontSize="11" Foreground="#FF8880A0" TextWrapping="Wrap" LineHeight="20"/>
+                </StackPanel>
+            </Border>
+
+            <!-- ===== CORE TEAM ===== -->
+            <Border Background="#0F0F1A" BorderBrush="#FF2A2A40" BorderThickness="1"
+                    CornerRadius="14" Padding="24" Margin="0,0,0,16">
+                <Border.Effect>
+                    <DropShadowEffect Color="#000000" Opacity="0.4" BlurRadius="12" ShadowDepth="3"/>
+                </Border.Effect>
+                <StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,16">
+                        <Border Width="28" Height="28" CornerRadius="8" Background="#128B5CF6" Margin="0,0,10,0">
+                            <TextBlock Text="&#xE77B;" FontFamily="Segoe MDL2 Assets" FontSize="12"
+                                       Foreground="#FF8B5CF6" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <TextBlock Text="Core Team" FontFamily="{StaticResource AtkinsonHyperlegible}"
+                                   FontSize="13" FontWeight="SemiBold" Foreground="White" VerticalAlignment="Center"/>
+                    </StackPanel>
+                    <UniformGrid x:Name="CoreTeamPanel" Columns="3" HorizontalAlignment="Center"/>
+                </StackPanel>
+            </Border>
+
+            <!-- ===== COMMUNITY ===== -->
+            <Border Background="#0F0F1A" BorderBrush="#FF2A2A40" BorderThickness="1"
+                    CornerRadius="14" Padding="24" Margin="0,0,0,16">
+                <Border.Effect>
+                    <DropShadowEffect Color="#000000" Opacity="0.4" BlurRadius="12" ShadowDepth="3"/>
+                </Border.Effect>
+                <StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,16">
+                        <Border Width="28" Height="28" CornerRadius="8" Background="#1210B981" Margin="0,0,10,0">
+                            <TextBlock Text="&#xE8BD;" FontFamily="Segoe MDL2 Assets" FontSize="12"
+                                       Foreground="#FF10B981" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <TextBlock Text="Community" FontFamily="{StaticResource AtkinsonHyperlegible}"
+                                   FontSize="13" FontWeight="SemiBold" Foreground="White" VerticalAlignment="Center"/>
+                    </StackPanel>
+                    <Button x:Name="GitHubButton" Background="#1A1A2E" BorderBrush="#FF2A2A40" BorderThickness="1"
+                            Height="38" HorizontalAlignment="Stretch" Margin="0,0,0,10"
+                            Cursor="Hand" Click="GitHubButton_Click"
+                            FontFamily="{StaticResource AtkinsonHyperlegible}" FontSize="11">
+                        <Button.Style>
+                            <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                                <Setter Property="Foreground" Value="#FF8880A0"/>
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="Button">
+                                            <Border Background="{TemplateBinding Background}"
+                                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                                    CornerRadius="8">
+                                                <ContentPresenter HorizontalAlignment="Left" VerticalAlignment="Center"
+                                                                  Margin="16,0,0,0" RecognizesAccessKey="False"/>
+                                            </Border>
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="Background" Value="#222244"/>
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </Button.Style>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="&#xE774;" FontFamily="Segoe MDL2 Assets" FontSize="14"
+                                       Foreground="#FFB44CFF" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                            <TextBlock Text="View on GitHub" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                    <Button x:Name="DiscordButton" Background="#1A1A2E" BorderBrush="#FF2A2A40" BorderThickness="1"
+                            Height="38" HorizontalAlignment="Stretch" Margin="0,0,0,0"
+                            Cursor="Hand" Click="DiscordButton_Click"
+                            FontFamily="{StaticResource AtkinsonHyperlegible}" FontSize="11">
+                        <Button.Style>
+                            <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                                <Setter Property="Foreground" Value="#FF8880A0"/>
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="Button">
+                                            <Border Background="{TemplateBinding Background}"
+                                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                                    CornerRadius="8">
+                                                <ContentPresenter HorizontalAlignment="Left" VerticalAlignment="Center"
+                                                                  Margin="16,0,0,0" RecognizesAccessKey="False"/>
+                                            </Border>
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="Background" Value="#222244"/>
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </Button.Style>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="&#xE8BD;" FontFamily="Segoe MDL2 Assets" FontSize="14"
+                                       Foreground="#FFFF2D95" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                            <TextBlock Text="Join our Discord" VerticalAlignment="Center"/>
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
+            </Border>
+
+            <!-- Footer -->
+            <TextBlock Text="All rights reserved. © 2026"
+                       FontFamily="{StaticResource AtkinsonHyperlegible}"
+                       FontSize="9" Foreground="#FF554C70" HorizontalAlignment="Center" Margin="0,8,0,0"/>
+        </StackPanel>
+    </ScrollViewer>
 </UserControl>
