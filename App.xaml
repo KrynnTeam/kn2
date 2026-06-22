@@ -7,90 +7,90 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <materialDesign:BundledTheme BaseTheme="Dark" PrimaryColor="Cyan" SecondaryColor="Indigo" />
+                <materialDesign:BundledTheme BaseTheme="Dark" PrimaryColor="Red" SecondaryColor="DeepOrange" />
             </ResourceDictionary.MergedDictionaries>
 
-            <!-- ========== CORE ========== -->
-            <SolidColorBrush x:Key="KN2Primary" Color="#FF00A8FF"/>
-            <SolidColorBrush x:Key="KN2Secondary" Color="#FF8B5CF6"/>
-            <SolidColorBrush x:Key="KN2Accent" Color="#FF10B981"/>
-            <SolidColorBrush x:Key="KN2Warning" Color="#FFF59E0B"/>
-            <SolidColorBrush x:Key="KN2Danger" Color="#FFEF4444"/>
+            <!-- ========== CORE GOTH PALETTE ========== -->
+            <SolidColorBrush x:Key="KN2Primary" Color="#FFCC0000"/>
+            <SolidColorBrush x:Key="KN2Secondary" Color="#FF8B0000"/>
+            <SolidColorBrush x:Key="KN2Accent" Color="#FFC0C0C0"/>
+            <SolidColorBrush x:Key="KN2Warning" Color="#FFD4A017"/>
+            <SolidColorBrush x:Key="KN2Danger" Color="#FFFF2020"/>
 
             <!-- ========== BACKGROUNDS ========== -->
-            <SolidColorBrush x:Key="KN2BgDeep" Color="#FF030712"/>
-            <SolidColorBrush x:Key="KN2BgBase" Color="#FF0A0F1E"/>
-            <SolidColorBrush x:Key="KN2BgSurface" Color="#FF111827"/>
-            <SolidColorBrush x:Key="KN2BgElevated" Color="#FF1F2937"/>
-            <SolidColorBrush x:Key="KN2BgCard" Color="#FF161E2E"/>
+            <SolidColorBrush x:Key="KN2BgDeep" Color="#FF050000"/>
+            <SolidColorBrush x:Key="KN2BgBase" Color="#FF0A0505"/>
+            <SolidColorBrush x:Key="KN2BgSurface" Color="#FF150A0A"/>
+            <SolidColorBrush x:Key="KN2BgElevated" Color="#FF1A0D0D"/>
+            <SolidColorBrush x:Key="KN2BgCard" Color="#FF0D0505"/>
 
             <!-- ========== BORDERS ========== -->
-            <SolidColorBrush x:Key="KN2BorderDefault" Color="#FF1E293B"/>
-            <SolidColorBrush x:Key="KN2BorderSubtle" Color="#FF0F172A"/>
-            <SolidColorBrush x:Key="KN2BorderFocus" Color="#FF00A8FF"/>
+            <SolidColorBrush x:Key="KN2BorderDefault" Color="#FF3D1A1A"/>
+            <SolidColorBrush x:Key="KN2BorderSubtle" Color="#FF2A0F0F"/>
+            <SolidColorBrush x:Key="KN2BorderFocus" Color="#FFCC0000"/>
 
             <!-- ========== TEXT ========== -->
             <SolidColorBrush x:Key="KN2TextPrimary" Color="#FFFFFFFF"/>
-            <SolidColorBrush x:Key="KN2TextSecondary" Color="#FF94A3B8"/>
-            <SolidColorBrush x:Key="KN2TextMuted" Color="#FF475569"/>
-            <SolidColorBrush x:Key="KN2TextAccent" Color="#FF00A8FF"/>
+            <SolidColorBrush x:Key="KN2TextSecondary" Color="#FFA0A0A0"/>
+            <SolidColorBrush x:Key="KN2TextMuted" Color="#FF663333"/>
+            <SolidColorBrush x:Key="KN2TextAccent" Color="#FFCC0000"/>
 
             <!-- ========== GLOWS ========== -->
-            <SolidColorBrush x:Key="KN2GlowBlue" Color="#3300A8FF"/>
-            <SolidColorBrush x:Key="KN2GlowPurple" Color="#338B5CF6"/>
-            <SolidColorBrush x:Key="KN2GlowGreen" Color="#3310B981"/>
+            <SolidColorBrush x:Key="KN2GlowRed" Color="#33CC0000"/>
+            <SolidColorBrush x:Key="KN2GlowCrimson" Color="#338B0000"/>
+            <SolidColorBrush x:Key="KN2GlowSilver" Color="#33C0C0C0"/>
 
             <!-- ========== GLASS ========== -->
-            <SolidColorBrush x:Key="KN2GlassBg" Color="#1A0A0F1E"/>
-            <SolidColorBrush x:Key="KN2GlassBorder" Color="#1AFFFFFF"/>
+            <SolidColorBrush x:Key="KN2GlassBg" Color="#1A0A0505"/>
+            <SolidColorBrush x:Key="KN2GlassBorder" Color="#1ACC0000"/>
 
             <!-- ========== M3 COMPAT ========== -->
-            <SolidColorBrush x:Key="M3Primary" Color="#FF00A8FF"/>
+            <SolidColorBrush x:Key="M3Primary" Color="#FFCC0000"/>
             <SolidColorBrush x:Key="M3OnPrimary" Color="#FFFFFFFF"/>
-            <SolidColorBrush x:Key="M3PrimaryContainer" Color="#FF3B82F6"/>
+            <SolidColorBrush x:Key="M3PrimaryContainer" Color="#FF8B0000"/>
             <SolidColorBrush x:Key="M3OnPrimaryContainer" Color="#FFFFFFFF"/>
-            <SolidColorBrush x:Key="M3Secondary" Color="#FF8B5CF6"/>
+            <SolidColorBrush x:Key="M3Secondary" Color="#FF8B0000"/>
             <SolidColorBrush x:Key="M3OnSecondary" Color="#FFFFFFFF"/>
-            <SolidColorBrush x:Key="M3SecondaryContainer" Color="#FF5B21B6"/>
-            <SolidColorBrush x:Key="M3OnSecondaryContainer" Color="#FFDDD6FE"/>
-            <SolidColorBrush x:Key="M3Surface" Color="#FF111827"/>
-            <SolidColorBrush x:Key="M3OnSurface" Color="#FFE2E8F0"/>
-            <SolidColorBrush x:Key="M3SurfaceVariant" Color="#FF1F2937"/>
-            <SolidColorBrush x:Key="M3OnSurfaceVariant" Color="#FF94A3B8"/>
-            <SolidColorBrush x:Key="M3Background" Color="#FF030712"/>
-            <SolidColorBrush x:Key="M3OnBackground" Color="#FFE2E8F0"/>
-            <SolidColorBrush x:Key="M3Outline" Color="#FF475569"/>
-            <SolidColorBrush x:Key="M3OutlineVariant" Color="#FF334155"/>
+            <SolidColorBrush x:Key="M3SecondaryContainer" Color="#FF5C0000"/>
+            <SolidColorBrush x:Key="M3OnSecondaryContainer" Color="#FFFFD0D0"/>
+            <SolidColorBrush x:Key="M3Surface" Color="#FF150A0A"/>
+            <SolidColorBrush x:Key="M3OnSurface" Color="#FFE0D0D0"/>
+            <SolidColorBrush x:Key="M3SurfaceVariant" Color="#FF1A0D0D"/>
+            <SolidColorBrush x:Key="M3OnSurfaceVariant" Color="#FFA0A0A0"/>
+            <SolidColorBrush x:Key="M3Background" Color="#FF050000"/>
+            <SolidColorBrush x:Key="M3OnBackground" Color="#FFE0D0D0"/>
+            <SolidColorBrush x:Key="M3Outline" Color="#FF663333"/>
+            <SolidColorBrush x:Key="M3OutlineVariant" Color="#FF4A2020"/>
             <Color x:Key="M3Shadow">#66000000</Color>
 
-            <SolidColorBrush x:Key="ThemeColor" Color="#FF00A8FF"/>
-            <SolidColorBrush x:Key="ThemeColorDark" Color="#FF0077CC"/>
-            <SolidColorBrush x:Key="ThemeColorLight" Color="#FF38BDF8"/>
-            <SolidColorBrush x:Key="ThemeGradientDark" Color="#FF030712"/>
-            <SolidColorBrush x:Key="ThemeColorTransparent" Color="#3300A8FF"/>
-            <SolidColorBrush x:Key="ThemeColorSemiTransparent" Color="#6600A8FF"/>
+            <SolidColorBrush x:Key="ThemeColor" Color="#FFCC0000"/>
+            <SolidColorBrush x:Key="ThemeColorDark" Color="#FF8B0000"/>
+            <SolidColorBrush x:Key="ThemeColorLight" Color="#FFFF2020"/>
+            <SolidColorBrush x:Key="ThemeGradientDark" Color="#FF050000"/>
+            <SolidColorBrush x:Key="ThemeColorTransparent" Color="#33CC0000"/>
+            <SolidColorBrush x:Key="ThemeColorSemiTransparent" Color="#66CC0000"/>
 
             <!-- ========== NEON COMPAT ========== -->
-            <SolidColorBrush x:Key="NeonBgDeep" Color="#FF030712"/>
-            <SolidColorBrush x:Key="NeonSurface" Color="#FF111827"/>
-            <SolidColorBrush x:Key="NeonSurfaceAlt" Color="#FF1F2937"/>
-            <SolidColorBrush x:Key="NeonPrimary" Color="#FF00A8FF"/>
-            <SolidColorBrush x:Key="NeonSecondary" Color="#FF8B5CF6"/>
-            <SolidColorBrush x:Key="NeonTertiary" Color="#FF10B981"/>
-            <SolidColorBrush x:Key="NeonBorder" Color="#FF1E293B"/>
-            <SolidColorBrush x:Key="NeonBorderLight" Color="#FF334155"/>
+            <SolidColorBrush x:Key="NeonBgDeep" Color="#FF050000"/>
+            <SolidColorBrush x:Key="NeonSurface" Color="#FF150A0A"/>
+            <SolidColorBrush x:Key="NeonSurfaceAlt" Color="#FF1A0D0D"/>
+            <SolidColorBrush x:Key="NeonPrimary" Color="#FFCC0000"/>
+            <SolidColorBrush x:Key="NeonSecondary" Color="#FF8B0000"/>
+            <SolidColorBrush x:Key="NeonTertiary" Color="#FFC0C0C0"/>
+            <SolidColorBrush x:Key="NeonBorder" Color="#FF3D1A1A"/>
+            <SolidColorBrush x:Key="NeonBorderLight" Color="#FF4A2020"/>
             <SolidColorBrush x:Key="NeonTextPrimary" Color="#FFFFFFFF"/>
-            <SolidColorBrush x:Key="NeonTextSecondary" Color="#FF94A3B8"/>
-            <SolidColorBrush x:Key="NeonTextMuted" Color="#FF475569"/>
-            <SolidColorBrush x:Key="NeonGlowPurple" Color="#3300A8FF"/>
-            <SolidColorBrush x:Key="NeonGlowMagenta" Color="#338B5CF6"/>
-            <SolidColorBrush x:Key="NeonGlowCyan" Color="#3310B981"/>
+            <SolidColorBrush x:Key="NeonTextSecondary" Color="#FFA0A0A0"/>
+            <SolidColorBrush x:Key="NeonTextMuted" Color="#FF663333"/>
+            <SolidColorBrush x:Key="NeonGlowPurple" Color="#33CC0000"/>
+            <SolidColorBrush x:Key="NeonGlowMagenta" Color="#338B0000"/>
+            <SolidColorBrush x:Key="NeonGlowCyan" Color="#33C0C0C0"/>
 
             <!-- ========== SHAPES ========== -->
-            <CornerRadius x:Key="M3ShapeSmall">4</CornerRadius>
-            <CornerRadius x:Key="M3ShapeMedium">8</CornerRadius>
-            <CornerRadius x:Key="M3ShapeLarge">12</CornerRadius>
-            <CornerRadius x:Key="M3ShapeExtraLarge">16</CornerRadius>
+            <CornerRadius x:Key="M3ShapeSmall">6</CornerRadius>
+            <CornerRadius x:Key="M3ShapeMedium">10</CornerRadius>
+            <CornerRadius x:Key="M3ShapeLarge">16</CornerRadius>
+            <CornerRadius x:Key="M3ShapeExtraLarge">24</CornerRadius>
 
             <!-- ========== TYPOGRAPHY ========== -->
             <FontFamily x:Key="AtkinsonHyperlegible">Segoe UI</FontFamily>
@@ -135,9 +135,9 @@
                 </Style.Triggers>
             </Style>
 
-            <SolidColorBrush x:Key="{x:Static SystemColors.WindowBrushKey}" Color="#FF1F2937" />
-            <SolidColorBrush x:Key="{x:Static SystemColors.WindowTextBrushKey}" Color="#FFE2E8F0" />
-            <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="#FF00A8FF" />
+            <SolidColorBrush x:Key="{x:Static SystemColors.WindowBrushKey}" Color="#FF1A0D0D" />
+            <SolidColorBrush x:Key="{x:Static SystemColors.WindowTextBrushKey}" Color="#FFE0D0D0" />
+            <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="#FFCC0000" />
             <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}" Color="#FFFFFFFF" />
 
             <Style x:Key="GhostButtonStyle" TargetType="Button">
@@ -159,13 +159,60 @@
             </Style>
 
             <Style TargetType="ToolTip">
-                <Setter Property="Background" Value="#1F2937"/>
-                <Setter Property="Foreground" Value="#FFE2E8F0"/>
+                <Setter Property="Background" Value="#1A0D0D"/>
+                <Setter Property="Foreground" Value="#FFE0D0D0"/>
                 <Setter Property="FontFamily" Value="Segoe UI"/>
                 <Setter Property="FontSize" Value="11"/>
-                <Setter Property="BorderBrush" Value="#FF475569"/>
+                <Setter Property="BorderBrush" Value="#FF663333"/>
                 <Setter Property="BorderThickness" Value="1"/>
                 <Setter Property="Padding" Value="8,6"/>
+            </Style>
+
+            <!-- Custom ComboBox with red-bordered popup -->
+            <ControlTemplate x:Key="ComboBoxToggleButton" TargetType="ToggleButton">
+                <Border Background="Transparent">
+                    <TextBlock Text="&#xE70D;" FontFamily="Segoe MDL2 Assets" FontSize="10"
+                               Foreground="#FFCC0000" HorizontalAlignment="Right"
+                               VerticalAlignment="Center" Margin="0,0,8,0"/>
+                </Border>
+            </ControlTemplate>
+
+            <Style x:Key="GothComboBox" TargetType="ComboBox" BasedOn="{StaticResource {x:Type ComboBox}}">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="ComboBox">
+                            <Grid>
+                                <Border x:Name="Border" Background="#FF0D0505"
+                                        BorderBrush="#FF4A2020" BorderThickness="1" CornerRadius="6">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+                                        <ToggleButton Grid.Column="1" Template="{StaticResource ComboBoxToggleButton}"
+                                                      Focusable="False" IsChecked="{Binding IsDropDownOpen, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"/>
+                                        <ContentPresenter x:Name="ContentSite" Margin="8,0,28,0" VerticalAlignment="Center"
+                                                          Content="{TemplateBinding SelectionBoxItem}"
+                                                          ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"/>
+                                    </Grid>
+                                </Border>
+                                <Popup x:Name="Popup" Placement="Bottom" IsOpen="{TemplateBinding IsDropDownOpen}"
+                                       AllowsTransparency="True" Focusable="False" PopupAnimation="Slide">
+                                    <Border CornerRadius="8" Background="#FF150A0A"
+                                            BorderBrush="#FFCC0000" BorderThickness="1"
+                                            MaxHeight="{TemplateBinding MaxDropDownHeight}">
+                                        <Border.Effect>
+                                            <DropShadowEffect Color="#CC0000" Opacity="0.25" BlurRadius="12" ShadowDepth="4"/>
+                                        </Border.Effect>
+                                        <ScrollViewer>
+                                            <ItemsPresenter />
+                                        </ScrollViewer>
+                                    </Border>
+                                </Popup>
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
             </Style>
         </ResourceDictionary>
     </Application.Resources>

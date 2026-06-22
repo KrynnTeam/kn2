@@ -44,7 +44,7 @@ namespace ShadowCheat.Controls
             {
                 var panel = new StackPanel { Margin = new Thickness(8, 0, 8, 0), HorizontalAlignment = HorizontalAlignment.Center };
                 var avatarBorder = new Border { Width = 48, Height = 48, CornerRadius = new CornerRadius(24),
-                    Background = new SolidColorBrush(Color.FromRgb(0x72, 0x2E, 0xD1)), Margin = new Thickness(0, 0, 0, 8) };
+                    Background = new SolidColorBrush(Color.FromRgb(0x8B, 0x00, 0x00)), Margin = new Thickness(0, 0, 0, 8) };
                 avatarBorder.Clip = new EllipseGeometry { Center = new Point(24, 24), RadiusX = 24, RadiusY = 24 };
 
                 if (!string.IsNullOrEmpty(avatarUrl))

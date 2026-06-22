@@ -101,9 +101,9 @@ namespace ShadowCheat
 
             var colorEase = new CubicEase { EasingMode = EasingMode.EaseInOut };
             GradStop1.BeginAnimation(GradientStop.ColorProperty,
-                new ColorAnimation { From = Color.FromArgb(0xFF, 0x00, 0xA8, 0xFF), To = Color.FromArgb(0xFF, 0x8B, 0x5C, 0xF6), Duration = TimeSpan.FromSeconds(4), AutoReverse = true, RepeatBehavior = forever, EasingFunction = colorEase });
+                new ColorAnimation { From = Color.FromArgb(0xFF, 0xCC, 0x00, 0x00), To = Color.FromArgb(0xFF, 0x8B, 0x00, 0x00), Duration = TimeSpan.FromSeconds(4), AutoReverse = true, RepeatBehavior = forever, EasingFunction = colorEase });
             GradStop3.BeginAnimation(GradientStop.ColorProperty,
-                new ColorAnimation { From = Color.FromArgb(0xFF, 0x8B, 0x5C, 0xF6), To = Color.FromArgb(0xFF, 0x00, 0xA8, 0xFF), Duration = TimeSpan.FromSeconds(4), AutoReverse = true, RepeatBehavior = forever, EasingFunction = colorEase });
+                new ColorAnimation { From = Color.FromArgb(0xFF, 0x8B, 0x00, 0x00), To = Color.FromArgb(0xFF, 0xCC, 0x00, 0x00), Duration = TimeSpan.FromSeconds(4), AutoReverse = true, RepeatBehavior = forever, EasingFunction = colorEase });
         }
 
         private void LoginTab_Click(object sender, MouseButtonEventArgs e) => ShowLogin();
@@ -114,7 +114,7 @@ namespace ShadowCheat
             if (_isLogin) return;
             _isLogin = true;
 
-            LoginTab.Background = new SolidColorBrush(Color.FromArgb(0x22, 0x00, 0xA8, 0xFF));
+            LoginTab.Background = new SolidColorBrush(Color.FromArgb(0x22, 0xCC, 0x00, 0x00));
             ((TextBlock)((Border)LoginTab).Child).Foreground = Brushes.White;
             RegisterTab.Background = Brushes.Transparent;
             ((TextBlock)((Border)RegisterTab).Child).Foreground = (Brush)new BrushConverter().ConvertFrom("#55FFFFFF")!;
@@ -134,7 +134,7 @@ namespace ShadowCheat
             if (!_isLogin) return;
             _isLogin = false;
 
-            RegisterTab.Background = new SolidColorBrush(Color.FromArgb(0x22, 0x00, 0xA8, 0xFF));
+            RegisterTab.Background = new SolidColorBrush(Color.FromArgb(0x22, 0xCC, 0x00, 0x00));
             ((TextBlock)((Border)RegisterTab).Child).Foreground = Brushes.White;
             LoginTab.Background = Brushes.Transparent;
             ((TextBlock)((Border)LoginTab).Child).Foreground = (Brush)new BrushConverter().ConvertFrom("#55FFFFFF")!;

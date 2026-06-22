@@ -4,11 +4,10 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:Ant="clr-namespace:AntWpf.Controls;assembly=AntWpf"
         mc:Ignorable="d"
         Title="KN2"
-        Height="560" MinHeight="560"
-        Width="880" MinWidth="880"
+        Height="640" MinHeight="640"
+        Width="1000" MinWidth="1000"
         WindowStyle="None"
         ResizeMode="CanResize"
         WindowStartupLocation="CenterScreen"
@@ -21,9 +20,9 @@
         <WindowChrome ResizeBorderThickness="2" CaptionHeight="0" />
     </WindowChrome.WindowChrome>
     <Grid>
-        <Border x:Name="MainBorder" CornerRadius="16" BorderBrush="#2200A8FF" BorderThickness="1">
+        <Border x:Name="MainBorder" CornerRadius="24" BorderBrush="#22CC0000" BorderThickness="1" SizeChanged="MainBorder_SizeChanged">
             <Border.Effect>
-                <DropShadowEffect Color="#000000" Opacity="0.6" BlurRadius="40" ShadowDepth="8"/>
+                <DropShadowEffect Color="#000000" Opacity="0.25" BlurRadius="8" ShadowDepth="5"/>
             </Border.Effect>
             <Border.Background>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0,0">
@@ -35,30 +34,31 @@
                             <TranslateTransform/>
                         </TransformGroup>
                     </LinearGradientBrush.RelativeTransform>
-                    <GradientStop Color="#FF030712" Offset="0.2"/>
-                    <GradientStop Color="#FF0A0F1E" Offset="0.5"/>
-                    <GradientStop x:Name="GradientThemeStop" Color="#FF111827" Offset="1"/>
+                    <GradientStop Color="#FF050000" Offset="0.2"/>
+                    <GradientStop Color="#FF0A0505" Offset="0.5"/>
+                    <GradientStop x:Name="GradientThemeStop" Color="#FF150A0A" Offset="1"/>
                 </LinearGradientBrush>
             </Border.Background>
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="72"/>
+                    <ColumnDefinition Width="80"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
                 <!-- Scanline overlay -->
                 <Rectangle Grid.ColumnSpan="2" Fill="{StaticResource Scanlines}" Opacity="0.08" IsHitTestVisible="False"
-                           RadiusX="16" RadiusY="16"/>
+                           RadiusX="24" RadiusY="24"/>
 
                 <!-- Hexagonal grid background -->
-                <Rectangle Grid.ColumnSpan="2" x:Name="HexGrid" IsHitTestVisible="False" Opacity="0.03">
+                <Rectangle Grid.ColumnSpan="2" x:Name="HexGrid" IsHitTestVisible="False" Opacity="0.03"
+                           RadiusX="24" RadiusY="24">
                     <Rectangle.Fill>
                         <DrawingBrush TileMode="Tile" Viewport="0,0,40,70" ViewportUnits="Absolute">
                             <DrawingBrush.Drawing>
                                 <DrawingGroup>
                                     <GeometryDrawing Geometry="M20,0 L40,11.5 L40,34.5 L20,46 L0,34.5 L0,11.5 Z"
-                                                      Brush="Transparent">
-                                        <GeometryDrawing.Pen><Pen Brush="#FF00A8FF" Thickness="0.5"/></GeometryDrawing.Pen>
+                                                       Brush="Transparent">
+                                        <GeometryDrawing.Pen><Pen Brush="#FFCC0000" Thickness="0.5"/></GeometryDrawing.Pen>
                                     </GeometryDrawing>
                                 </DrawingGroup>
                             </DrawingBrush.Drawing>
@@ -67,7 +67,7 @@
                 </Rectangle>
 
                 <!-- ===== SIDEBAR ===== -->
-                <Grid Grid.Column="0" Background="#080C18" ZIndex="10">
+                <Grid Grid.Column="0" ZIndex="10">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="*"/>
@@ -75,58 +75,74 @@
                     </Grid.RowDefinitions>
 
                     <!-- Logo -->
-                    <Border x:Name="LogoBorder" Width="40" Height="40" Margin="0,16,0,0"
-                            CornerRadius="12" HorizontalAlignment="Center">
+                    <Border x:Name="LogoBorder" Width="44" Height="44" Margin="0,18,0,0"
+                            CornerRadius="14" HorizontalAlignment="Center">
                         <Border.Background>
                             <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                                <GradientStop Offset="0" Color="#FF00A8FF"/>
-                                <GradientStop Offset="1" Color="#FF8B5CF6"/>
+                                <GradientStop Offset="0" Color="#FFCC0000"/>
+                                <GradientStop Offset="1" Color="#FF8B0000"/>
                             </LinearGradientBrush>
                         </Border.Background>
                         <Border.Effect>
-                            <DropShadowEffect x:Name="LogoGlow" Color="#00A8FF" Opacity="0.5" BlurRadius="12" ShadowDepth="0"/>
+                            <DropShadowEffect x:Name="LogoGlow" Color="#CC0000" Opacity="0.5" BlurRadius="12" ShadowDepth="0"/>
                         </Border.Effect>
-                        <TextBlock Text="K" FontFamily="Segoe UI" Foreground="White" FontSize="18" FontWeight="Bold"
+                        <TextBlock Text="K" FontFamily="Segoe UI" Foreground="White" FontSize="20" FontWeight="Bold"
                                    HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Border>
 
-                    <Border Grid.Row="0" Height="1" Margin="12,10,12,0" VerticalAlignment="Bottom" Opacity="0.3">
+                    <Border Grid.Row="0" Height="1" Margin="14,12,14,0" VerticalAlignment="Bottom" Opacity="0.3">
                         <Border.Background>
                             <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
                                 <GradientStop Offset="0" Color="Transparent"/>
-                                <GradientStop Offset="0.5" Color="#FF00A8FF"/>
+                                <GradientStop Offset="0.5" Color="#FFCC0000"/>
                                 <GradientStop Offset="1" Color="Transparent"/>
                             </LinearGradientBrush>
                         </Border.Background>
                     </Border>
 
                     <!-- Nav buttons -->
-                    <StackPanel Grid.Row="1" Margin="0,12,0,0">
+                    <Grid Grid.Row="1" Margin="0,14,0,0">
+                        <!-- Sliding active bar indicator (overlays buttons) -->
+                        <Border x:Name="SliderBar" Width="3" Height="24" HorizontalAlignment="Left"
+                                VerticalAlignment="Top" CornerRadius="0,3,3,0" Opacity="0"
+                                IsHitTestVisible="False" Margin="0,19,0,0">
+                            <Border.Background>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                    <GradientStop Offset="0" Color="#FFCC0000"/>
+                                    <GradientStop Offset="1" Color="#FF8B0000"/>
+                                </LinearGradientBrush>
+                            </Border.Background>
+                            <Border.Effect>
+                                <DropShadowEffect Color="#CC0000" Opacity="0.6" BlurRadius="6" ShadowDepth="0"/>
+                            </Border.Effect>
+                        </Border>
+
+                        <StackPanel>
                         <!-- Inicio -->
-                        <Button x:Name="Menu1B" Tag="HomePage" Width="72" Height="58"
+                        <Button x:Name="Menu1B" Tag="HomePage" Width="80" Height="62"
                                 BorderThickness="0" Background="Transparent" Click="MenuSwitch" Cursor="Hand">
                             <Button.Template>
                                 <ControlTemplate TargetType="Button">
                                     <Grid>
-                                        <Border x:Name="ActiveBar" Width="3" Height="22" HorizontalAlignment="Left"
-                                                VerticalAlignment="Center" CornerRadius="0,2,2,0" Opacity="0">
+                                        <Border x:Name="ActiveBar" Width="3" Height="24" HorizontalAlignment="Left"
+                                                VerticalAlignment="Center" CornerRadius="0,3,3,0" Opacity="0">
                                             <Border.Background>
                                                 <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                                                    <GradientStop Offset="0" Color="#FF00A8FF"/>
-                                                    <GradientStop Offset="1" Color="#FF8B5CF6"/>
+                                                    <GradientStop Offset="0" Color="#FFCC0000"/>
+                                                    <GradientStop Offset="1" Color="#FF8B0000"/>
                                                 </LinearGradientBrush>
                                             </Border.Background>
                                         </Border>
-                                        <Border x:Name="BtnBg" Width="44" Height="44" CornerRadius="12"
+                                        <Border x:Name="BtnBg" Width="48" Height="48" CornerRadius="14"
                                                 Background="Transparent" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                            <TextBlock Text="&#xE80F;" FontFamily="Segoe MDL2 Assets" FontSize="18"
-                                                       Foreground="#FF475569" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            <TextBlock Text="&#xE80F;" FontFamily="Segoe MDL2 Assets" FontSize="20"
+                                                       Foreground="#FF663333" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                         </Border>
                                         <ContentPresenter RecognizesAccessKey="False"/>
                                     </Grid>
                                     <ControlTemplate.Triggers>
                                         <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter TargetName="BtnBg" Property="Background" Value="#10FFFFFF"/>
+                                            <Setter TargetName="BtnBg" Property="Background" Value="#10FF0000"/>
                                         </Trigger>
                                     </ControlTemplate.Triggers>
                                 </ControlTemplate>
@@ -135,30 +151,30 @@
                         </Button>
 
                         <!-- Juegos -->
-                        <Button x:Name="Menu2B" Tag="ModelMenu" Width="72" Height="58"
+                        <Button x:Name="Menu2B" Tag="ModelMenu" Width="80" Height="62"
                                 BorderThickness="0" Background="Transparent" Click="MenuSwitch" Cursor="Hand">
                             <Button.Template>
                                 <ControlTemplate TargetType="Button">
                                     <Grid>
-                                        <Border x:Name="ActiveBar" Width="3" Height="22" HorizontalAlignment="Left"
-                                                VerticalAlignment="Center" CornerRadius="0,2,2,0" Opacity="0">
+                                        <Border x:Name="ActiveBar" Width="3" Height="24" HorizontalAlignment="Left"
+                                                VerticalAlignment="Center" CornerRadius="0,3,3,0" Opacity="0">
                                             <Border.Background>
                                                 <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                                                    <GradientStop Offset="0" Color="#FF00A8FF"/>
-                                                    <GradientStop Offset="1" Color="#FF8B5CF6"/>
+                                                    <GradientStop Offset="0" Color="#FFCC0000"/>
+                                                    <GradientStop Offset="1" Color="#FF8B0000"/>
                                                 </LinearGradientBrush>
                                             </Border.Background>
                                         </Border>
-                                        <Border x:Name="BtnBg" Width="44" Height="44" CornerRadius="12"
+                                        <Border x:Name="BtnBg" Width="48" Height="48" CornerRadius="14"
                                                 Background="Transparent" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                            <TextBlock Text="&#xE7AC;" FontFamily="Segoe MDL2 Assets" FontSize="18"
-                                                       Foreground="#FF475569" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            <TextBlock Text="&#xE7AC;" FontFamily="Segoe MDL2 Assets" FontSize="20"
+                                                       Foreground="#FF663333" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                         </Border>
                                         <ContentPresenter RecognizesAccessKey="False"/>
                                     </Grid>
                                     <ControlTemplate.Triggers>
                                         <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter TargetName="BtnBg" Property="Background" Value="#10FFFFFF"/>
+                                            <Setter TargetName="BtnBg" Property="Background" Value="#10FF0000"/>
                                         </Trigger>
                                     </ControlTemplate.Triggers>
                                 </ControlTemplate>
@@ -167,30 +183,30 @@
                         </Button>
 
                         <!-- Cheats -->
-                        <Button x:Name="Menu3B" Tag="AimMenu" Width="72" Height="58"
+                        <Button x:Name="Menu3B" Tag="AimMenu" Width="80" Height="62"
                                 BorderThickness="0" Background="Transparent" Click="MenuSwitch" Cursor="Hand">
                             <Button.Template>
                                 <ControlTemplate TargetType="Button">
                                     <Grid>
-                                        <Border x:Name="ActiveBar" Width="3" Height="22" HorizontalAlignment="Left"
-                                                VerticalAlignment="Center" CornerRadius="0,2,2,0" Opacity="0">
+                                        <Border x:Name="ActiveBar" Width="3" Height="24" HorizontalAlignment="Left"
+                                                VerticalAlignment="Center" CornerRadius="0,3,3,0" Opacity="0">
                                             <Border.Background>
                                                 <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                                                    <GradientStop Offset="0" Color="#FF00A8FF"/>
-                                                    <GradientStop Offset="1" Color="#FF8B5CF6"/>
+                                                    <GradientStop Offset="0" Color="#FFCC0000"/>
+                                                    <GradientStop Offset="1" Color="#FF8B0000"/>
                                                 </LinearGradientBrush>
                                             </Border.Background>
                                         </Border>
-                                        <Border x:Name="BtnBg" Width="44" Height="44" CornerRadius="12"
+                                        <Border x:Name="BtnBg" Width="48" Height="48" CornerRadius="14"
                                                 Background="Transparent" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                            <TextBlock Text="&#xE768;" FontFamily="Segoe MDL2 Assets" FontSize="18"
-                                                       Foreground="#FF475569" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            <TextBlock Text="&#xE768;" FontFamily="Segoe MDL2 Assets" FontSize="20"
+                                                       Foreground="#FF663333" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                         </Border>
                                         <ContentPresenter RecognizesAccessKey="False"/>
                                     </Grid>
                                     <ControlTemplate.Triggers>
                                         <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter TargetName="BtnBg" Property="Background" Value="#10FFFFFF"/>
+                                            <Setter TargetName="BtnBg" Property="Background" Value="#10FF0000"/>
                                         </Trigger>
                                     </ControlTemplate.Triggers>
                                 </ControlTemplate>
@@ -198,63 +214,31 @@
                             <Button.ToolTip><ToolTip Content="Cheats" FontFamily="Segoe UI" FontSize="11"/></Button.ToolTip>
                         </Button>
 
-                        <!-- Aprender -->
-                        <Button x:Name="Menu4B" Tag="SettingsMenu" Width="72" Height="58"
-                                BorderThickness="0" Background="Transparent" Click="MenuSwitch" Cursor="Hand">
-                            <Button.Template>
-                                <ControlTemplate TargetType="Button">
-                                    <Grid>
-                                        <Border x:Name="ActiveBar" Width="3" Height="22" HorizontalAlignment="Left"
-                                                VerticalAlignment="Center" CornerRadius="0,2,2,0" Opacity="0">
-                                            <Border.Background>
-                                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                                                    <GradientStop Offset="0" Color="#FF00A8FF"/>
-                                                    <GradientStop Offset="1" Color="#FF8B5CF6"/>
-                                                </LinearGradientBrush>
-                                            </Border.Background>
-                                        </Border>
-                                        <Border x:Name="BtnBg" Width="44" Height="44" CornerRadius="12"
-                                                Background="Transparent" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                            <TextBlock Text="&#xE838;" FontFamily="Segoe MDL2 Assets" FontSize="18"
-                                                       Foreground="#FF475569" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                        </Border>
-                                        <ContentPresenter RecognizesAccessKey="False"/>
-                                    </Grid>
-                                    <ControlTemplate.Triggers>
-                                        <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter TargetName="BtnBg" Property="Background" Value="#10FFFFFF"/>
-                                        </Trigger>
-                                    </ControlTemplate.Triggers>
-                                </ControlTemplate>
-                            </Button.Template>
-                            <Button.ToolTip><ToolTip Content="Aprender" FontFamily="Segoe UI" FontSize="11"/></Button.ToolTip>
-                        </Button>
-
                         <!-- Ajustes -->
-                        <Button x:Name="Menu5B" Tag="AboutMenu" Width="72" Height="58"
+                        <Button x:Name="Menu4B" Tag="SettingsMenu" Width="80" Height="62"
                                 BorderThickness="0" Background="Transparent" Click="MenuSwitch" Cursor="Hand">
                             <Button.Template>
                                 <ControlTemplate TargetType="Button">
                                     <Grid>
-                                        <Border x:Name="ActiveBar" Width="3" Height="22" HorizontalAlignment="Left"
-                                                VerticalAlignment="Center" CornerRadius="0,2,2,0" Opacity="0">
+                                        <Border x:Name="ActiveBar" Width="3" Height="24" HorizontalAlignment="Left"
+                                                VerticalAlignment="Center" CornerRadius="0,3,3,0" Opacity="0">
                                             <Border.Background>
                                                 <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                                                    <GradientStop Offset="0" Color="#FF00A8FF"/>
-                                                    <GradientStop Offset="1" Color="#FF8B5CF6"/>
+                                                    <GradientStop Offset="0" Color="#FFCC0000"/>
+                                                    <GradientStop Offset="1" Color="#FF8B0000"/>
                                                 </LinearGradientBrush>
                                             </Border.Background>
                                         </Border>
-                                        <Border x:Name="BtnBg" Width="44" Height="44" CornerRadius="12"
+                                        <Border x:Name="BtnBg" Width="48" Height="48" CornerRadius="14"
                                                 Background="Transparent" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                            <TextBlock Text="&#xE713;" FontFamily="Segoe MDL2 Assets" FontSize="18"
-                                                       Foreground="#FF475569" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            <TextBlock Text="&#xE713;" FontFamily="Segoe MDL2 Assets" FontSize="20"
+                                                       Foreground="#FF663333" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                         </Border>
                                         <ContentPresenter RecognizesAccessKey="False"/>
                                     </Grid>
                                     <ControlTemplate.Triggers>
                                         <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter TargetName="BtnBg" Property="Background" Value="#10FFFFFF"/>
+                                            <Setter TargetName="BtnBg" Property="Background" Value="#10FF0000"/>
                                         </Trigger>
                                     </ControlTemplate.Triggers>
                                 </ControlTemplate>
@@ -263,30 +247,30 @@
                         </Button>
 
                         <!-- Acerca de -->
-                        <Button x:Name="Menu6B" Tag="AcercaDe" Width="72" Height="58"
+                        <Button x:Name="Menu5B" Tag="AcercaDe" Width="80" Height="62"
                                 BorderThickness="0" Background="Transparent" Click="MenuSwitch" Cursor="Hand">
                             <Button.Template>
                                 <ControlTemplate TargetType="Button">
                                     <Grid>
-                                        <Border x:Name="ActiveBar" Width="3" Height="22" HorizontalAlignment="Left"
-                                                VerticalAlignment="Center" CornerRadius="0,2,2,0" Opacity="0">
+                                        <Border x:Name="ActiveBar" Width="3" Height="24" HorizontalAlignment="Left"
+                                                VerticalAlignment="Center" CornerRadius="0,3,3,0" Opacity="0">
                                             <Border.Background>
                                                 <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                                                    <GradientStop Offset="0" Color="#FF00A8FF"/>
-                                                    <GradientStop Offset="1" Color="#FF8B5CF6"/>
+                                                    <GradientStop Offset="0" Color="#FFCC0000"/>
+                                                    <GradientStop Offset="1" Color="#FF8B0000"/>
                                                 </LinearGradientBrush>
                                             </Border.Background>
                                         </Border>
-                                        <Border x:Name="BtnBg" Width="44" Height="44" CornerRadius="12"
+                                        <Border x:Name="BtnBg" Width="48" Height="48" CornerRadius="14"
                                                 Background="Transparent" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                            <TextBlock Text="&#xE946;" FontFamily="Segoe MDL2 Assets" FontSize="18"
-                                                       Foreground="#FF475569" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            <TextBlock Text="&#xE946;" FontFamily="Segoe MDL2 Assets" FontSize="20"
+                                                       Foreground="#FF663333" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                         </Border>
                                         <ContentPresenter RecognizesAccessKey="False"/>
                                     </Grid>
                                     <ControlTemplate.Triggers>
                                         <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter TargetName="BtnBg" Property="Background" Value="#10FFFFFF"/>
+                                            <Setter TargetName="BtnBg" Property="Background" Value="#10FF0000"/>
                                         </Trigger>
                                     </ControlTemplate.Triggers>
                                 </ControlTemplate>
@@ -294,19 +278,20 @@
                             <Button.ToolTip><ToolTip Content="Acerca de" FontFamily="Segoe UI" FontSize="11"/></Button.ToolTip>
                         </Button>
                     </StackPanel>
+                    </Grid>
 
                     <!-- Bottom controls -->
-                    <StackPanel Grid.Row="2" Margin="0,0,0,10">
-                        <Border Height="1" Margin="12,0,12,8" Opacity="0.3">
+                    <StackPanel Grid.Row="2" Margin="0,0,0,12">
+                        <Border Height="1" Margin="14,0,14,10" Opacity="0.3">
                             <Border.Background>
                                 <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
                                     <GradientStop Offset="0" Color="Transparent"/>
-                                    <GradientStop Offset="0.5" Color="#FF00A8FF"/>
+                                    <GradientStop Offset="0.5" Color="#FFCC0000"/>
                                     <GradientStop Offset="1" Color="Transparent"/>
                                 </LinearGradientBrush>
                             </Border.Background>
                         </Border>
-                        <Button x:Name="Minimize" Content="&#xE921;" Width="72" Height="32"
+                        <Button x:Name="Minimize" Content="&#xE921;" Width="80" Height="36"
                                 Background="Transparent" BorderBrush="{x:Null}"
                                 Foreground="{StaticResource NeonTextMuted}" FontFamily="Segoe MDL2 Assets"
                                 Padding="0" BorderThickness="0" FontSize="10" Click="Minimize_Click" Cursor="Hand">
@@ -315,14 +300,14 @@
                                     <Setter Property="Background" Value="Transparent"/>
                                     <Style.Triggers>
                                         <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter Property="Background" Value="#10FFFFFF"/>
+                                            <Setter Property="Background" Value="#10FF0000"/>
                                             <Setter Property="Foreground" Value="{StaticResource NeonTextPrimary}"/>
                                         </Trigger>
                                     </Style.Triggers>
                                 </Style>
                             </Button.Style>
                         </Button>
-                        <Button x:Name="Exit" Content="&#xE8BB;" Width="72" Height="32"
+                        <Button x:Name="Exit" Content="&#xE8BB;" Width="80" Height="36"
                                 Background="Transparent" BorderBrush="{x:Null}"
                                 Foreground="{StaticResource NeonTextMuted}" FontFamily="Segoe MDL2 Assets"
                                 Padding="0" BorderThickness="0" FontSize="10" Click="Exit_Click" Cursor="Hand">
@@ -331,8 +316,8 @@
                                     <Setter Property="Background" Value="Transparent"/>
                                     <Style.Triggers>
                                         <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter Property="Background" Value="#22EF4444"/>
-                                            <Setter Property="Foreground" Value="#FFEF4444"/>
+                                            <Setter Property="Background" Value="#22CC0000"/>
+                                            <Setter Property="Foreground" Value="#FFFF2020"/>
                                         </Trigger>
                                     </Style.Triggers>
                                 </Style>
@@ -345,9 +330,9 @@
                         <Border.Background>
                             <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
                                 <GradientStop Offset="0" Color="Transparent"/>
-                                <GradientStop Offset="0.1" Color="#FF00A8FF"/>
-                                <GradientStop Offset="0.5" Color="#FF8B5CF6"/>
-                                <GradientStop Offset="0.9" Color="#FF00A8FF"/>
+                                <GradientStop Offset="0.1" Color="#FFCC0000"/>
+                                <GradientStop Offset="0.5" Color="#FF8B0000"/>
+                                <GradientStop Offset="0.9" Color="#FFCC0000"/>
                                 <GradientStop Offset="1" Color="Transparent"/>
                             </LinearGradientBrush>
                         </Border.Background>
@@ -355,8 +340,50 @@
                     </Border>
                 </Grid>
 
-                <!-- Content area -->
-                <Grid x:Name="ContentArea" Grid.Column="1"/>
+                <!-- Right dashboard -->
+                <Grid Grid.Column="1" Margin="8,8,8,8">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Border CornerRadius="16" Background="#06000000" BorderBrush="#14CC0000" BorderThickness="1">
+                        <Border.Effect>
+                            <DropShadowEffect Color="#CC0000" Opacity="0.08" BlurRadius="20" ShadowDepth="0"/>
+                        </Border.Effect>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+
+                            <!-- Dashboard header -->
+                            <Border Grid.Row="0" Height="60" BorderBrush="#0DCC0000" BorderThickness="0,0,0,1"
+                                    Background="#06000000" CornerRadius="16,16,0,0">
+                                <Grid Margin="20,0,20,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                                        <TextBlock x:Name="DashTitle" Text="Inicio" FontSize="15" FontWeight="SemiBold"
+                                                   Foreground="{StaticResource NeonTextPrimary}" FontFamily="Segoe UI"/>
+                                        <TextBlock x:Name="DashDesc" Text="Bienvenido a KN2" FontSize="11"
+                                                   Foreground="{StaticResource NeonTextMuted}" FontFamily="Segoe UI"
+                                                   Margin="0,1,0,0"/>
+                                    </StackPanel>
+                                    <Border Grid.Column="1" Width="24" Height="24" CornerRadius="8"
+                                            Background="#10CC0000" VerticalAlignment="Center">
+                                        <TextBlock x:Name="DashIcon" Text="&#xE80F;" FontFamily="Segoe MDL2 Assets"
+                                                   FontSize="12" Foreground="#FFCC0000"
+                                                   HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                </Grid>
+                            </Border>
+
+                            <!-- Page content -->
+                            <Grid x:Name="ContentArea" Grid.Row="1" Margin="0,0,0,0"/>
+                        </Grid>
+                    </Border>
+                </Grid>
             </Grid>
         </Border>
     </Grid>

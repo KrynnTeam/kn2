@@ -6,7 +6,7 @@
              mc:Ignorable="d"
              d:DesignWidth="282.5" Height="6">
     <Grid>
-        <Border Background="#0F0F1A" CornerRadius="0,0,6,6" BorderThickness="0,0,0,1"
-                BorderBrush="#FF2A2A40" Margin="0" Height="6" />
+        <Border Background="#0D0505" CornerRadius="0,0,10,10" BorderThickness="0,0,0,1"
+                BorderBrush="#FF3D1A1A" Margin="0" Height="6" />
     </Grid>
 </UserControl>

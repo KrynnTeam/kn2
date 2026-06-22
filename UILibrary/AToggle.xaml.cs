@@ -6,11 +6,11 @@ namespace ShadowCheat.UILibrary
 {
     public partial class AToggle : System.Windows.Controls.UserControl
     {
-        private static readonly Color DisableColor = Color.FromRgb(0x55, 0x4C, 0x70);
-        private static readonly Color DisableTrackColor = Color.FromRgb(0x1A, 0x1A, 0x2E);
-        private static readonly Color EnableColor = Color.FromRgb(0x00, 0xA8, 0xFF);
-        private static readonly Color EnableTrackColor = Color.FromRgb(0x0A, 0x2A, 0x4E);
-        private static readonly TimeSpan AnimationDuration = TimeSpan.FromMilliseconds(200);
+        private static readonly Color DisableColor = Color.FromRgb(0x66, 0x33, 0x33);
+        private static readonly Color DisableTrackColor = Color.FromRgb(0x1A, 0x0A, 0x0A);
+        private static readonly Color EnableColor = Color.FromRgb(0xCC, 0x00, 0x00);
+        private static readonly Color EnableTrackColor = Color.FromRgb(0x33, 0x00, 0x00);
+        private static readonly TimeSpan AnimationDuration = TimeSpan.FromMilliseconds(300);
         private bool _isEnabled = false;
 
         public AToggle(string Text, string? tooltip = null)

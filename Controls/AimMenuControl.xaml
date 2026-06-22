@@ -5,19 +5,19 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d">
     <ScrollViewer x:Name="AimMenu" VerticalScrollBarVisibility="Hidden" PanningMode="VerticalOnly"
-                  Background="Transparent">
+                  Background="Transparent" Padding="12,12,12,12">
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
-            <StackPanel x:Name="ASP1" Grid.Column="0" Margin="10,0,5,0">
+            <StackPanel x:Name="ASP1" Grid.Column="0" Margin="6,0,10,0">
                 <StackPanel x:Name="DetectionPanel" />
                 <StackPanel x:Name="CrosshairAssistPanel" />
                 <StackPanel x:Name="StandstillPanel" />
                 <StackPanel x:Name="ShotOverridePanel" />
             </StackPanel>
-            <StackPanel x:Name="ASP2" Grid.Column="1" Margin="5,0,10,0">
+            <StackPanel x:Name="ASP2" Grid.Column="1" Margin="10,0,6,0">
                 <StackPanel x:Name="NoRecoilPanel" />
                 <StackPanel x:Name="VisibilityPanel" />
                 <StackPanel x:Name="FlickAssistPanel" />
