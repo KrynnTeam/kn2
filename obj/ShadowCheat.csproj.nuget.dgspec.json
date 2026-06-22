@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\lkero\\OneDrive\\Desktop\\ShadowCheat\\ShadowCheat.csproj": {}
+    "C:\\Users\\lkero\\OneDrive\\Documentos\\GitHub\\kn2\\ShadowCheat.csproj": {}
   },
   "projects": {
-    "C:\\Users\\lkero\\OneDrive\\Desktop\\ShadowCheat\\ShadowCheat.csproj": {
+    "C:\\Users\\lkero\\OneDrive\\Documentos\\GitHub\\kn2\\ShadowCheat.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\lkero\\OneDrive\\Desktop\\ShadowCheat\\ShadowCheat.csproj",
+        "projectUniqueName": "C:\\Users\\lkero\\OneDrive\\Documentos\\GitHub\\kn2\\ShadowCheat.csproj",
         "projectName": "ShadowCheat",
-        "projectPath": "C:\\Users\\lkero\\OneDrive\\Desktop\\ShadowCheat\\ShadowCheat.csproj",
+        "projectPath": "C:\\Users\\lkero\\OneDrive\\Documentos\\GitHub\\kn2\\ShadowCheat.csproj",
         "packagesPath": "C:\\Users\\lkero\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\lkero\\OneDrive\\Desktop\\ShadowCheat\\obj\\",
+        "outputPath": "C:\\Users\\lkero\\OneDrive\\Documentos\\GitHub\\kn2\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\lkero\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -79,7 +79,7 @@
               "privateAssets": "none"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Users\\lkero\\AppData\\Local\\Microsoft\\dotnet\\sdk\\9.0.315/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.315/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

@@ -138,28 +138,30 @@ namespace ShadowCheat
                 if (menuName == _currentMenu) return;
                 _currentlySwitching = true;
 
-                var newControl = GetOrCreateMenuControl(menuName);
-                int targetIndex = Array.IndexOf(MenuNames, menuName);
-                UpdateTabStyles(targetIndex);
-
-                if (_currentControl != null)
+                try
                 {
-                    Animator.FadeOut(_currentControl);
-                    ContentArea.Children.Clear();
+                    var newControl = GetOrCreateMenuControl(menuName);
+                    int targetIndex = Array.IndexOf(MenuNames, menuName);
+                    UpdateTabStyles(targetIndex);
+
+                    if (_currentControl != null)
+                    {
+                        Animator.FadeOut(_currentControl);
+                        ContentArea.Children.Clear();
+                    }
+
+                    ContentArea.Children.Add(newControl);
+                    Animator.Fade(newControl);
+                    _currentControl = newControl;
+                    _currentMenu = menuName;
+
+                    if (!_menuInitialized[menuName])
+                    {
+                        InitializeMenuControl(menuName, newControl);
+                        _menuInitialized[menuName] = true;
+                    }
                 }
-
-                ContentArea.Children.Add(newControl);
-                Animator.Fade(newControl);
-                _currentControl = newControl;
-                _currentMenu = menuName;
-
-                if (!_menuInitialized[menuName])
-                {
-                    InitializeMenuControl(menuName, newControl);
-                    _menuInitialized[menuName] = true;
-                }
-
-                _currentlySwitching = false;
+                finally { _currentlySwitching = false; }
             }
         }
 
