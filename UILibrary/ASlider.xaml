@@ -5,9 +5,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d"
              d:DesignWidth="282.5" Height="64">
-    <Grid Height="64">
-        <Border Height="64" Background="#0F0F1A"
-                CornerRadius="6" BorderThickness="1" BorderBrush="#FF2A2A40">
+    <Grid Height="68" Margin="0,0,0,6">
+        <Border Height="68" Background="#0D0505"
+                CornerRadius="10" BorderThickness="1" BorderBrush="#FF3D1A1A">
             <Border.Effect>
                 <DropShadowEffect Color="#000000" Opacity="0.4" BlurRadius="8" ShadowDepth="2"/>
             </Border.Effect>
@@ -17,9 +17,9 @@
                        Content="Slider" Foreground="#FFF0EBF5"
                        VerticalContentAlignment="Center" FontSize="13"
                        VerticalAlignment="Top" Height="28" HorizontalAlignment="Left" Width="172" />
-                <Label x:Name="AdjustNotifier" Padding="0,8,12,0"
+                <Label x:Name="AdjustNotifier" Padding="0,10,12,0"
                        FontFamily="{StaticResource MonoFont}"
-                       Content="0.00" Foreground="#FF8880A0"
+                       Content="0.00" Foreground="#FFA0A0A0"
                        VerticalContentAlignment="Center" FontSize="11"
                        VerticalAlignment="Top" Height="28" HorizontalAlignment="Right"
                        HorizontalContentAlignment="Right" />
@@ -31,13 +31,13 @@
                         HorizontalAlignment="Left" Height="22" Width="22" Margin="8,0,0,6"
                         VerticalAlignment="Bottom"
                         Padding="0" FontFamily="Segoe MDL2 Assets" BorderThickness="0"
-                        FontSize="10" Foreground="#FF8880A0"
+                        FontSize="10" Foreground="#FFCC0000"
                         Style="{StaticResource GhostButtonStyle}" Cursor="Hand" />
                 <Button x:Name="AddOne" Content="&#xE948;"
                         HorizontalAlignment="Right" Height="22" Width="22" Margin="0,0,8,6"
                         VerticalAlignment="Bottom"
                         Padding="0" FontFamily="Segoe MDL2 Assets" BorderThickness="0"
-                        FontSize="10" Foreground="#FF8880A0"
+                        FontSize="10" Foreground="#FFCC0000"
                         Style="{StaticResource GhostButtonStyle}" Cursor="Hand" />
             </Grid>
         </Border>

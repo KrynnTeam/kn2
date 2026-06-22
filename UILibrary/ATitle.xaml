@@ -5,9 +5,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d"
              d:DesignWidth="282.5" d:DesignHeight="40">
-    <Grid Height="40">
-        <Border Height="40" Background="#0F0F1A"
-                CornerRadius="6" BorderThickness="1" BorderBrush="#FF2A2A40">
+    <Grid Height="44">
+        <Border Height="44" Background="#0D0505"
+                CornerRadius="10" BorderThickness="1" BorderBrush="#FF3D1A1A">
             <Border.Effect>
                 <DropShadowEffect Color="#000000" Opacity="0.4" BlurRadius="8" ShadowDepth="2"/>
             </Border.Effect>
@@ -16,12 +16,12 @@
                         HorizontalAlignment="Left" Margin="6,0,0,0" CornerRadius="1.5">
                     <Border.Background>
                         <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                            <GradientStop Offset="0" Color="#FF00A8FF"/>
-                            <GradientStop Offset="1" Color="#FF8B5CF6"/>
+                            <GradientStop Offset="0" Color="#FFCC0000"/>
+                            <GradientStop Offset="1" Color="#FF8B0000"/>
                         </LinearGradientBrush>
                     </Border.Background>
                     <Border.Effect>
-                        <DropShadowEffect Color="#FF00A8FF" Opacity="0.6" BlurRadius="6" ShadowDepth="0"/>
+                        <DropShadowEffect Color="#FFCC0000" Opacity="0.6" BlurRadius="6" ShadowDepth="0"/>
                     </Border.Effect>
                 </Border>
                 <Label x:Name="LabelTitle" Padding="16,0,30,0"
@@ -30,7 +30,7 @@
                        VerticalContentAlignment="Center" FontSize="14" FontWeight="SemiBold" />
                 <Button x:Name="Minimize" Content="&#xE921;" HorizontalAlignment="Right"
                         BorderThickness="0"
-                        Foreground="#FF8880A0"
+                        Foreground="#FFF0EBF5"
                         Style="{StaticResource GhostButtonStyle}"
                         FontFamily="Segoe MDL2 Assets" Padding="10,10,10,10"
                         FontSize="10" Visibility="Collapsed" Margin="0,4,3,3" Cursor="Hand" />

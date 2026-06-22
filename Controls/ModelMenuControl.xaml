@@ -51,8 +51,8 @@
                                                     CornerRadius="1" Opacity="0">
                                                 <Border.Background>
                                                     <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
-                                                        <GradientStop Offset="0" Color="#FFB44CFF"/>
-                                                        <GradientStop Offset="1" Color="#FFFF2D95"/>
+                                                        <GradientStop Offset="0" Color="#FFCC0000"/>
+                                                        <GradientStop Offset="1" Color="#FF8B0000"/>
                                                     </LinearGradientBrush>
                                                 </Border.Background>
                                             </Border>
@@ -60,12 +60,12 @@
                                     </Border>
                                     <ControlTemplate.Triggers>
                                         <Trigger Property="IsSelected" Value="True">
-                                            <Setter TargetName="Border" Property="Background" Value="#0F0F1A" />
+                                            <Setter TargetName="Border" Property="Background" Value="#0D0505" />
                                             <Setter TargetName="Border" Property="CornerRadius" Value="4" />
                                             <Setter TargetName="TabUnderline" Property="Opacity" Value="1" />
                                         </Trigger>
                                         <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter TargetName="Border" Property="Background" Value="#1A1A2E" />
+                                            <Setter TargetName="Border" Property="Background" Value="#1A0A0A" />
                                             <Setter TargetName="Border" Property="CornerRadius" Value="4" />
                                         </Trigger>
                                     </ControlTemplate.Triggers>
@@ -85,44 +85,44 @@
                     <Grid>
                         <ScrollViewer VerticalScrollBarVisibility="Hidden" PanningMode="VerticalOnly" Margin="0,10,-6,0">
                             <StackPanel>
-                                <Border Background="#0F0F1A"
-                                        BorderBrush="#FF2A2A40"
+                                <Border Background="#0D0505"
+                                        BorderBrush="#FF3D1A1A"
                                         BorderThickness="1" Height="39"
                                         CornerRadius="6">
                                     <TextBox x:Name="LocalModelSearchBox"
                                              FontFamily="{StaticResource AtkinsonHyperlegible}"
                                              Padding="8,0" Foreground="#FFF0EBF5"
-                                             CaretBrush="#FFB44CFF" Background="Transparent"
+                                             CaretBrush="#FFCC0000" Background="Transparent"
                                              TextChanged="LocalModelSearchBox_TextChanged" />
                                 </Border>
                                 <StackPanel x:Name="LocalModelStoreScroller" />
                             </StackPanel>
                         </ScrollViewer>
-                        <Border Background="#0F0F1A"
-                                BorderBrush="#FF2A2A40"
+                        <Border Background="#0D0505"
+                                BorderBrush="#FF3D1A1A"
                                 BorderThickness="1" Margin="0,55,0,54"
-                                CornerRadius="6">
+                                CornerRadius="10">
                             <ListBox x:Name="ModelListBox" AllowDrop="True" Drop="ModelListBox_Drop"
                                      DragOver="ModelListBox_DragOver"
                                      Foreground="#FFF0EBF5" Background="Transparent"
                                      FontFamily="{StaticResource AtkinsonHyperlegible}" Margin="0" Padding="2" />
                         </Border>
-                        <Border Background="#0F0F1A"
-                                BorderBrush="#FF2A2A40"
+                        <Border Background="#0D0505"
+                                BorderBrush="#FF3D1A1A"
                                 BorderThickness="1" Margin="0,0,44,10" VerticalAlignment="Bottom" Height="39"
-                                CornerRadius="6">
+                                CornerRadius="10">
                             <Label x:Name="SelectedModelNotifier"
-                                   Foreground="#FF8880A0" Content="Loaded Model: N/A"
+                                   Foreground="#FFA0A0A0" Content="Loaded Model: N/A"
                                    FontFamily="{StaticResource AtkinsonHyperlegible}" Padding="10" />
                         </Border>
                         <Button x:Name="OpenFolderB_ModelWindow"
-                                Background="#0F0F1A"
-                                BorderBrush="#FF2A2A40"
+                                Background="#0D0505"
+                                BorderBrush="#FF3D1A1A"
                                 Content="&#xE838;" HorizontalAlignment="Right" Height="39" Width="39"
                                 Margin="0,0,0,10" VerticalAlignment="Bottom" Padding="0"
                                 FontFamily="Segoe MDL2 Assets"
                                 BorderThickness="1" FontSize="13"
-                                Foreground="#FF8880A0"
+                                Foreground="#FFC0C0C0"
                                 Click="OpenFolderB_Click" Tag="models" />
                     </Grid>
                 </TabItem>
@@ -134,44 +134,44 @@
                     <Grid>
                         <ScrollViewer VerticalScrollBarVisibility="Hidden" PanningMode="VerticalOnly" Margin="0,10,-6,0">
                             <StackPanel>
-                                <Border Background="#0F0F1A"
-                                        BorderBrush="#FF2A2A40"
+                                <Border Background="#0D0505"
+                                        BorderBrush="#FF3D1A1A"
                                         BorderThickness="1" Height="39"
                                         CornerRadius="6">
                                     <TextBox x:Name="LocalConfigSearchBox"
                                              FontFamily="{StaticResource AtkinsonHyperlegible}"
                                              Padding="8,0" Foreground="#FFF0EBF5"
-                                             CaretBrush="#FFB44CFF" Background="Transparent"
+                                             CaretBrush="#FFCC0000" Background="Transparent"
                                              TextChanged="LocalConfigSearchBox_TextChanged" />
                                 </Border>
                                 <StackPanel x:Name="LocalConfigStoreScroller" />
                             </StackPanel>
                         </ScrollViewer>
-                        <Border Background="#0F0F1A"
-                                BorderBrush="#FF2A2A40"
+                        <Border Background="#0D0505"
+                                BorderBrush="#FF3D1A1A"
                                 BorderThickness="1" Margin="0,55,0,54"
-                                CornerRadius="6">
+                                CornerRadius="10">
                             <ListBox x:Name="ConfigsListBox" AllowDrop="True" Drop="ConfigsListBox_Drop"
                                      DragOver="ConfigsListBox_DragOver"
                                      Foreground="#FFF0EBF5" Background="Transparent"
                                      FontFamily="{StaticResource AtkinsonHyperlegible}" Margin="0" Padding="2" />
                         </Border>
-                        <Border Background="#0F0F1A"
-                                BorderBrush="#FF2A2A40"
+                        <Border Background="#0D0505"
+                                BorderBrush="#FF3D1A1A"
                                 BorderThickness="1" Margin="0,0,44,10" VerticalAlignment="Bottom" Height="39"
-                                CornerRadius="6">
+                                CornerRadius="10">
                             <Label x:Name="SelectedConfigNotifier"
-                                   Foreground="#FF8880A0" Content="Loaded Configs: N/A"
+                                   Foreground="#FFA0A0A0" Content="Loaded Configs: N/A"
                                    FontFamily="{StaticResource AtkinsonHyperlegible}" Padding="10" />
                         </Border>
                         <Button x:Name="OpenFolderB_ConfigWindow"
-                                Background="#0F0F1A"
-                                BorderBrush="#FF2A2A40"
+                                Background="#0D0505"
+                                BorderBrush="#FF3D1A1A"
                                 Content="&#xE838;" HorizontalAlignment="Right" Height="39" Width="39"
                                 Margin="0,0,0,10" VerticalAlignment="Bottom" Padding="0"
                                 FontFamily="Segoe MDL2 Assets"
                                 BorderThickness="1" FontSize="13"
-                                Foreground="#FF8880A0"
+                                Foreground="#FFC0C0C0"
                                 Click="OpenFolderB_Click" Tag="configs" />
                     </Grid>
                 </TabItem>

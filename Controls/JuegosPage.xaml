@@ -6,29 +6,29 @@
              mc:Ignorable="d" Background="Transparent">
     <UserControl.Resources>
         <Style x:Key="GameCard" TargetType="Border">
-            <Setter Property="CornerRadius" Value="14"/>
-            <Setter Property="Background" Value="#0D1117"/>
+            <Setter Property="CornerRadius" Value="18"/>
+            <Setter Property="Background" Value="#0D0505"/>
             <Setter Property="BorderThickness" Value="1"/>
-            <Setter Property="BorderBrush" Value="#FF1E293B"/>
-            <Setter Property="Margin" Value="0,0,16,16"/>
-            <Setter Property="Width" Value="160"/>
-            <Setter Property="Height" Value="200"/>
+            <Setter Property="BorderBrush" Value="#FF3D1A1A"/>
+            <Setter Property="Margin" Value="0,0,20,20"/>
+            <Setter Property="Width" Value="200"/>
+            <Setter Property="Height" Value="240"/>
             <Setter Property="Cursor" Value="Hand"/>
             <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
                     <Trigger.EnterActions>
                         <BeginStoryboard>
                             <Storyboard>
-                                <ThicknessAnimation Duration="0:0:0.2" Storyboard.TargetProperty="BorderBrush.Thickness" To="2"/>
-                                <ColorAnimation Duration="0:0:0.2" Storyboard.TargetProperty="BorderBrush.Color" To="#FF00A8FF"/>
+                                <ThicknessAnimation Duration="0:0:0.2" Storyboard.TargetProperty="BorderThickness" To="2"/>
+                                <ColorAnimation Duration="0:0:0.2" Storyboard.TargetProperty="BorderBrush.Color" To="#FFCC0000"/>
                             </Storyboard>
                         </BeginStoryboard>
                     </Trigger.EnterActions>
                     <Trigger.ExitActions>
                         <BeginStoryboard>
                             <Storyboard>
-                                <ThicknessAnimation Duration="0:0:0.25" Storyboard.TargetProperty="BorderBrush.Thickness" To="1"/>
-                                <ColorAnimation Duration="0:0:0.25" Storyboard.TargetProperty="BorderBrush.Color" To="#FF1E293B"/>
+                                <ThicknessAnimation Duration="0:0:0.25" Storyboard.TargetProperty="BorderThickness" To="1"/>
+                                <ColorAnimation Duration="0:0:0.25" Storyboard.TargetProperty="BorderBrush.Color" To="#FF3D1A1A"/>
                             </Storyboard>
                         </BeginStoryboard>
                     </Trigger.ExitActions>
@@ -36,117 +36,141 @@
             </Style.Triggers>
         </Style>
     </UserControl.Resources>
-    <Grid Margin="28,24,28,24">
+    <Grid Margin="36,28,36,28">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="16"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="20"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
         <!-- Header -->
-        <TextBlock Grid.Row="0" Text="Juegos Soportados" FontSize="20" FontWeight="Bold"
+        <TextBlock Grid.Row="0" Text="Juegos Soportados" FontSize="22" FontWeight="Bold"
                    Foreground="White" FontFamily="Segoe UI"/>
 
+        <!-- Sub-header -->
+        <TextBlock Grid.Row="1" Text="Selecciona un shooter para configurar sus cheats" FontSize="12"
+                   Foreground="#FFA0A0A0" FontFamily="Segoe UI" Margin="0,4,0,0"/>
+
         <!-- Game grid -->
-        <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+        <ScrollViewer Grid.Row="3" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Disabled">
             <WrapPanel HorizontalAlignment="Left">
-                <!-- God of War -->
+                <!-- Shooter placeholder 1 -->
                 <Border Style="{StaticResource GameCard}">
                     <Grid>
-                        <Border Background="#0F1D2E" CornerRadius="14"/>
-                        <StackPanel VerticalAlignment="Bottom" Margin="0,0,0,14">
-                            <Border Width="48" Height="48" CornerRadius="24" HorizontalAlignment="Center" Margin="0,0,0,12"
-                                    Background="#1200A8FF">
-                                <TextBlock Text="&#xE74C;" FontFamily="Segoe MDL2 Assets" FontSize="20"
-                                           Foreground="#FF00A8FF" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <Border Width="56" Height="56" CornerRadius="28" HorizontalAlignment="Center" Margin="0,0,0,12"
+                                    Background="#12CC0000">
+                                <TextBlock Text="&#xE768;" FontFamily="Segoe MDL2 Assets" FontSize="24"
+                                           Foreground="#FFCC0000" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                             </Border>
-                            <TextBlock Text="God of War" FontSize="12" FontWeight="SemiBold" Foreground="White"
+                            <TextBlock Text="Shooter #1" FontSize="14" FontWeight="SemiBold" Foreground="White"
                                        FontFamily="Segoe UI" HorizontalAlignment="Center"/>
-                            <TextBlock Text="Steam" FontSize="10" Foreground="#FF475569" FontFamily="Segoe UI"
-                                       HorizontalAlignment="Center" Margin="0,2,0,0"/>
+                            <Border Background="#1A0A0A0A" CornerRadius="6" Padding="8,4" Margin="0,8,0,0"
+                                    HorizontalAlignment="Center">
+                                <TextBlock Text="Coming Soon" FontSize="9" Foreground="#FF663333"
+                                           FontFamily="Segoe UI" HorizontalAlignment="Center"/>
+                            </Border>
                         </StackPanel>
                     </Grid>
                 </Border>
 
-                <!-- Batman Arkham City -->
+                <!-- Shooter placeholder 2 -->
                 <Border Style="{StaticResource GameCard}">
                     <Grid>
-                        <Border Background="#0F1520" CornerRadius="14"/>
-                        <StackPanel VerticalAlignment="Bottom" Margin="0,0,0,14">
-                            <Border Width="48" Height="48" CornerRadius="24" HorizontalAlignment="Center" Margin="0,0,0,12"
-                                    Background="#128B5CF6">
-                                <TextBlock Text="&#xE77B;" FontFamily="Segoe MDL2 Assets" FontSize="20"
-                                           Foreground="#FF8B5CF6" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <Border Width="56" Height="56" CornerRadius="28" HorizontalAlignment="Center" Margin="0,0,0,12"
+                                    Background="#128B0000">
+                                <TextBlock Text="&#xE768;" FontFamily="Segoe MDL2 Assets" FontSize="24"
+                                           Foreground="#FF8B0000" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                             </Border>
-                            <TextBlock Text="Batman: Arkham City" FontSize="12" FontWeight="SemiBold" Foreground="White"
-                                       FontFamily="Segoe UI" HorizontalAlignment="Center" TextWrapping="Wrap"
-                                       TextAlignment="Center" Padding="10,0"/>
-                        </StackPanel>
-                    </Grid>
-                </Border>
-
-                <!-- Devil May Cry 5 -->
-                <Border Style="{StaticResource GameCard}">
-                    <Grid>
-                        <Border Background="#1A0F0F" CornerRadius="14"/>
-                        <StackPanel VerticalAlignment="Bottom" Margin="0,0,0,14">
-                            <Border Width="48" Height="48" CornerRadius="24" HorizontalAlignment="Center" Margin="0,0,0,12"
-                                    Background="#12EF4444">
-                                <TextBlock Text="&#xE74A;" FontFamily="Segoe MDL2 Assets" FontSize="20"
-                                           Foreground="#FFEF4444" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            </Border>
-                            <TextBlock Text="Devil May Cry 5" FontSize="12" FontWeight="SemiBold" Foreground="White"
+                            <TextBlock Text="Shooter #2" FontSize="14" FontWeight="SemiBold" Foreground="White"
                                        FontFamily="Segoe UI" HorizontalAlignment="Center"/>
+                            <Border Background="#1A0A0A0A" CornerRadius="6" Padding="8,4" Margin="0,8,0,0"
+                                    HorizontalAlignment="Center">
+                                <TextBlock Text="Coming Soon" FontSize="9" Foreground="#FF663333"
+                                           FontFamily="Segoe UI" HorizontalAlignment="Center"/>
+                            </Border>
                         </StackPanel>
                     </Grid>
                 </Border>
 
-                <!-- Red Dead Redemption 2 -->
+                <!-- Shooter placeholder 3 -->
                 <Border Style="{StaticResource GameCard}">
                     <Grid>
-                        <Border Background="#1A1510" CornerRadius="14"/>
-                        <StackPanel VerticalAlignment="Bottom" Margin="0,0,0,14">
-                            <Border Width="48" Height="48" CornerRadius="24" HorizontalAlignment="Center" Margin="0,0,0,12"
-                                    Background="#12F59E0B">
-                                <TextBlock Text="&#xE7C3;" FontFamily="Segoe MDL2 Assets" FontSize="20"
-                                           Foreground="#FFF59E0B" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <Border Width="56" Height="56" CornerRadius="28" HorizontalAlignment="Center" Margin="0,0,0,12"
+                                    Background="#12C0C0C0">
+                                <TextBlock Text="&#xE768;" FontFamily="Segoe MDL2 Assets" FontSize="24"
+                                           Foreground="#FFC0C0C0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                             </Border>
-                            <TextBlock Text="Red Dead Redemption 2" FontSize="12" FontWeight="SemiBold" Foreground="White"
-                                       FontFamily="Segoe UI" HorizontalAlignment="Center" TextWrapping="Wrap"
-                                       TextAlignment="Center" Padding="10,0"/>
-                        </StackPanel>
-                    </Grid>
-                </Border>
-
-                <!-- Need for Speed -->
-                <Border Style="{StaticResource GameCard}">
-                    <Grid>
-                        <Border Background="#0F1A14" CornerRadius="14"/>
-                        <StackPanel VerticalAlignment="Bottom" Margin="0,0,0,14">
-                            <Border Width="48" Height="48" CornerRadius="24" HorizontalAlignment="Center" Margin="0,0,0,12"
-                                    Background="#1210B981">
-                                <TextBlock Text="&#xE74C;" FontFamily="Segoe MDL2 Assets" FontSize="20"
-                                           Foreground="#FF10B981" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            </Border>
-                            <TextBlock Text="Need for Speed MW" FontSize="12" FontWeight="SemiBold" Foreground="White"
-                                       FontFamily="Segoe UI" HorizontalAlignment="Center" TextWrapping="Wrap"
-                                       TextAlignment="Center" Padding="10,0"/>
-                        </StackPanel>
-                    </Grid>
-                </Border>
-
-                <!-- Elden Ring -->
-                <Border Style="{StaticResource GameCard}">
-                    <Grid>
-                        <Border Background="#14120F" CornerRadius="14"/>
-                        <StackPanel VerticalAlignment="Bottom" Margin="0,0,0,14">
-                            <Border Width="48" Height="48" CornerRadius="24" HorizontalAlignment="Center" Margin="0,0,0,12"
-                                    Background="#12FFD700">
-                                <TextBlock Text="&#xE730;" FontFamily="Segoe MDL2 Assets" FontSize="20"
-                                           Foreground="#FFFFD700" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            </Border>
-                            <TextBlock Text="Elden Ring" FontSize="12" FontWeight="SemiBold" Foreground="White"
+                            <TextBlock Text="Shooter #3" FontSize="14" FontWeight="SemiBold" Foreground="White"
                                        FontFamily="Segoe UI" HorizontalAlignment="Center"/>
+                            <Border Background="#1A0A0A0A" CornerRadius="6" Padding="8,4" Margin="0,8,0,0"
+                                    HorizontalAlignment="Center">
+                                <TextBlock Text="Coming Soon" FontSize="9" Foreground="#FF663333"
+                                           FontFamily="Segoe UI" HorizontalAlignment="Center"/>
+                            </Border>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+
+                <!-- Shooter placeholder 4 -->
+                <Border Style="{StaticResource GameCard}">
+                    <Grid>
+                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <Border Width="56" Height="56" CornerRadius="28" HorizontalAlignment="Center" Margin="0,0,0,12"
+                                    Background="#12CC0000">
+                                <TextBlock Text="&#xE768;" FontFamily="Segoe MDL2 Assets" FontSize="24"
+                                           Foreground="#FFCC0000" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <TextBlock Text="Shooter #4" FontSize="14" FontWeight="SemiBold" Foreground="White"
+                                       FontFamily="Segoe UI" HorizontalAlignment="Center"/>
+                            <Border Background="#1A0A0A0A" CornerRadius="6" Padding="8,4" Margin="0,8,0,0"
+                                    HorizontalAlignment="Center">
+                                <TextBlock Text="Coming Soon" FontSize="9" Foreground="#FF663333"
+                                           FontFamily="Segoe UI" HorizontalAlignment="Center"/>
+                            </Border>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+
+                <!-- Shooter placeholder 5 -->
+                <Border Style="{StaticResource GameCard}">
+                    <Grid>
+                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <Border Width="56" Height="56" CornerRadius="28" HorizontalAlignment="Center" Margin="0,0,0,12"
+                                    Background="#128B0000">
+                                <TextBlock Text="&#xE768;" FontFamily="Segoe MDL2 Assets" FontSize="24"
+                                           Foreground="#FF8B0000" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <TextBlock Text="Shooter #5" FontSize="14" FontWeight="SemiBold" Foreground="White"
+                                       FontFamily="Segoe UI" HorizontalAlignment="Center"/>
+                            <Border Background="#1A0A0A0A" CornerRadius="6" Padding="8,4" Margin="0,8,0,0"
+                                    HorizontalAlignment="Center">
+                                <TextBlock Text="Coming Soon" FontSize="9" Foreground="#FF663333"
+                                           FontFamily="Segoe UI" HorizontalAlignment="Center"/>
+                            </Border>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+
+                <!-- Shooter placeholder 6 -->
+                <Border Style="{StaticResource GameCard}">
+                    <Grid>
+                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <Border Width="56" Height="56" CornerRadius="28" HorizontalAlignment="Center" Margin="0,0,0,12"
+                                    Background="#12C0C0C0">
+                                <TextBlock Text="&#xE768;" FontFamily="Segoe MDL2 Assets" FontSize="24"
+                                           Foreground="#FFC0C0C0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <TextBlock Text="Shooter #6" FontSize="14" FontWeight="SemiBold" Foreground="White"
+                                       FontFamily="Segoe UI" HorizontalAlignment="Center"/>
+                            <Border Background="#1A0A0A0A" CornerRadius="6" Padding="8,4" Margin="0,8,0,0"
+                                    HorizontalAlignment="Center">
+                                <TextBlock Text="Coming Soon" FontSize="9" Foreground="#FF663333"
+                                           FontFamily="Segoe UI" HorizontalAlignment="Center"/>
+                            </Border>
                         </StackPanel>
                     </Grid>
                 </Border>
