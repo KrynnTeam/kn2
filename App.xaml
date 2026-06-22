@@ -1,0 +1,172 @@
+﻿<Application x:Class="ShadowCheat.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             StartupUri="LoginWindow.xaml">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <materialDesign:BundledTheme BaseTheme="Dark" PrimaryColor="Cyan" SecondaryColor="Indigo" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <!-- ========== CORE ========== -->
+            <SolidColorBrush x:Key="KN2Primary" Color="#FF00A8FF"/>
+            <SolidColorBrush x:Key="KN2Secondary" Color="#FF8B5CF6"/>
+            <SolidColorBrush x:Key="KN2Accent" Color="#FF10B981"/>
+            <SolidColorBrush x:Key="KN2Warning" Color="#FFF59E0B"/>
+            <SolidColorBrush x:Key="KN2Danger" Color="#FFEF4444"/>
+
+            <!-- ========== BACKGROUNDS ========== -->
+            <SolidColorBrush x:Key="KN2BgDeep" Color="#FF030712"/>
+            <SolidColorBrush x:Key="KN2BgBase" Color="#FF0A0F1E"/>
+            <SolidColorBrush x:Key="KN2BgSurface" Color="#FF111827"/>
+            <SolidColorBrush x:Key="KN2BgElevated" Color="#FF1F2937"/>
+            <SolidColorBrush x:Key="KN2BgCard" Color="#FF161E2E"/>
+
+            <!-- ========== BORDERS ========== -->
+            <SolidColorBrush x:Key="KN2BorderDefault" Color="#FF1E293B"/>
+            <SolidColorBrush x:Key="KN2BorderSubtle" Color="#FF0F172A"/>
+            <SolidColorBrush x:Key="KN2BorderFocus" Color="#FF00A8FF"/>
+
+            <!-- ========== TEXT ========== -->
+            <SolidColorBrush x:Key="KN2TextPrimary" Color="#FFFFFFFF"/>
+            <SolidColorBrush x:Key="KN2TextSecondary" Color="#FF94A3B8"/>
+            <SolidColorBrush x:Key="KN2TextMuted" Color="#FF475569"/>
+            <SolidColorBrush x:Key="KN2TextAccent" Color="#FF00A8FF"/>
+
+            <!-- ========== GLOWS ========== -->
+            <SolidColorBrush x:Key="KN2GlowBlue" Color="#3300A8FF"/>
+            <SolidColorBrush x:Key="KN2GlowPurple" Color="#338B5CF6"/>
+            <SolidColorBrush x:Key="KN2GlowGreen" Color="#3310B981"/>
+
+            <!-- ========== GLASS ========== -->
+            <SolidColorBrush x:Key="KN2GlassBg" Color="#1A0A0F1E"/>
+            <SolidColorBrush x:Key="KN2GlassBorder" Color="#1AFFFFFF"/>
+
+            <!-- ========== M3 COMPAT ========== -->
+            <SolidColorBrush x:Key="M3Primary" Color="#FF00A8FF"/>
+            <SolidColorBrush x:Key="M3OnPrimary" Color="#FFFFFFFF"/>
+            <SolidColorBrush x:Key="M3PrimaryContainer" Color="#FF3B82F6"/>
+            <SolidColorBrush x:Key="M3OnPrimaryContainer" Color="#FFFFFFFF"/>
+            <SolidColorBrush x:Key="M3Secondary" Color="#FF8B5CF6"/>
+            <SolidColorBrush x:Key="M3OnSecondary" Color="#FFFFFFFF"/>
+            <SolidColorBrush x:Key="M3SecondaryContainer" Color="#FF5B21B6"/>
+            <SolidColorBrush x:Key="M3OnSecondaryContainer" Color="#FFDDD6FE"/>
+            <SolidColorBrush x:Key="M3Surface" Color="#FF111827"/>
+            <SolidColorBrush x:Key="M3OnSurface" Color="#FFE2E8F0"/>
+            <SolidColorBrush x:Key="M3SurfaceVariant" Color="#FF1F2937"/>
+            <SolidColorBrush x:Key="M3OnSurfaceVariant" Color="#FF94A3B8"/>
+            <SolidColorBrush x:Key="M3Background" Color="#FF030712"/>
+            <SolidColorBrush x:Key="M3OnBackground" Color="#FFE2E8F0"/>
+            <SolidColorBrush x:Key="M3Outline" Color="#FF475569"/>
+            <SolidColorBrush x:Key="M3OutlineVariant" Color="#FF334155"/>
+            <Color x:Key="M3Shadow">#66000000</Color>
+
+            <SolidColorBrush x:Key="ThemeColor" Color="#FF00A8FF"/>
+            <SolidColorBrush x:Key="ThemeColorDark" Color="#FF0077CC"/>
+            <SolidColorBrush x:Key="ThemeColorLight" Color="#FF38BDF8"/>
+            <SolidColorBrush x:Key="ThemeGradientDark" Color="#FF030712"/>
+            <SolidColorBrush x:Key="ThemeColorTransparent" Color="#3300A8FF"/>
+            <SolidColorBrush x:Key="ThemeColorSemiTransparent" Color="#6600A8FF"/>
+
+            <!-- ========== NEON COMPAT ========== -->
+            <SolidColorBrush x:Key="NeonBgDeep" Color="#FF030712"/>
+            <SolidColorBrush x:Key="NeonSurface" Color="#FF111827"/>
+            <SolidColorBrush x:Key="NeonSurfaceAlt" Color="#FF1F2937"/>
+            <SolidColorBrush x:Key="NeonPrimary" Color="#FF00A8FF"/>
+            <SolidColorBrush x:Key="NeonSecondary" Color="#FF8B5CF6"/>
+            <SolidColorBrush x:Key="NeonTertiary" Color="#FF10B981"/>
+            <SolidColorBrush x:Key="NeonBorder" Color="#FF1E293B"/>
+            <SolidColorBrush x:Key="NeonBorderLight" Color="#FF334155"/>
+            <SolidColorBrush x:Key="NeonTextPrimary" Color="#FFFFFFFF"/>
+            <SolidColorBrush x:Key="NeonTextSecondary" Color="#FF94A3B8"/>
+            <SolidColorBrush x:Key="NeonTextMuted" Color="#FF475569"/>
+            <SolidColorBrush x:Key="NeonGlowPurple" Color="#3300A8FF"/>
+            <SolidColorBrush x:Key="NeonGlowMagenta" Color="#338B5CF6"/>
+            <SolidColorBrush x:Key="NeonGlowCyan" Color="#3310B981"/>
+
+            <!-- ========== SHAPES ========== -->
+            <CornerRadius x:Key="M3ShapeSmall">4</CornerRadius>
+            <CornerRadius x:Key="M3ShapeMedium">8</CornerRadius>
+            <CornerRadius x:Key="M3ShapeLarge">12</CornerRadius>
+            <CornerRadius x:Key="M3ShapeExtraLarge">16</CornerRadius>
+
+            <!-- ========== TYPOGRAPHY ========== -->
+            <FontFamily x:Key="AtkinsonHyperlegible">Segoe UI</FontFamily>
+            <FontFamily x:Key="MonoFont">Consolas</FontFamily>
+            <sys:Double x:Key="M3FontSizeLabel">11</sys:Double>
+            <sys:Double x:Key="M3FontSizeBody">13</sys:Double>
+            <sys:Double x:Key="M3FontSizeTitle">16</sys:Double>
+            <sys:Double x:Key="M3FontSizeHeadline">20</sys:Double>
+
+            <!-- ========== EFFECTS ========== -->
+            <VisualBrush x:Key="Scanlines" TileMode="Tile" Viewport="0,0,4,4" ViewportUnits="Absolute">
+                <VisualBrush.Visual>
+                    <Rectangle Width="4" Height="4" Fill="#06000000"/>
+                </VisualBrush.Visual>
+            </VisualBrush>
+
+            <!-- ========== FOCUS ========== -->
+            <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+            </Style>
+            <Style TargetType="Slider" BasedOn="{StaticResource {x:Type Slider}}">
+                <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+            </Style>
+            <Style TargetType="ComboBox" BasedOn="{StaticResource {x:Type ComboBox}}">
+                <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+            </Style>
+            <Style TargetType="ListBoxItem" BasedOn="{StaticResource {x:Type ListBoxItem}}">
+                <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+            </Style>
+            <Style TargetType="Thumb" BasedOn="{StaticResource {x:Type Thumb}}">
+                <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+            </Style>
+            <Style TargetType="ComboBoxItem" BasedOn="{StaticResource {x:Type ComboBoxItem}}">
+                <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+                <Setter Property="Background" Value="Transparent" />
+                <Setter Property="Foreground" Value="{StaticResource M3OnSurface}" />
+                <Style.Triggers>
+                    <Trigger Property="IsHighlighted" Value="True">
+                        <Setter Property="Background" Value="{StaticResource M3PrimaryContainer}" />
+                        <Setter Property="Foreground" Value="{StaticResource M3OnPrimaryContainer}" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+
+            <SolidColorBrush x:Key="{x:Static SystemColors.WindowBrushKey}" Color="#FF1F2937" />
+            <SolidColorBrush x:Key="{x:Static SystemColors.WindowTextBrushKey}" Color="#FFE2E8F0" />
+            <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="#FF00A8FF" />
+            <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}" Color="#FFFFFFFF" />
+
+            <Style x:Key="GhostButtonStyle" TargetType="Button">
+                <Setter Property="Background" Value="Transparent" />
+                <Setter Property="BorderBrush" Value="{x:Null}" />
+                <Setter Property="BorderThickness" Value="0" />
+                <Setter Property="Padding" Value="0" />
+                <Setter Property="Focusable" Value="False" />
+                <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Button">
+                            <Border Background="{TemplateBinding Background}">
+                                <ContentPresenter RecognizesAccessKey="False" />
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <Style TargetType="ToolTip">
+                <Setter Property="Background" Value="#1F2937"/>
+                <Setter Property="Foreground" Value="#FFE2E8F0"/>
+                <Setter Property="FontFamily" Value="Segoe UI"/>
+                <Setter Property="FontSize" Value="11"/>
+                <Setter Property="BorderBrush" Value="#FF475569"/>
+                <Setter Property="BorderThickness" Value="1"/>
+                <Setter Property="Padding" Value="8,6"/>
+            </Style>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

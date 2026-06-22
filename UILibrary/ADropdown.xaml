@@ -1,0 +1,33 @@
+<UserControl x:Class="ShadowCheat.UILibrary.ADropdown"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d"
+             d:DesignWidth="282.5" Height="76">
+    <Grid Height="76">
+        <Border Height="76" Background="#0F0F1A"
+                CornerRadius="6" BorderThickness="1" BorderBrush="#FF2A2A40">
+            <Border.Effect>
+                <DropShadowEffect Color="#000000" Opacity="0.4" BlurRadius="8" ShadowDepth="2"/>
+            </Border.Effect>
+            <Grid>
+                <Label x:Name="DropdownTitle" Padding="12,10,0,0"
+                       FontFamily="{StaticResource AtkinsonHyperlegible}"
+                       Content="Dropdown" Foreground="#FFF0EBF5"
+                       VerticalContentAlignment="Center" FontSize="13"
+                       VerticalAlignment="Top" Height="36" />
+                <ComboBox x:Name="DropdownBox" Height="32" Margin="12,0,12,10"
+                          VerticalAlignment="Bottom"
+                          Foreground="#FFF0EBF5"
+                          BorderBrush="#FF3A3A55"
+                          Padding="8,0" BorderThickness="1"
+                          Background="#FF1A1A2E"
+                          FontFamily="{StaticResource AtkinsonHyperlegible}"
+                          FontSize="12"
+                          SelectionChanged="DropdownBox_SelectionChanged">
+                </ComboBox>
+            </Grid>
+        </Border>
+    </Grid>
+</UserControl>

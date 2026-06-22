@@ -1,0 +1,36 @@
+<UserControl x:Class="ShadowCheat.UILibrary.AToggle"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d"
+             d:DesignWidth="282.5" d:DesignHeight="40">
+    <Grid Height="40">
+        <Border x:Name="ToggleBorder" Height="40" Background="#0F0F1A"
+                CornerRadius="6" BorderThickness="1" BorderBrush="#FF2A2A40">
+            <Border.Effect>
+                <DropShadowEffect Color="#000000" Opacity="0.4" BlurRadius="8" ShadowDepth="2"/>
+            </Border.Effect>
+            <Grid>
+                <Label x:Name="ToggleTitle" Padding="12,0,0,0"
+                       FontFamily="{StaticResource AtkinsonHyperlegible}"
+                       Content="Toggle" Foreground="#FFF0EBF5"
+                       VerticalContentAlignment="Center" FontSize="13"
+                       HorizontalAlignment="Left" />
+                <Border x:Name="SwitchBorder" HorizontalAlignment="Right" VerticalAlignment="Center"
+                        Width="44" Height="24" CornerRadius="12" Margin="0,0,12,0"
+                        BorderThickness="2" BorderBrush="#FF3A3A55"
+                        Background="#FF1A1A2E">
+                    <Border x:Name="SwitchMoving" HorizontalAlignment="Left" VerticalAlignment="Center"
+                            Width="20" Height="20" Background="#FF554C70"
+                            CornerRadius="10" BorderThickness="0" Margin="2,0,0,0">
+                        <Border.Effect>
+                            <DropShadowEffect Color="#000000" Opacity="0.5" BlurRadius="4" ShadowDepth="1"/>
+                        </Border.Effect>
+                    </Border>
+                </Border>
+                <Button x:Name="Reader" Style="{StaticResource GhostButtonStyle}" Height="40" Focusable="False" />
+            </Grid>
+        </Border>
+    </Grid>
+</UserControl>

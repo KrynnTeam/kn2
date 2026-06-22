@@ -1,0 +1,497 @@
+<Window x:Class="ShadowCheat.LoginWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="KN2"
+        Height="700" Width="1100"
+        WindowStyle="None"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen"
+        AllowsTransparency="True"
+        Background="Transparent"
+        MouseLeftButtonDown="Window_MouseLeftButtonDown"
+        KeyDown="Window_KeyDown">
+    <WindowChrome.WindowChrome>
+        <WindowChrome ResizeBorderThickness="0" CaptionHeight="0" />
+    </WindowChrome.WindowChrome>
+    <Window.Resources>
+        <Style x:Key="InputField" TargetType="Border">
+            <Setter Property="Height" Value="48"/>
+            <Setter Property="CornerRadius" Value="12"/>
+            <Setter Property="Background" Value="#0DFFFFFF"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="#15FFFFFF"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Trigger.EnterActions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <ColorAnimation To="#5500A8FF" Duration="0:0:0.2"
+                                                Storyboard.TargetProperty="BorderBrush.Color"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </Trigger.EnterActions>
+                    <Trigger.ExitActions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <ColorAnimation To="#15FFFFFF" Duration="0:0:0.3"
+                                                Storyboard.TargetProperty="BorderBrush.Color"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </Trigger.ExitActions>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+    <Window.Triggers>
+        <EventTrigger RoutedEvent="Loaded">
+            <BeginStoryboard>
+                <Storyboard>
+                    <DoubleAnimation Storyboard.TargetName="MainBorder" Storyboard.TargetProperty="Opacity"
+                                     From="0" To="1" Duration="0:0:0.8">
+                        <DoubleAnimation.EasingFunction><CubicEase EasingMode="EaseOut"/></DoubleAnimation.EasingFunction>
+                    </DoubleAnimation>
+                    <DoubleAnimation Storyboard.TargetName="MainBorder"
+                                     Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleX)"
+                                     From="0.95" To="1" Duration="0:0:1">
+                        <DoubleAnimation.EasingFunction><CubicEase EasingMode="EaseOut"/></DoubleAnimation.EasingFunction>
+                    </DoubleAnimation>
+                    <DoubleAnimation Storyboard.TargetName="MainBorder"
+                                     Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)"
+                                     From="0.95" To="1" Duration="0:0:1">
+                        <DoubleAnimation.EasingFunction><CubicEase EasingMode="EaseOut"/></DoubleAnimation.EasingFunction>
+                    </DoubleAnimation>
+                </Storyboard>
+            </BeginStoryboard>
+        </EventTrigger>
+    </Window.Triggers>
+    <Grid x:Name="RootGrid">
+        <Border x:Name="MainBorder" CornerRadius="20" Opacity="0"
+                RenderTransformOrigin="0.5,0.5">
+            <Border.RenderTransform>
+                <ScaleTransform ScaleX="1" ScaleY="1"/>
+            </Border.RenderTransform>
+            <Grid ClipToBounds="True">
+                <!-- Deep base -->
+                <Border CornerRadius="20" Background="#FF030712"/>
+
+                <!-- Animated gradient wash -->
+                <Border x:Name="GradientOverlay" CornerRadius="20" Opacity="0.2">
+                    <Border.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                            <GradientStop Offset="0" Color="#FF00A8FF" x:Name="GradStop1"/>
+                            <GradientStop Offset="0.5" Color="#FF0066CC" x:Name="GradStop2"/>
+                            <GradientStop Offset="1" Color="#FF8B5CF6" x:Name="GradStop3"/>
+                        </LinearGradientBrush>
+                    </Border.Background>
+                </Border>
+
+                <!-- Geometric grid lines (decorative) -->
+                <Canvas x:Name="GridCanvas" Opacity="0.06" IsHitTestVisible="False">
+                    <!-- Vertical lines -->
+                    <Line X1="200" Y1="0" X2="200" Y2="700" Stroke="#FF00A8FF" StrokeThickness="0.5"/>
+                    <Line X1="400" Y1="0" X2="400" Y2="700" Stroke="#FF00A8FF" StrokeThickness="0.5"/>
+                    <Line X1="600" Y1="0" X2="600" Y2="700" Stroke="#FF8B5CF6" StrokeThickness="0.5"/>
+                    <Line X1="800" Y1="0" X2="800" Y2="700" Stroke="#FF00A8FF" StrokeThickness="0.5"/>
+                    <!-- Horizontal lines -->
+                    <Line X1="0" Y1="175" X2="1100" Y2="175" Stroke="#FF00A8FF" StrokeThickness="0.5"/>
+                    <Line X1="0" Y1="350" X2="1100" Y2="350" Stroke="#FF8B5CF6" StrokeThickness="0.5"/>
+                    <Line X1="0" Y1="525" X2="1100" Y2="525" Stroke="#FF00A8FF" StrokeThickness="0.5"/>
+                    <!-- Diagonal accent -->
+                    <Line X1="0" Y1="700" X2="550" Y2="0" Stroke="#FF8B5CF6" StrokeThickness="0.5" Opacity="0.4"/>
+                    <Line X1="550" Y1="700" X2="1100" Y2="0" Stroke="#FF00A8FF" StrokeThickness="0.5" Opacity="0.4"/>
+                </Canvas>
+
+                <!-- Floating orbs -->
+                <Ellipse x:Name="Orb1" Width="400" Height="400" Fill="#1800A8FF"
+                         HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,-150,-100,0">
+                    <Ellipse.RenderTransform><TranslateTransform x:Name="Orb1Transform"/></Ellipse.RenderTransform>
+                </Ellipse>
+                <Ellipse x:Name="Orb2" Width="250" Height="250" Fill="#128B5CF6"
+                         HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="-80,0,0,80">
+                    <Ellipse.RenderTransform><TranslateTransform x:Name="Orb2Transform"/></Ellipse.RenderTransform>
+                </Ellipse>
+                <Ellipse x:Name="Orb3" Width="180" Height="180" Fill="#1000A8FF"
+                         HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,40,-50">
+                    <Ellipse.RenderTransform><TranslateTransform x:Name="Orb3Transform"/></Ellipse.RenderTransform>
+                </Ellipse>
+                <Ellipse x:Name="Orb4" Width="100" Height="100" Fill="#0D8B5CF6"
+                         HorizontalAlignment="Left" VerticalAlignment="Top" Margin="60,-30,0,0">
+                    <Ellipse.RenderTransform><TranslateTransform x:Name="Orb4Transform"/></Ellipse.RenderTransform>
+                </Ellipse>
+
+                <!-- Dark overlay -->
+                <Border CornerRadius="20" Background="#030712" Opacity="0.85"/>
+
+                <!-- Shimmer -->
+                <Border x:Name="ShimmerLayer" CornerRadius="20" Opacity="0.04" IsHitTestVisible="False">
+                    <Border.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1" SpreadMethod="Reflect">
+                            <LinearGradientBrush.Transform><RotateTransform Angle="30"/></LinearGradientBrush.Transform>
+                            <GradientStop Offset="-0.3" Color="Transparent"/>
+                            <GradientStop Offset="0" Color="White" x:Name="ShimmerStop1"/>
+                            <GradientStop Offset="0.3" Color="Transparent"/>
+                        </LinearGradientBrush>
+                    </Border.Background>
+                </Border>
+
+                <!-- ===== LEFT BRANDING PANEL ===== -->
+                <Grid Margin="60,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Width="420">
+                    <StackPanel VerticalAlignment="Center">
+                        <!-- KN2 Logo large -->
+                        <Border Width="80" Height="80" CornerRadius="20" Margin="0,0,0,24">
+                            <Border.Background>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                    <GradientStop Offset="0" Color="#FF00A8FF"/>
+                                    <GradientStop Offset="1" Color="#FF8B5CF6"/>
+                                </LinearGradientBrush>
+                            </Border.Background>
+                            <Border.Effect>
+                                <DropShadowEffect x:Name="LogoGlow" Color="#00A8FF" Opacity="0.7" BlurRadius="30" ShadowDepth="0"/>
+                            </Border.Effect>
+                            <TextBlock Text="KN2" FontFamily="Segoe UI" Foreground="White"
+                                       FontSize="28" FontWeight="Bold" HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"/>
+                        </Border>
+
+                        <TextBlock Text="KN2" FontSize="42" FontWeight="Bold" Foreground="White"
+                                   FontFamily="Segoe UI" Margin="0,0,0,8"/>
+                        <TextBlock Text="AI-Powered Gaming" FontSize="20" FontWeight="Light"
+                                   Foreground="#FF94A3B8" FontFamily="Segoe UI" Margin="0,0,0,4"/>
+                        <TextBlock Text="Performance" FontSize="20" FontWeight="Light"
+                                   Foreground="#FF94A3B8" FontFamily="Segoe UI" Margin="0,0,0,32"/>
+
+                        <!-- Feature highlights -->
+                        <StackPanel Margin="0,0,0,40">
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,12">
+                                <Border Width="6" Height="6" CornerRadius="3" Background="#FF00A8FF" Margin="0,0,12,0" VerticalAlignment="Center"/>
+                                <TextBlock Text="Advanced AI Detection Engine" FontSize="13" Foreground="#FF94A3B8" FontFamily="Segoe UI"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,12">
+                                <Border Width="6" Height="6" CornerRadius="3" Background="#FF8B5CF6" Margin="0,0,12,0" VerticalAlignment="Center"/>
+                                <TextBlock Text="Real-Time Performance Optimization" FontSize="13" Foreground="#FF94A3B8" FontFamily="Segoe UI"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Border Width="6" Height="6" CornerRadius="3" Background="#FF10B981" Margin="0,0,12,0" VerticalAlignment="Center"/>
+                                <TextBlock Text="Undetectable HWID Protection" FontSize="13" Foreground="#FF94A3B8" FontFamily="Segoe UI"/>
+                            </StackPanel>
+                        </StackPanel>
+
+                        <TextBlock Text="v1.0.0" FontSize="11" Foreground="#FF475569" FontFamily="Segoe UI"/>
+                    </StackPanel>
+                </Grid>
+
+                <!-- ===== RIGHT LOGIN PANEL (Glass Card) ===== -->
+                <Border x:Name="LoginCard" CornerRadius="20" Width="380" Height="440"
+                        HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,80,0"
+                        Background="#1A0A0F1E" BorderThickness="1" BorderBrush="#22FFFFFF">
+                    <Border.Effect>
+                        <DropShadowEffect Color="#000000" Opacity="0.5" BlurRadius="40" ShadowDepth="8"/>
+                    </Border.Effect>
+                    <Grid Margin="36,32,36,32">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <!-- Tab switcher -->
+                        <Grid Grid.Row="0" Height="40">
+                            <Border CornerRadius="10" Background="#0AFFFFFF"/>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Border x:Name="LoginTab" Grid.Column="0" CornerRadius="10"
+                                        Background="#2200A8FF" Cursor="Hand"
+                                        MouseLeftButtonDown="LoginTab_Click">
+                                    <TextBlock Text="SIGN IN" FontSize="12" FontWeight="SemiBold"
+                                               Foreground="White" FontFamily="Segoe UI"
+                                               HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                                <Border x:Name="RegisterTab" Grid.Column="1" CornerRadius="10"
+                                        Cursor="Hand" MouseLeftButtonDown="RegisterTab_Click">
+                                    <TextBlock Text="REGISTER" FontSize="12" FontWeight="SemiBold"
+                                               Foreground="#55FFFFFF" FontFamily="Segoe UI"
+                                               HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+                            </Grid>
+                        </Grid>
+
+                        <!-- Login Panel -->
+                        <Border x:Name="LoginPanel" Grid.Row="1" Margin="0,24,0,0" Opacity="1">
+                            <StackPanel>
+                                <TextBlock Text="USERNAME" FontSize="10" FontWeight="Bold"
+                                           Foreground="#FF94A3B8" FontFamily="Segoe UI" Margin="0,0,0,8"/>
+                                <Border Style="{StaticResource InputField}">
+                                    <Grid>
+                                        <Border Width="44" HorizontalAlignment="Left" CornerRadius="12,0,0,12" Background="#08FFFFFF">
+                                            <TextBlock Text="&#xE77B;" FontFamily="Segoe MDL2 Assets" Foreground="#FF94A3B8"
+                                                       FontSize="14" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </Border>
+                                        <TextBox x:Name="LoginUsername" FontSize="13" FontFamily="Segoe UI"
+                                                 Background="Transparent" BorderThickness="0" Foreground="White"
+                                                 CaretBrush="#00A8FF" Padding="52,0,12,0" VerticalContentAlignment="Center"/>
+                                    </Grid>
+                                </Border>
+
+                                <TextBlock Text="PASSWORD" FontSize="10" FontWeight="Bold"
+                                           Foreground="#FF94A3B8" FontFamily="Segoe UI" Margin="0,18,0,8"/>
+                                <Border Style="{StaticResource InputField}">
+                                    <Grid>
+                                        <Border Width="44" HorizontalAlignment="Left" CornerRadius="12,0,0,12" Background="#08FFFFFF">
+                                            <TextBlock Text="&#xE72E;" FontFamily="Segoe MDL2 Assets" Foreground="#FF94A3B8"
+                                                       FontSize="14" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </Border>
+                                        <PasswordBox x:Name="LoginPassword" FontSize="13" FontFamily="Segoe UI"
+                                                     Background="Transparent" BorderThickness="0" Foreground="White"
+                                                     CaretBrush="#00A8FF" Padding="52,0,12,0" VerticalContentAlignment="Center"/>
+                                    </Grid>
+                                </Border>
+
+                                <Button x:Name="LoginSubmit" Content="SIGN IN" Height="48" Margin="0,24,0,0"
+                                        Cursor="Hand" FontFamily="Segoe UI" FontSize="13" FontWeight="Bold"
+                                        BorderThickness="0" Click="LoginSubmit_Click">
+                                    <Button.Template>
+                                        <ControlTemplate TargetType="Button">
+                                            <Border x:Name="BtnBorder" CornerRadius="12">
+                                                <Border.Background>
+                                                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                                        <GradientStop Offset="0" Color="#FF00A8FF"/>
+                                                        <GradientStop Offset="1" Color="#FF8B5CF6"/>
+                                                    </LinearGradientBrush>
+                                                </Border.Background>
+                                                <Border.Effect>
+                                                    <DropShadowEffect Color="#00A8FF" Opacity="0.35" BlurRadius="20" ShadowDepth="0"/>
+                                                </Border.Effect>
+                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"
+                                                                  TextElement.Foreground="White"/>
+                                            </Border>
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Trigger.EnterActions><BeginStoryboard><Storyboard>
+                                                        <DoubleAnimation To="0.88" Duration="0:0:0.15" Storyboard.TargetProperty="Opacity"/>
+                                                    </Storyboard></BeginStoryboard></Trigger.EnterActions>
+                                                    <Trigger.ExitActions><BeginStoryboard><Storyboard>
+                                                        <DoubleAnimation To="1" Duration="0:0:0.15" Storyboard.TargetProperty="Opacity"/>
+                                                    </Storyboard></BeginStoryboard></Trigger.ExitActions>
+                                                </Trigger>
+                                                <Trigger Property="IsPressed" Value="True">
+                                                    <Trigger.EnterActions><BeginStoryboard><Storyboard>
+                                                        <DoubleAnimation To="0.96" Duration="0:0:0.05"
+                                                                         Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleX)"/>
+                                                        <DoubleAnimation To="0.98" Duration="0:0:0.05"
+                                                                         Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)"/>
+                                                    </Storyboard></BeginStoryboard></Trigger.EnterActions>
+                                                    <Trigger.ExitActions><BeginStoryboard><Storyboard>
+                                                        <DoubleAnimation To="1" Duration="0:0:0.1"
+                                                                         Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleX)"/>
+                                                        <DoubleAnimation To="1" Duration="0:0:0.1"
+                                                                         Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)"/>
+                                                    </Storyboard></BeginStoryboard></Trigger.ExitActions>
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Button.Template>
+                                    <Button.RenderTransform><ScaleTransform ScaleX="1" ScaleY="1"/></Button.RenderTransform>
+                                </Button>
+
+                                <TextBlock x:Name="LoginError" Visibility="Collapsed" FontFamily="Segoe UI"
+                                           FontSize="12" HorizontalAlignment="Center" Margin="0,14,0,0">
+                                    <Run Text="&#xE783;" FontFamily="Segoe MDL2 Assets" Foreground="#FF00A8FF"/>
+                                    <Run Text="  Invalid credentials." Foreground="#FF00A8FF"/>
+                                    <Run Text="  Use" Foreground="#FF00A8FF"/>
+                                    <Run Text=" admin:admin" Foreground="#FF00A8FF" FontWeight="Bold"/>
+                                </TextBlock>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- Register Panel -->
+                        <Border x:Name="RegisterPanel" Grid.Row="1" Margin="0,24,0,0" Opacity="0" IsHitTestVisible="False">
+                            <StackPanel>
+                                <TextBlock Text="USERNAME" FontSize="10" FontWeight="Bold" Foreground="#FF94A3B8"
+                                           FontFamily="Segoe UI" Margin="0,0,0,8"/>
+                                <Border Style="{StaticResource InputField}">
+                                    <Grid>
+                                        <Border Width="44" HorizontalAlignment="Left" CornerRadius="12,0,0,12" Background="#08FFFFFF">
+                                            <TextBlock Text="&#xE77B;" FontFamily="Segoe MDL2 Assets" Foreground="#FF94A3B8"
+                                                       FontSize="14" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </Border>
+                                        <TextBox x:Name="RegUsername" FontSize="13" FontFamily="Segoe UI"
+                                                 Background="Transparent" BorderThickness="0" Foreground="White"
+                                                 CaretBrush="#00A8FF" Padding="52,0,12,0" VerticalContentAlignment="Center"/>
+                                    </Grid>
+                                </Border>
+                                <TextBlock Text="PASSWORD" FontSize="10" FontWeight="Bold" Foreground="#FF94A3B8"
+                                           FontFamily="Segoe UI" Margin="0,14,0,8"/>
+                                <Border Style="{StaticResource InputField}">
+                                    <Grid>
+                                        <Border Width="44" HorizontalAlignment="Left" CornerRadius="12,0,0,12" Background="#08FFFFFF">
+                                            <TextBlock Text="&#xE72E;" FontFamily="Segoe MDL2 Assets" Foreground="#FF94A3B8"
+                                                       FontSize="14" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </Border>
+                                        <PasswordBox x:Name="RegPassword" FontSize="13" FontFamily="Segoe UI"
+                                                     Background="Transparent" BorderThickness="0" Foreground="White"
+                                                     CaretBrush="#00A8FF" Padding="52,0,12,0" VerticalContentAlignment="Center"/>
+                                    </Grid>
+                                </Border>
+                                <TextBlock Text="CONFIRM PASSWORD" FontSize="10" FontWeight="Bold" Foreground="#FF94A3B8"
+                                           FontFamily="Segoe UI" Margin="0,14,0,8"/>
+                                <Border Style="{StaticResource InputField}">
+                                    <Grid>
+                                        <Border Width="44" HorizontalAlignment="Left" CornerRadius="12,0,0,12" Background="#08FFFFFF">
+                                            <TextBlock Text="&#xE72E;" FontFamily="Segoe MDL2 Assets" Foreground="#FF94A3B8"
+                                                       FontSize="14" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </Border>
+                                        <PasswordBox x:Name="RegConfirm" FontSize="13" FontFamily="Segoe UI"
+                                                     Background="Transparent" BorderThickness="0" Foreground="White"
+                                                     CaretBrush="#00A8FF" Padding="52,0,12,0" VerticalContentAlignment="Center"/>
+                                    </Grid>
+                                </Border>
+                                <Button x:Name="RegisterSubmit" Content="CREATE ACCOUNT" Height="48" Margin="0,20,0,0"
+                                        Cursor="Hand" FontFamily="Segoe UI" FontSize="13" FontWeight="Bold"
+                                        BorderThickness="0" Click="RegisterSubmit_Click">
+                                    <Button.Template>
+                                        <ControlTemplate TargetType="Button">
+                                            <Border CornerRadius="12">
+                                                <Border.Background>
+                                                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                                        <GradientStop Offset="0" Color="#FF00A8FF"/>
+                                                        <GradientStop Offset="1" Color="#FF8B5CF6"/>
+                                                    </LinearGradientBrush>
+                                                </Border.Background>
+                                                <Border.Effect>
+                                                    <DropShadowEffect Color="#00A8FF" Opacity="0.35" BlurRadius="20" ShadowDepth="0"/>
+                                                </Border.Effect>
+                                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"
+                                                                  TextElement.Foreground="White"/>
+                                            </Border>
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Trigger.EnterActions><BeginStoryboard><Storyboard>
+                                                        <DoubleAnimation To="0.88" Duration="0:0:0.15" Storyboard.TargetProperty="Opacity"/>
+                                                    </Storyboard></BeginStoryboard></Trigger.EnterActions>
+                                                    <Trigger.ExitActions><BeginStoryboard><Storyboard>
+                                                        <DoubleAnimation To="1" Duration="0:0:0.15" Storyboard.TargetProperty="Opacity"/>
+                                                    </Storyboard></BeginStoryboard></Trigger.ExitActions>
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Button.Template>
+                                    <Button.RenderTransform><ScaleTransform ScaleX="1" ScaleY="1"/></Button.RenderTransform>
+                                </Button>
+                                <TextBlock x:Name="RegisterError" Visibility="Collapsed" FontFamily="Segoe UI"
+                                           FontSize="12" HorizontalAlignment="Center" Margin="0,12,0,0">
+                                    <Run Text="&#xE783;" FontFamily="Segoe MDL2 Assets" Foreground="#FFEF4444"/>
+                                    <Run Text="  Registration unavailable." Foreground="#FFEF4444"/>
+                                </TextBlock>
+                                <TextBlock x:Name="RegisterSuccess" Visibility="Collapsed" FontFamily="Segoe UI"
+                                           FontSize="12" HorizontalAlignment="Center" Margin="0,12,0,0">
+                                    <Run Text="&#xE930;" FontFamily="Segoe MDL2 Assets" Foreground="#FF10B981"/>
+                                    <Run Text="  Account created. Sign in." Foreground="#FF10B981"/>
+                                </TextBlock>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- Footer -->
+                        <StackPanel Grid.Row="4" Margin="0,12,0,0">
+                            <Border Height="1" Margin="0,0,0,12">
+                                <Border.Background>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                        <GradientStop Offset="0" Color="Transparent"/>
+                                        <GradientStop Offset="0.5" Color="#1500A8FF"/>
+                                        <GradientStop Offset="1" Color="Transparent"/>
+                                    </LinearGradientBrush>
+                                </Border.Background>
+                            </Border>
+                            <Grid>
+                                <TextBlock Text="v1.0.0" FontSize="10" Foreground="#FF475569" FontFamily="Segoe UI"
+                                           HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                <TextBlock x:Name="ForgotLink" Text="Forgot password?" FontSize="11"
+                                           Foreground="#FF475569" FontFamily="Segoe UI" Cursor="Hand"
+                                           HorizontalAlignment="Right" VerticalAlignment="Center">
+                                    <TextBlock.Style>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="Opacity" Value="0.6"/>
+                                            <Style.Triggers>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter Property="Opacity" Value="1"/>
+                                                    <Setter Property="Foreground" Value="#FF00A8FF"/>
+                                                </Trigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </Grid>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+
+                <!-- Floating particles -->
+                <Ellipse x:Name="Particle1" Width="3" Height="3" Fill="#FF00A8FF" Opacity="0"
+                         HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="100,0,0,150">
+                    <Ellipse.RenderTransform><TranslateTransform/></Ellipse.RenderTransform>
+                </Ellipse>
+                <Ellipse x:Name="Particle2" Width="2.5" Height="2.5" Fill="#FF8B5CF6" Opacity="0"
+                         HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,150,200">
+                    <Ellipse.RenderTransform><TranslateTransform/></Ellipse.RenderTransform>
+                </Ellipse>
+                <Ellipse x:Name="Particle3" Width="2" Height="2" Fill="#FF00A8FF" Opacity="0"
+                         HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,220,130">
+                    <Ellipse.RenderTransform><TranslateTransform/></Ellipse.RenderTransform>
+                </Ellipse>
+                <Ellipse x:Name="Particle4" Width="3.5" Height="3.5" Fill="#FF8B5CF6" Opacity="0"
+                         HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="180,0,0,220">
+                    <Ellipse.RenderTransform><TranslateTransform/></Ellipse.RenderTransform>
+                </Ellipse>
+                <Ellipse x:Name="Particle5" Width="2" Height="2" Fill="#FF00A8FF" Opacity="0"
+                         HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,70,110">
+                    <Ellipse.RenderTransform><TranslateTransform/></Ellipse.RenderTransform>
+                </Ellipse>
+                <Ellipse x:Name="Particle6" Width="4" Height="4" Fill="#FF8B5CF6" Opacity="0"
+                         HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="240,0,0,70">
+                    <Ellipse.RenderTransform><TranslateTransform/></Ellipse.RenderTransform>
+                </Ellipse>
+                <Ellipse x:Name="Particle7" Width="1.5" Height="1.5" Fill="White" Opacity="0"
+                         HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,180,270">
+                    <Ellipse.RenderTransform><TranslateTransform/></Ellipse.RenderTransform>
+                </Ellipse>
+                <Ellipse x:Name="Particle8" Width="2.5" Height="2.5" Fill="#FF00A8FF" Opacity="0"
+                         HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="60,0,0,90">
+                    <Ellipse.RenderTransform><TranslateTransform/></Ellipse.RenderTransform>
+                </Ellipse>
+
+                <!-- Close button -->
+                <Button x:Name="CloseButton" Content="&#xE711;" FontFamily="Segoe MDL2 Assets" FontSize="14"
+                        Foreground="#FF475569" Background="Transparent" BorderThickness="0" Cursor="Hand"
+                        HorizontalAlignment="Right" VerticalAlignment="Top" Width="36" Height="36" Margin="0,12,16,0"
+                        Click="CloseButton_Click">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border Background="{TemplateBinding Background}">
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"
+                                                  TextElement.Foreground="{TemplateBinding Foreground}"/>
+                            </Border>
+                        </ControlTemplate>
+                    </Button.Template>
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Setter Property="Background" Value="Transparent"/>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#22EF4444"/>
+                                    <Setter Property="Foreground" Value="#FFEF4444"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

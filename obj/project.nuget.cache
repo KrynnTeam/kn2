@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "dgSpecHash": "qIoq0t6gDS0=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\lkero\\OneDrive\\Desktop\\ShadowCheat\\ShadowCheat.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\lkero\\.nuget\\packages\\antwpf\\1.0.5\\antwpf.1.0.5.nupkg.sha512",
+    "C:\\Users\\lkero\\.nuget\\packages\\materialdesigncolors\\5.2.1\\materialdesigncolors.5.2.1.nupkg.sha512",
+    "C:\\Users\\lkero\\.nuget\\packages\\materialdesignthemes\\5.2.1\\materialdesignthemes.5.2.1.nupkg.sha512",
+    "C:\\Users\\lkero\\.nuget\\packages\\microsoft.xaml.behaviors.wpf\\1.1.39\\microsoft.xaml.behaviors.wpf.1.1.39.nupkg.sha512",
+    "C:\\Users\\lkero\\.nuget\\packages\\system.codedom\\9.0.0\\system.codedom.9.0.0.nupkg.sha512",
+    "C:\\Users\\lkero\\.nuget\\packages\\system.management\\9.0.0\\system.management.9.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}
