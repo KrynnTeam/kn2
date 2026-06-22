@@ -13,6 +13,7 @@
         WindowStartupLocation="CenterScreen"
         AllowsTransparency="True"
         Background="Transparent"
+        Icon="app.ico"
         MouseLeftButtonDown="Window_MouseLeftButtonDown"
         Closing="Window_Closing"
         Loaded="Window_Loaded">
@@ -135,14 +136,29 @@
                                         </Border>
                                         <Border x:Name="BtnBg" Width="48" Height="48" CornerRadius="14"
                                                 Background="Transparent" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                            <TextBlock Text="&#xE80F;" FontFamily="Segoe MDL2 Assets" FontSize="20"
+                                            <TextBlock x:Name="IconText" Text="&#xE80F;" FontFamily="Segoe MDL2 Assets" FontSize="20"
                                                        Foreground="#FF663333" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                         </Border>
                                         <ContentPresenter RecognizesAccessKey="False"/>
                                     </Grid>
                                     <ControlTemplate.Triggers>
                                         <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter TargetName="BtnBg" Property="Background" Value="#10FF0000"/>
+                                            <Trigger.EnterActions>
+                                                <BeginStoryboard>
+                                                    <Storyboard>
+                                                        <ColorAnimation Storyboard.TargetName="BtnBg" Storyboard.TargetProperty="Background.Color" To="#15CC0000" Duration="0:0:0.15"/>
+                                                        <ColorAnimation Storyboard.TargetName="IconText" Storyboard.TargetProperty="Foreground.Color" To="#FFF0EBF5" Duration="0:0:0.15"/>
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </Trigger.EnterActions>
+                                            <Trigger.ExitActions>
+                                                <BeginStoryboard>
+                                                    <Storyboard>
+                                                        <ColorAnimation Storyboard.TargetName="BtnBg" Storyboard.TargetProperty="Background.Color" To="Transparent" Duration="0:0:0.2"/>
+                                                        <ColorAnimation Storyboard.TargetName="IconText" Storyboard.TargetProperty="Foreground.Color" To="#FF663333" Duration="0:0:0.2"/>
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </Trigger.ExitActions>
                                         </Trigger>
                                     </ControlTemplate.Triggers>
                                 </ControlTemplate>
@@ -167,14 +183,29 @@
                                         </Border>
                                         <Border x:Name="BtnBg" Width="48" Height="48" CornerRadius="14"
                                                 Background="Transparent" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                            <TextBlock Text="&#xE7AC;" FontFamily="Segoe MDL2 Assets" FontSize="20"
+                                            <TextBlock x:Name="IconText" Text="&#xE7AC;" FontFamily="Segoe MDL2 Assets" FontSize="20"
                                                        Foreground="#FF663333" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                         </Border>
                                         <ContentPresenter RecognizesAccessKey="False"/>
                                     </Grid>
                                     <ControlTemplate.Triggers>
                                         <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter TargetName="BtnBg" Property="Background" Value="#10FF0000"/>
+                                            <Trigger.EnterActions>
+                                                <BeginStoryboard>
+                                                    <Storyboard>
+                                                        <ColorAnimation Storyboard.TargetName="BtnBg" Storyboard.TargetProperty="Background.Color" To="#15CC0000" Duration="0:0:0.15"/>
+                                                        <ColorAnimation Storyboard.TargetName="IconText" Storyboard.TargetProperty="Foreground.Color" To="#FFF0EBF5" Duration="0:0:0.15"/>
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </Trigger.EnterActions>
+                                            <Trigger.ExitActions>
+                                                <BeginStoryboard>
+                                                    <Storyboard>
+                                                        <ColorAnimation Storyboard.TargetName="BtnBg" Storyboard.TargetProperty="Background.Color" To="Transparent" Duration="0:0:0.2"/>
+                                                        <ColorAnimation Storyboard.TargetName="IconText" Storyboard.TargetProperty="Foreground.Color" To="#FF663333" Duration="0:0:0.2"/>
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </Trigger.ExitActions>
                                         </Trigger>
                                     </ControlTemplate.Triggers>
                                 </ControlTemplate>
@@ -199,14 +230,29 @@
                                         </Border>
                                         <Border x:Name="BtnBg" Width="48" Height="48" CornerRadius="14"
                                                 Background="Transparent" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                            <TextBlock Text="&#xE768;" FontFamily="Segoe MDL2 Assets" FontSize="20"
+                                            <TextBlock x:Name="IconText" Text="&#xE768;" FontFamily="Segoe MDL2 Assets" FontSize="20"
                                                        Foreground="#FF663333" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                         </Border>
                                         <ContentPresenter RecognizesAccessKey="False"/>
                                     </Grid>
                                     <ControlTemplate.Triggers>
                                         <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter TargetName="BtnBg" Property="Background" Value="#10FF0000"/>
+                                            <Trigger.EnterActions>
+                                                <BeginStoryboard>
+                                                    <Storyboard>
+                                                        <ColorAnimation Storyboard.TargetName="BtnBg" Storyboard.TargetProperty="Background.Color" To="#15CC0000" Duration="0:0:0.15"/>
+                                                        <ColorAnimation Storyboard.TargetName="IconText" Storyboard.TargetProperty="Foreground.Color" To="#FFF0EBF5" Duration="0:0:0.15"/>
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </Trigger.EnterActions>
+                                            <Trigger.ExitActions>
+                                                <BeginStoryboard>
+                                                    <Storyboard>
+                                                        <ColorAnimation Storyboard.TargetName="BtnBg" Storyboard.TargetProperty="Background.Color" To="Transparent" Duration="0:0:0.2"/>
+                                                        <ColorAnimation Storyboard.TargetName="IconText" Storyboard.TargetProperty="Foreground.Color" To="#FF663333" Duration="0:0:0.2"/>
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </Trigger.ExitActions>
                                         </Trigger>
                                     </ControlTemplate.Triggers>
                                 </ControlTemplate>
@@ -231,14 +277,29 @@
                                         </Border>
                                         <Border x:Name="BtnBg" Width="48" Height="48" CornerRadius="14"
                                                 Background="Transparent" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                            <TextBlock Text="&#xE713;" FontFamily="Segoe MDL2 Assets" FontSize="20"
+                                            <TextBlock x:Name="IconText" Text="&#xE713;" FontFamily="Segoe MDL2 Assets" FontSize="20"
                                                        Foreground="#FF663333" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                         </Border>
                                         <ContentPresenter RecognizesAccessKey="False"/>
                                     </Grid>
                                     <ControlTemplate.Triggers>
                                         <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter TargetName="BtnBg" Property="Background" Value="#10FF0000"/>
+                                            <Trigger.EnterActions>
+                                                <BeginStoryboard>
+                                                    <Storyboard>
+                                                        <ColorAnimation Storyboard.TargetName="BtnBg" Storyboard.TargetProperty="Background.Color" To="#15CC0000" Duration="0:0:0.15"/>
+                                                        <ColorAnimation Storyboard.TargetName="IconText" Storyboard.TargetProperty="Foreground.Color" To="#FFF0EBF5" Duration="0:0:0.15"/>
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </Trigger.EnterActions>
+                                            <Trigger.ExitActions>
+                                                <BeginStoryboard>
+                                                    <Storyboard>
+                                                        <ColorAnimation Storyboard.TargetName="BtnBg" Storyboard.TargetProperty="Background.Color" To="Transparent" Duration="0:0:0.2"/>
+                                                        <ColorAnimation Storyboard.TargetName="IconText" Storyboard.TargetProperty="Foreground.Color" To="#FF663333" Duration="0:0:0.2"/>
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </Trigger.ExitActions>
                                         </Trigger>
                                     </ControlTemplate.Triggers>
                                 </ControlTemplate>
@@ -263,7 +324,7 @@
                                         </Border>
                                         <Border x:Name="BtnBg" Width="48" Height="48" CornerRadius="14"
                                                 Background="Transparent" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                            <TextBlock Text="&#xE946;" FontFamily="Segoe MDL2 Assets" FontSize="20"
+                                            <TextBlock x:Name="IconText" Text="&#xE946;" FontFamily="Segoe MDL2 Assets" FontSize="20"
                                                        Foreground="#FF663333" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                         </Border>
                                         <ContentPresenter RecognizesAccessKey="False"/>
