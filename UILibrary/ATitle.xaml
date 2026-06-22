@@ -5,15 +5,15 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d"
              d:DesignWidth="282.5" d:DesignHeight="40">
-    <Grid Height="44">
-        <Border Height="44" Background="#0D0505"
-                CornerRadius="10" BorderThickness="1" BorderBrush="#FF3D1A1A">
+    <Grid Height="50">
+        <Border Height="50" Background="#0D0505"
+                CornerRadius="12" BorderThickness="1" BorderBrush="#FF3D1A1A">
             <Border.Effect>
                 <DropShadowEffect Color="#000000" Opacity="0.4" BlurRadius="8" ShadowDepth="2"/>
             </Border.Effect>
             <Grid>
-                <Border x:Name="AccentLine" Width="3" Height="20" VerticalAlignment="Center"
-                        HorizontalAlignment="Left" Margin="6,0,0,0" CornerRadius="1.5">
+                <Border x:Name="AccentLine" Width="3" Height="22" VerticalAlignment="Center"
+                        HorizontalAlignment="Left" Margin="12,0,0,0" CornerRadius="1.5">
                     <Border.Background>
                         <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
                             <GradientStop Offset="0" Color="#FFCC0000"/>
@@ -24,16 +24,33 @@
                         <DropShadowEffect Color="#FFCC0000" Opacity="0.6" BlurRadius="6" ShadowDepth="0"/>
                     </Border.Effect>
                 </Border>
-                <Label x:Name="LabelTitle" Padding="16,0,30,0"
+                <Label x:Name="LabelTitle" Padding="24,0,36,0"
                        FontFamily="{StaticResource AtkinsonHyperlegible}"
                        Content="Title" Foreground="#FFF0EBF5"
                        VerticalContentAlignment="Center" FontSize="14" FontWeight="SemiBold" />
-                <Button x:Name="Minimize" Content="&#xE921;" HorizontalAlignment="Right"
-                        BorderThickness="0"
-                        Foreground="#FFF0EBF5"
-                        Style="{StaticResource GhostButtonStyle}"
-                        FontFamily="Segoe MDL2 Assets" Padding="10,10,10,10"
-                        FontSize="10" Visibility="Collapsed" Margin="0,4,3,3" Cursor="Hand" />
+                <Button x:Name="Minimize" Width="28" Height="28"
+                        HorizontalAlignment="Right" VerticalAlignment="Center"
+                        BorderThickness="0" Foreground="#FFF0EBF5"
+                        FontFamily="Segoe MDL2 Assets" Padding="0"
+                        FontSize="10" Visibility="Collapsed" Margin="0,0,8,0" Cursor="Hand">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Border x:Name="Bg" Background="Transparent" CornerRadius="6">
+                                <Border.Effect>
+                                    <DropShadowEffect Color="#CC0000" Opacity="0.2" BlurRadius="4" ShadowDepth="0"/>
+                                </Border.Effect>
+                                <TextBlock Text="&#xE921;" FontFamily="Segoe MDL2 Assets" FontSize="10"
+                                           Foreground="{TemplateBinding Foreground}"
+                                           HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="Bg" Property="Background" Value="#22CC0000"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Button.Template>
+                </Button>
             </Grid>
         </Border>
     </Grid>

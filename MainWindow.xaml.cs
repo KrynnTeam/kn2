@@ -187,11 +187,13 @@ namespace ShadowCheat
                 {
                     var newControl = GetOrCreateMenuControl(menuName);
                     int targetIndex = Array.IndexOf(MenuNames, menuName);
+                    int currentIndex = Array.IndexOf(MenuNames, _currentMenu);
                     UpdateTabStyles(targetIndex);
                     AnimateDashboardHeader(menuName);
 
+                    double slideDir = targetIndex > currentIndex ? 40 : -40;
                     newControl.Opacity = 0;
-                    newControl.RenderTransform = new TranslateTransform(0, 20);
+                    newControl.RenderTransform = new TranslateTransform(slideDir, 0);
                     newControl.RenderTransformOrigin = new Point(0.5, 0.5);
 
                     if (_currentControl != null)
@@ -202,7 +204,7 @@ namespace ShadowCheat
 
                     ContentArea.Children.Clear();
                     ContentArea.Children.Add(newControl);
-                    Animator.FadeSlide(newControl, 0, 0, 20, 0, 0, 1);
+                    Animator.FadeSlide(newControl, slideDir, 0, 0, 0, 0, 1);
                     _currentControl = newControl;
                     _currentMenu = menuName;
 
@@ -394,6 +396,48 @@ namespace ShadowCheat
                 child = VisualTreeHelper.GetParent(child);
             }
             return null;
+        }
+
+        public void ToggleOverlayVisibility()
+        {
+            if (_overlay == null) return;
+            if (_overlay.IsVisible) _overlay.Hide();
+            else _overlay.Show();
+        }
+
+        public void SetProcessPriority(int level)
+        {
+            var p = System.Diagnostics.Process.GetCurrentProcess();
+            p.PriorityClass = level switch
+            {
+                1 => System.Diagnostics.ProcessPriorityClass.Idle,
+                2 => System.Diagnostics.ProcessPriorityClass.BelowNormal,
+                3 => System.Diagnostics.ProcessPriorityClass.Normal,
+                4 => System.Diagnostics.ProcessPriorityClass.AboveNormal,
+                5 => System.Diagnostics.ProcessPriorityClass.High,
+                _ => System.Diagnostics.ProcessPriorityClass.Normal
+            };
+        }
+
+        public void SetAutoStart(bool enabled)
+        {
+            using var key = Microsoft.Win32.Registry.CurrentUser.OpenSubKey(
+                @"Software\Microsoft\Windows\CurrentVersion\Run", true);
+            if (key == null) return;
+            if (enabled)
+                key.SetValue("KN2", System.Diagnostics.Process.GetCurrentProcess().MainModule?.FileName ?? "");
+            else
+                key.DeleteValue("KN2", false);
+        }
+
+        public void ApplyTheme(bool darkMode)
+        {
+            var primary = darkMode ? Color.FromRgb(0xF0, 0xEB, 0xF5) : Color.FromRgb(0x1A, 0x1A, 0x2E);
+            var muted = darkMode ? Color.FromRgb(0xA0, 0xA0, 0xA0) : Color.FromRgb(0x66, 0x66, 0x66);
+            if (TryFindResource("NeonTextPrimary") is System.Windows.Media.SolidColorBrush bp)
+                bp.Color = primary;
+            if (TryFindResource("NeonTextMuted") is System.Windows.Media.SolidColorBrush bm)
+                bm.Color = muted;
         }
 
         private void InitTrayIcon()
