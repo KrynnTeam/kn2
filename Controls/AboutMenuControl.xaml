@@ -64,7 +64,17 @@
                             BorderThickness="1" Content="Check for Updates" FontWeight="Normal" FontSize="11"
                             Height="36" Foreground="#FFF0EBF5" Width="140"
                             Margin="0,16,0,0" FontFamily="{StaticResource AtkinsonHyperlegible}"
-                            Click="CheckForUpdates_Click" Cursor="Hand" />
+                            Click="CheckForUpdates_Click" Cursor="Hand">
+                        <Button.Style>
+                            <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Background" Value="#22CC0000"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </Button.Style>
+                    </Button>
                 </StackPanel>
             </Border>
 
