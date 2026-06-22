@@ -11,7 +11,7 @@ namespace ShadowCheat.Controls
     {
         private MainWindow? _mainWindow;
         private bool _isInitialized;
-        private bool _autoStart, _minimizeToTray, _darkMode = true;
+        private bool _autoStart, _minimizeToTray, _darkMode, _showOverlay;
 
         public StackPanel ModelSettingsPanel => ModelSettings;
         public StackPanel SettingsConfigPanel => SettingsConfig;
@@ -32,6 +32,18 @@ namespace ShadowCheat.Controls
             LoadThemeConfig();
         }
 
+        private static bool IsInStartup(string appName, string appPath)
+        {
+            try
+            {
+                using var key = Microsoft.Win32.Registry.CurrentUser.OpenSubKey(
+                    @"Software\Microsoft\Windows\CurrentVersion\Run", false);
+                var val = key?.GetValue(appName) as string;
+                return string.Equals(val, appPath, System.StringComparison.OrdinalIgnoreCase);
+            }
+            catch { return false; }
+        }
+
         private void LoadGeneralSettings()
         {
             var b = new SectionBuilder(SettingsConfig);
@@ -39,27 +51,33 @@ namespace ShadowCheat.Controls
 
             b.AddToggle("Auto-Start", t =>
             {
-                t.Reader.Click += (_, _) => _autoStart = !_autoStart;
-            }, "Automatically start modules on launch.");
+                var appPath = System.Diagnostics.Process.GetCurrentProcess().MainModule?.FileName ?? "";
+                _autoStart = IsInStartup("KN2", appPath);
+                if (_autoStart) t.EnableSwitch();
+                t.Reader.Click += (_, _) =>
+                {
+                    _autoStart = !_autoStart;
+                    _mainWindow?.SetAutoStart(_autoStart);
+                    if (_autoStart) t.EnableSwitch(); else t.DisableSwitch();
+                };
+            }, "Launch KN2 automatically on Windows startup.");
 
             b.AddToggle("Minimize to Tray", t =>
             {
-                t.Reader.Click += (_, _) => _minimizeToTray = !_minimizeToTray;
+                t.Reader.Click += (_, _) =>
+                {
+                    _minimizeToTray = !_minimizeToTray;
+                    if (_minimizeToTray) t.EnableSwitch(); else t.DisableSwitch();
+                };
             }, "Minimize to system tray instead of taskbar.");
 
             b.AddToggle("Show Overlay", t =>
             {
-                t.EnableSwitch();
                 t.Reader.Click += (_, _) =>
                 {
-                    var manager = _mainWindow?.FeatureManager;
-                    if (manager != null)
-                    {
-                        if (manager.IsRunning)
-                            manager.Stop();
-                        else
-                            manager.Start();
-                    }
+                    _showOverlay = !_showOverlay;
+                    _mainWindow?.ToggleOverlayVisibility();
+                    if (_showOverlay) t.EnableSwitch(); else t.DisableSwitch();
                 };
             }, "Display HUD overlay in-game.");
 
@@ -68,15 +86,23 @@ namespace ShadowCheat.Controls
 
             b.AddSlider("Update Rate", "ms", 1, 1, 10, 100, s =>
             {
+                s.Slider.Value = 16;
                 s.Slider.ValueChanged += (_, _) =>
                 {
                     var detector = _mainWindow?.FeatureManager.Detector;
                     if (detector != null)
                         detector.Profile.ScanRadius = (int)s.Slider.Value;
                 };
-            }, "Detection loop interval.");
+            }, "Detection loop interval in milliseconds.");
 
-            b.AddSlider("Priority Level", "", 1, 1, 1, 5, s => { }, "Process priority (1=Low, 5=High).");
+            b.AddSlider("Priority Level", "", 1, 1, 1, 5, s =>
+            {
+                s.Slider.Value = 3;
+                s.Slider.ValueChanged += (_, _) =>
+                {
+                    _mainWindow?.SetProcessPriority((int)s.Slider.Value);
+                };
+            }, "Process priority (1=Low, 5=High).");
             b.AddSeparator();
         }
 
@@ -104,6 +130,7 @@ namespace ShadowCheat.Controls
                     {
                         var info = selector.GetSelectedDisplayIndex();
                         btn.ButtonTitle.Content = $"Display {info + 1}";
+                        Dictionary.sliderSettings["SelectedDisplay"] = info;
                         win.Close();
                     };
                     win.ShowDialog();
@@ -126,9 +153,12 @@ namespace ShadowCheat.Controls
                         Filter = "Model files (*.onnx;*.pt)|*.onnx;*.pt|All files (*.*)|*.*"
                     };
                     if (dialog.ShowDialog() == true)
+                    {
                         loc.FileLocationTextbox.Text = dialog.FileName;
+                        Dictionary.filelocationState["Model Path"] = dialog.FileName;
+                    }
                 };
-            });
+            }, "Model Path");
 
             b.AddDropdown("Model Type", d =>
             {
@@ -136,7 +166,7 @@ namespace ShadowCheat.Controls
                 d.DropdownBox.Items.Add("YOLOv5");
                 d.DropdownBox.Items.Add("Custom ONNX");
                 d.DropdownBox.SelectedIndex = 0;
-            });
+            }, "Model Type");
 
             b.AddSlider("Confidence", "%", 0.05, 0.05, 0.0, 1.0, s =>
             {
@@ -149,7 +179,14 @@ namespace ShadowCheat.Controls
                 };
             }, "Minimum confidence threshold.");
 
-            b.AddToggle("Auto-Download Models", t => { }, "Fetch models from repository.");
+            b.AddToggle("Auto-Download Models", t =>
+            {
+                t.Reader.Click += (_, _) =>
+                {
+                    try { System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo { FileName = "https://github.com", UseShellExecute = true }); }
+                    catch { }
+                };
+            }, "Fetch models from repository.");
             b.AddSeparator();
         }
 
@@ -163,20 +200,18 @@ namespace ShadowCheat.Controls
                 c.Reader.Click += (_, _) =>
                 {
                     var picker = new ColorPicker(Color.FromRgb(0xCC, 0x00, 0x00), "Theme Color");
-                    picker.ColorChanged += (color) =>
-                    {
-                        _mainWindow?.ApplyThemeColor(color);
-                    };
+                    picker.ColorChanged += (color) => _mainWindow?.ApplyThemeColor(color);
                     picker.ShowDialog();
                 };
             });
 
             b.AddToggle("Dark Mode", t =>
             {
-                t.EnableSwitch();
                 t.Reader.Click += (_, _) =>
                 {
                     _darkMode = !_darkMode;
+                    _mainWindow?.ApplyTheme(_darkMode);
+                    if (_darkMode) t.EnableSwitch(); else t.DisableSwitch();
                 };
             }, "Dark interface theme.");
 

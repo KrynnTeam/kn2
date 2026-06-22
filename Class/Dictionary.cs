@@ -65,7 +65,8 @@ namespace ShadowCheat.Class
             { "Prediction Method", "Kalman Filter" },
             { "Screen Capture Method", "DirectX" },
             { "Image Size", "640" },
-            { "Target Class", "Best Confidence" }
+            { "Target Class", "Best Confidence" },
+            { "Model Type", "YOLOv8" }
         };
 
         public static Dictionary<string, string> bindingSettings = new()
@@ -99,7 +100,8 @@ namespace ShadowCheat.Class
 
         public static Dictionary<string, string> filelocationState = new()
         {
-            { "ddxoft Driver Location", "" }
+            { "ddxoft Driver Location", "" },
+            { "Model Path", "" }
         };
 
         public static string lastLoadedModel = "N/A";

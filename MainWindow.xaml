@@ -359,6 +359,9 @@
                             <Button.Template>
                                 <ControlTemplate TargetType="Button">
                                     <Border x:Name="Bg" Background="Transparent" CornerRadius="6">
+                                        <Border.Effect>
+                                            <DropShadowEffect Color="#CC0000" Opacity="0.2" BlurRadius="4" ShadowDepth="0"/>
+                                        </Border.Effect>
                                         <TextBlock Text="&#xE921;" FontFamily="Segoe MDL2 Assets" FontSize="10"
                                                    Foreground="{TemplateBinding Foreground}"
                                                    HorizontalAlignment="Center" VerticalAlignment="Center"/>
@@ -379,6 +382,9 @@
                             <Button.Template>
                                 <ControlTemplate TargetType="Button">
                                     <Border x:Name="Bg" Background="Transparent" CornerRadius="6">
+                                        <Border.Effect>
+                                            <DropShadowEffect Color="#CC0000" Opacity="0.2" BlurRadius="4" ShadowDepth="0"/>
+                                        </Border.Effect>
                                         <TextBlock Text="&#xE8BB;" FontFamily="Segoe MDL2 Assets" FontSize="10"
                                                    Foreground="{TemplateBinding Foreground}"
                                                    HorizontalAlignment="Center" VerticalAlignment="Center"/>
