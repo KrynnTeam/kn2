@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using System.Management;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -14,6 +15,7 @@ namespace ShadowCheat.Controls
         private MainWindow? _mainWindow;
         private bool _isInitialized;
         private static readonly HttpClient _httpClient = new() { Timeout = TimeSpan.FromSeconds(5) };
+        static AboutMenuControl() { _httpClient.DefaultRequestHeaders.UserAgent.ParseAdd("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"); }
 
         private static readonly (string name, string role, string? github, string? avatarUrl)[] CoreTeam =
         {
@@ -33,52 +35,70 @@ namespace ShadowCheat.Controls
             _mainWindow = mainWindow;
             _isInitialized = true;
 
-            LoadCoreTeam();
-            LoadSystemSpecs();
+            LoadCoreTeamPlaceholders();
+            _ = LoadAsyncData();
         }
 
-        private void LoadCoreTeam()
+        private void LoadCoreTeamPlaceholders()
         {
             CoreTeamPanel.Children.Clear();
-            foreach (var (name, role, github, avatarUrl) in CoreTeam)
-            {
-                var panel = new StackPanel { Margin = new Thickness(8, 0, 8, 0), HorizontalAlignment = HorizontalAlignment.Center };
-                var avatarBorder = new Border { Width = 48, Height = 48, CornerRadius = new CornerRadius(24),
-                    Background = new SolidColorBrush(Color.FromRgb(0x8B, 0x00, 0x00)), Margin = new Thickness(0, 0, 0, 8) };
-                avatarBorder.Clip = new EllipseGeometry { Center = new Point(24, 24), RadiusX = 24, RadiusY = 24 };
+            foreach (var (name, role, _, _) in CoreTeam)
+                CoreTeamPanel.Children.Add(CreateTeamPanel(name, role, null));
+        }
 
-                if (!string.IsNullOrEmpty(avatarUrl))
+        private async Task LoadAsyncData()
+        {
+            await Task.Run(() => LoadSystemSpecs());
+            await LoadCoreTeamAvatars();
+        }
+
+        private static StackPanel CreateTeamPanel(string name, string role, ImageSource? avatar)
+        {
+            var panel = new StackPanel { Margin = new Thickness(8, 0, 8, 0), HorizontalAlignment = HorizontalAlignment.Center };
+            var avatarBorder = new Border { Width = 48, Height = 48, CornerRadius = new CornerRadius(24),
+                Background = new SolidColorBrush(Color.FromRgb(0x8B, 0x00, 0x00)), Margin = new Thickness(0, 0, 0, 8) };
+            avatarBorder.Clip = new EllipseGeometry { Center = new Point(24, 24), RadiusX = 24, RadiusY = 24 };
+
+            if (avatar != null)
+                avatarBorder.Child = new Image { Source = avatar, Stretch = Stretch.UniformToFill };
+            else
+                avatarBorder.Child = new TextBlock { Text = name[0].ToString().ToUpper(), FontSize = 20,
+                    FontWeight = FontWeights.Bold, Foreground = Brushes.White,
+                    HorizontalAlignment = HorizontalAlignment.Center, VerticalAlignment = VerticalAlignment.Center };
+
+            panel.Children.Add(avatarBorder);
+            panel.Children.Add(new TextBlock { Text = name, FontSize = 12, Foreground = Brushes.White,
+                HorizontalAlignment = HorizontalAlignment.Center });
+            panel.Children.Add(new TextBlock { Text = role, FontSize = 10,
+                Foreground = new SolidColorBrush(Color.FromArgb(0x70, 0xFF, 0xFF, 0xFF)),
+                HorizontalAlignment = HorizontalAlignment.Center });
+            return panel;
+        }
+
+        private async Task LoadCoreTeamAvatars()
+        {
+            for (int i = 0; i < CoreTeam.Length; i++)
+            {
+                var (name, role, _, avatarUrl) = CoreTeam[i];
+                if (string.IsNullOrEmpty(avatarUrl)) continue;
+
+                try
                 {
-                    try
+                    var bytes = await _httpClient.GetByteArrayAsync(avatarUrl);
+                    var bitmap = new BitmapImage();
+                    using (var ms = new System.IO.MemoryStream(bytes))
                     {
-                        var bitmap = new BitmapImage();
                         bitmap.BeginInit();
-                        bitmap.UriSource = new Uri(avatarUrl);
+                        bitmap.StreamSource = ms;
                         bitmap.CacheOption = BitmapCacheOption.OnLoad;
                         bitmap.EndInit();
-                        avatarBorder.Child = new Image { Source = bitmap, Stretch = Stretch.UniformToFill };
+                        bitmap.Freeze();
                     }
-                    catch
-                    {
-                        avatarBorder.Child = new TextBlock { Text = name[0].ToString().ToUpper(), FontSize = 20,
-                            FontWeight = FontWeights.Bold, Foreground = Brushes.White,
-                            HorizontalAlignment = HorizontalAlignment.Center, VerticalAlignment = VerticalAlignment.Center };
-                    }
-                }
-                else
-                {
-                    avatarBorder.Child = new TextBlock { Text = name[0].ToString().ToUpper(), FontSize = 20,
-                        FontWeight = FontWeights.Bold, Foreground = Brushes.White,
-                        HorizontalAlignment = HorizontalAlignment.Center, VerticalAlignment = VerticalAlignment.Center };
-                }
 
-                panel.Children.Add(avatarBorder);
-                panel.Children.Add(new TextBlock { Text = name, FontSize = 12, Foreground = Brushes.White,
-                    HorizontalAlignment = HorizontalAlignment.Center });
-                panel.Children.Add(new TextBlock { Text = role, FontSize = 10,
-                    Foreground = new SolidColorBrush(Color.FromArgb(0x70, 0xFF, 0xFF, 0xFF)),
-                    HorizontalAlignment = HorizontalAlignment.Center });
-                CoreTeamPanel.Children.Add(panel);
+                    if (CoreTeamPanel.Children.Count > i && CoreTeamPanel.Children[i] is StackPanel panel && panel.Children[0] is Border border)
+                        border.Child = new Image { Source = bitmap, Stretch = Stretch.UniformToFill };
+                }
+                catch { }
             }
         }
 
@@ -105,9 +125,10 @@ namespace ShadowCheat.Controls
                         ram = $"{totalRAM:F1} GB";
                     }
 
-                AboutSpecs.Content = $"{cpu} | {gpu} | {ram}";
+                var spec = $"{cpu} | {gpu} | {ram}";
+                Dispatcher.Invoke(() => AboutSpecs.Content = spec);
             }
-            catch { AboutSpecs.Content = "System specs unavailable"; }
+            catch { Dispatcher.Invoke(() => AboutSpecs.Content = "System specs unavailable"); }
         }
 
         private async void CheckForUpdates_Click(object sender, RoutedEventArgs e) { }

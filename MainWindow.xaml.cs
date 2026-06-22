@@ -22,6 +22,10 @@ namespace ShadowCheat
         private UserControl? _currentControl;
         private string _currentMenu = "HomePage";
         private bool _currentlySwitching;
+        private readonly Button[] _navTabs = new Button[5];
+        private TextBlock?[] _tabTextBlocks = new TextBlock?[5];
+
+        private System.Windows.Forms.NotifyIcon? _trayIcon;
 
         private static readonly string[] MenuNames = { "HomePage", "ModelMenu", "AimMenu", "SettingsMenu", "AcercaDe" };
 
@@ -48,8 +52,8 @@ namespace ShadowCheat
             StartGradientAnimation();
             InitializeFeatures();
             ShowOverlay();
-            AttachNavAnimations();
             PlayEntranceAnimation();
+            InitTrayIcon();
         }
 
         private void PlayEntranceAnimation()
@@ -63,36 +67,6 @@ namespace ShadowCheat
             var grow = new DoubleAnimation(0.92, 1.0, TimeSpan.FromMilliseconds(500)) { EasingFunction = new QuarticEase { EasingMode = EasingMode.EaseOut } };
             scale.BeginAnimation(ScaleTransform.ScaleXProperty, grow);
             scale.BeginAnimation(ScaleTransform.ScaleYProperty, grow);
-        }
-
-        private void AttachNavAnimations()
-        {
-            var navButtons = new[] { Menu1B, Menu2B, Menu3B, Menu4B, Menu5B };
-            foreach (var btn in navButtons)
-            {
-                btn.MouseEnter += NavButton_MouseEnter;
-                btn.MouseLeave += NavButton_MouseLeave;
-            }
-        }
-
-        private void NavButton_MouseEnter(object sender, MouseEventArgs e)
-        {
-            if (sender is Button btn && btn.Template != null)
-            {
-                var btnBg = btn.Template.FindName("BtnBg", btn) as Border;
-                if (btnBg != null)
-                    Animator.ScaleTo(btnBg, 1.0, 1.08, 150);
-            }
-        }
-
-        private void NavButton_MouseLeave(object sender, MouseEventArgs e)
-        {
-            if (sender is Button btn && btn.Template != null)
-            {
-                var btnBg = btn.Template.FindName("BtnBg", btn) as Border;
-                if (btnBg != null)
-                    Animator.ScaleTo(btnBg, 1.08, 1.0, 150);
-            }
         }
 
         private void MainBorder_SizeChanged(object sender, SizeChangedEventArgs e)
@@ -325,7 +299,7 @@ namespace ShadowCheat
 
         private void UpdateTabStyles(int activeIndex)
         {
-            var tabs = new[] { Menu1B, Menu2B, Menu3B, Menu4B, Menu5B };
+            _navTabs[0] = Menu1B; _navTabs[1] = Menu2B; _navTabs[2] = Menu3B; _navTabs[3] = Menu4B; _navTabs[4] = Menu5B;
             var sliderTop = 19 + activeIndex * 62;
 
             if (SliderBar.Opacity < 0.5)
@@ -342,12 +316,20 @@ namespace ShadowCheat
             { EasingFunction = new QuarticEase { EasingMode = EasingMode.EaseInOut } };
             SliderBar.BeginAnimation(FrameworkElement.MarginProperty, anim);
 
-            for (int i = 0; i < tabs.Length; i++)
+            for (int i = 0; i < _navTabs.Length; i++)
             {
-                var btn = tabs[i];
+                var btn = _navTabs[i];
                 if (btn.Template == null) continue;
                 var btnBg = btn.Template.FindName("BtnBg", btn) as Border;
-                var textBlocks = FindVisualChildren<TextBlock>(btn);
+
+                if (_tabTextBlocks[i] == null)
+                {
+                    foreach (var tb in FindVisualChildren<TextBlock>(btn))
+                    {
+                        if (tb.Name == "IconText") { _tabTextBlocks[i] = tb; break; }
+                    }
+                }
+                var tbIcon = _tabTextBlocks[i];
 
                 if (i == activeIndex)
                 {
@@ -358,19 +340,18 @@ namespace ShadowCheat
                         btnBg.Background = new SolidColorBrush(current);
                         Animator.ColorTo(btnBg, "Background.Color", current, target, 350);
                     }
-                    foreach (var tb in textBlocks)
+                    if (tbIcon != null)
                     {
-                        var current = (tb.Foreground as SolidColorBrush)?.Color ?? Colors.Gray;
+                        var current = (tbIcon.Foreground as SolidColorBrush)?.Color ?? Colors.Gray;
                         var target = ((SolidColorBrush)FindResource("NeonTextPrimary")).Color;
-                        tb.Foreground = new SolidColorBrush(current);
-                        Animator.ColorTo(tb, "Foreground.Color", current, target, 350);
+                        tbIcon.Foreground = new SolidColorBrush(current);
+                        Animator.ColorTo(tbIcon, "Foreground.Color", current, target, 350);
                     }
                 }
                 else
                 {
                     if (btnBg != null) btnBg.Background = Brushes.Transparent;
-                    foreach (var tb in textBlocks)
-                        tb.Foreground = (SolidColorBrush)FindResource("NeonTextMuted");
+                    if (tbIcon != null) tbIcon.Foreground = (SolidColorBrush)FindResource("NeonTextMuted");
                 }
             }
         }
@@ -415,8 +396,33 @@ namespace ShadowCheat
             return null;
         }
 
-        private void Minimize_Click(object sender, RoutedEventArgs e) => WindowState = WindowState.Minimized;
-        private void Exit_Click(object sender, RoutedEventArgs e) => Application.Current.Shutdown();
+        private void InitTrayIcon()
+        {
+            _trayIcon = new System.Windows.Forms.NotifyIcon
+            {
+                Icon = System.Drawing.Icon.ExtractAssociatedIcon(System.Windows.Forms.Application.ExecutablePath),
+                Text = "KN2",
+                Visible = true
+            };
+            _trayIcon.Click += (_, _) =>
+            {
+                Show();
+                WindowState = WindowState.Normal;
+                Activate();
+            };
+        }
+
+        private void Minimize_Click(object sender, RoutedEventArgs e)
+        {
+            Hide();
+            if (_trayIcon != null) _trayIcon.Visible = true;
+        }
+
+        private void Exit_Click(object sender, RoutedEventArgs e)
+        {
+            _trayIcon?.Dispose();
+            Application.Current.Shutdown();
+        }
         private void Window_Closing(object? sender, System.ComponentModel.CancelEventArgs e) { }
 
         public void UpdateToggleUI(AToggle toggle, bool state)
