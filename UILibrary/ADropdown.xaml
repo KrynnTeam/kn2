@@ -5,9 +5,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d"
              d:DesignWidth="282.5" Height="76">
-    <Grid Height="76">
-        <Border Height="76" Background="#0F0F1A"
-                CornerRadius="6" BorderThickness="1" BorderBrush="#FF2A2A40">
+    <Grid Height="80" Margin="0,0,0,6">
+        <Border Height="80" Background="#0D0505"
+                CornerRadius="10" BorderThickness="1" BorderBrush="#FF3D1A1A">
             <Border.Effect>
                 <DropShadowEffect Color="#000000" Opacity="0.4" BlurRadius="8" ShadowDepth="2"/>
             </Border.Effect>
@@ -17,15 +17,54 @@
                        Content="Dropdown" Foreground="#FFF0EBF5"
                        VerticalContentAlignment="Center" FontSize="13"
                        VerticalAlignment="Top" Height="36" />
-                <ComboBox x:Name="DropdownBox" Height="32" Margin="12,0,12,10"
+                <ComboBox x:Name="DropdownBox" Height="32" Margin="12,0,12,12"
                           VerticalAlignment="Bottom"
                           Foreground="#FFF0EBF5"
-                          BorderBrush="#FF3A3A55"
-                          Padding="8,0" BorderThickness="1"
-                          Background="#FF1A1A2E"
+                          Style="{StaticResource GothComboBox}"
                           FontFamily="{StaticResource AtkinsonHyperlegible}"
                           FontSize="12"
                           SelectionChanged="DropdownBox_SelectionChanged">
+                    <ComboBox.ItemContainerStyle>
+                        <Style TargetType="ComboBoxItem">
+                            <Setter Property="Background" Value="Transparent" />
+                            <Setter Property="Foreground" Value="#FFF0EBF5" />
+                            <Setter Property="BorderThickness" Value="0" />
+                            <Setter Property="Padding" Value="10,6" />
+                            <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Trigger.EnterActions>
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <ColorAnimation Storyboard.TargetProperty="Background.Color"
+                                                                To="#22CC0000" Duration="0:0:0.15" />
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </Trigger.EnterActions>
+                                    <Trigger.ExitActions>
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <ColorAnimation Storyboard.TargetProperty="Background.Color"
+                                                                To="Transparent" Duration="0:0:0.25" />
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </Trigger.ExitActions>
+                                </Trigger>
+                                <Trigger Property="IsHighlighted" Value="True">
+                                    <Trigger.EnterActions>
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <ColorAnimation Storyboard.TargetProperty="Background.Color"
+                                                                To="#33CC0000" Duration="0:0:0.2" />
+                                                <ColorAnimation Storyboard.TargetProperty="Foreground.Color"
+                                                                To="White" Duration="0:0:0.2" />
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </Trigger.EnterActions>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ComboBox.ItemContainerStyle>
                 </ComboBox>
             </Grid>
         </Border>

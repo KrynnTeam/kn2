@@ -6,12 +6,12 @@
              mc:Ignorable="d"
              d:DesignWidth="282.5" d:DesignHeight="200">
     <Grid>
-        <Border Height="200" Background="#0F0F1A"
-                CornerRadius="6" BorderThickness="1" BorderBrush="#FF2A2A40">
+        <Border Height="200" Background="#0D0505"
+                CornerRadius="10" BorderThickness="1" BorderBrush="#FF3D1A1A">
             <Border.Effect>
                 <DropShadowEffect Color="#000000" Opacity="0.4" BlurRadius="8" ShadowDepth="2"/>
             </Border.Effect>
-            <Grid>
+    <Grid Margin="0,0,0,6">
                 <Label x:Name="DisplaySelectorTitle" Padding="12,10,0,0"
                        FontFamily="{StaticResource AtkinsonHyperlegible}"
                        Content="Focus Display" Foreground="#FFF0EBF5"
@@ -21,10 +21,10 @@
                             HorizontalAlignment="Center" VerticalAlignment="Center"
                             Width="260" Height="100" Margin="10,50,10,60" />
                 <Border Height="50" VerticalAlignment="Bottom" CornerRadius="0"
-                        Background="#0A000000" BorderThickness="0,1,0,0" BorderBrush="#FF2A2A40">
+                        Background="#0A000000" BorderThickness="0,1,0,0" BorderBrush="#FF3D1A1A">
                     <Label x:Name="CurrentDisplayInfo"
                            FontFamily="{StaticResource AtkinsonHyperlegible}"
-                           Content="No Display Selected" Foreground="#FF8880A0"
+                           Content="No Display Selected" Foreground="#FFF0EBF5"
                            FontSize="12"
                            HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
                 </Border>

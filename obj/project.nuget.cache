@@ -1,15 +1,15 @@
 {
   "version": 2,
-  "dgSpecHash": "iBOm/CTZDv4=",
+  "dgSpecHash": "dgAQjuXcPxx6ItQXh7UAhhn+u/l0FcsqAmk+ZkNzYgpQzT6CuKXWOvVXfxOQcfAhH9FslKg1zz6rYZ9hCEAkEQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\lkero\\OneDrive\\Documentos\\GitHub\\kn2\\ShadowCheat.csproj",
+  "projectFilePath": "C:\\Users\\gg260\\Documents\\GitHub\\kn2\\ShadowCheat.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\lkero\\.nuget\\packages\\antwpf\\1.0.5\\antwpf.1.0.5.nupkg.sha512",
-    "C:\\Users\\lkero\\.nuget\\packages\\materialdesigncolors\\5.2.1\\materialdesigncolors.5.2.1.nupkg.sha512",
-    "C:\\Users\\lkero\\.nuget\\packages\\materialdesignthemes\\5.2.1\\materialdesignthemes.5.2.1.nupkg.sha512",
-    "C:\\Users\\lkero\\.nuget\\packages\\microsoft.xaml.behaviors.wpf\\1.1.39\\microsoft.xaml.behaviors.wpf.1.1.39.nupkg.sha512",
-    "C:\\Users\\lkero\\.nuget\\packages\\system.codedom\\9.0.0\\system.codedom.9.0.0.nupkg.sha512",
-    "C:\\Users\\lkero\\.nuget\\packages\\system.management\\9.0.0\\system.management.9.0.0.nupkg.sha512"
+    "C:\\Users\\gg260\\.nuget\\packages\\antwpf\\1.0.5\\antwpf.1.0.5.nupkg.sha512",
+    "C:\\Users\\gg260\\.nuget\\packages\\materialdesigncolors\\2.1.4\\materialdesigncolors.2.1.4.nupkg.sha512",
+    "C:\\Users\\gg260\\.nuget\\packages\\materialdesignthemes\\4.9.0\\materialdesignthemes.4.9.0.nupkg.sha512",
+    "C:\\Users\\gg260\\.nuget\\packages\\microsoft.xaml.behaviors.wpf\\1.1.39\\microsoft.xaml.behaviors.wpf.1.1.39.nupkg.sha512",
+    "C:\\Users\\gg260\\.nuget\\packages\\system.codedom\\6.0.0\\system.codedom.6.0.0.nupkg.sha512",
+    "C:\\Users\\gg260\\.nuget\\packages\\system.management\\6.0.2\\system.management.6.0.2.nupkg.sha512"
   ],
   "logs": []
 }

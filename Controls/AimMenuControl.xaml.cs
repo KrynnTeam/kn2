@@ -1,6 +1,7 @@
 using ShadowCheat.Class;
 using ShadowCheat.Class.Features;
 using ShadowCheat.UILibrary;
+using System;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -83,7 +84,7 @@ namespace ShadowCheat.Controls
 
         private void LoadDetectionConfig()
         {
-            var b = new SectionBuilder(this, DetectionPanel);
+            var b = GetBuilder(DetectionPanel);
             b.AddTitle("Detection Config", true, t => t.Minimize.Click += (_, _) =>
             {
                 TogglePanel("Detection Config", DetectionPanel);
@@ -147,7 +148,7 @@ namespace ShadowCheat.Controls
 
         private void LoadCrosshairPlacement()
         {
-            var b = new SectionBuilder(this, CrosshairAssistPanel);
+            var b = GetBuilder(CrosshairAssistPanel);
             b.AddTitle("Crosshair Placement", true, t => t.Minimize.Click += (_, _) =>
             {
                 TogglePanel("Crosshair Placement", CrosshairAssistPanel);
@@ -182,7 +183,7 @@ namespace ShadowCheat.Controls
 
         private void LoadStandstillAccuracy()
         {
-            var b = new SectionBuilder(this, StandstillPanel);
+            var b = GetBuilder(StandstillPanel);
             b.AddTitle("Standstill Accuracy", true, t => t.Minimize.Click += (_, _) =>
             {
                 TogglePanel("Standstill Accuracy", StandstillPanel);
@@ -217,7 +218,7 @@ namespace ShadowCheat.Controls
 
         private void LoadShotOverride()
         {
-            var b = new SectionBuilder(this, ShotOverridePanel);
+            var b = GetBuilder(ShotOverridePanel);
             b.AddTitle("Shot Override", true, t => t.Minimize.Click += (_, _) =>
             {
                 TogglePanel("Shot Override", ShotOverridePanel);
@@ -252,7 +253,7 @@ namespace ShadowCheat.Controls
 
         private void LoadNoRecoil()
         {
-            var b = new SectionBuilder(this, NoRecoilPanel);
+            var b = GetBuilder(NoRecoilPanel);
             b.AddTitle("No-Recoil", true, t => t.Minimize.Click += (_, _) =>
             {
                 TogglePanel("No-Recoil", NoRecoilPanel);
@@ -287,7 +288,7 @@ namespace ShadowCheat.Controls
 
         private void LoadVisibilityLock()
         {
-            var b = new SectionBuilder(this, VisibilityPanel);
+            var b = GetBuilder(VisibilityPanel);
             b.AddTitle("Visibility Lock", true, t => t.Minimize.Click += (_, _) =>
             {
                 TogglePanel("Visibility Lock", VisibilityPanel);
@@ -314,7 +315,7 @@ namespace ShadowCheat.Controls
 
         private void LoadFlickAssist()
         {
-            var b = new SectionBuilder(this, FlickAssistPanel);
+            var b = GetBuilder(FlickAssistPanel);
             b.AddTitle("Flick Assist", true, t => t.Minimize.Click += (_, _) =>
             {
                 TogglePanel("Flick Assist", FlickAssistPanel);
@@ -365,7 +366,7 @@ namespace ShadowCheat.Controls
 
         private void LoadHwidSpoofing()
         {
-            var b = new SectionBuilder(this, HwidPanel);
+            var b = GetBuilder(HwidPanel);
             b.AddTitle("HWID Spoofing", true, t => t.Minimize.Click += (_, _) =>
             {
                 TogglePanel("HWID Spoofing", HwidPanel);
@@ -390,53 +391,6 @@ namespace ShadowCheat.Controls
             b.AddSeparator();
         }
 
-        private class SectionBuilder
-        {
-            private readonly AimMenuControl _parent;
-            private readonly StackPanel _panel;
-            public SectionBuilder(AimMenuControl parent, StackPanel panel) { _parent = parent; _panel = panel; }
-
-            public SectionBuilder AddTitle(string title, bool canMinimize, Action<ATitle>? configure = null)
-            {
-                var c = new ATitle(title, canMinimize);
-                configure?.Invoke(c);
-                _panel.Children.Add(c);
-                return this;
-            }
-
-            public SectionBuilder AddToggle(string title, Action<AToggle>? configure = null, string? tooltip = null)
-            {
-                var c = new AToggle(title, tooltip);
-                configure?.Invoke(c);
-                _panel.Children.Add(c);
-                return this;
-            }
-
-            public SectionBuilder AddSlider(string title, string label, double freq, double steps, double min, double max, Action<ASlider>? configure = null, string? tooltip = null)
-            {
-                var c = new ASlider(title, label, steps, tooltip)
-                {
-                    Slider = { Minimum = min, Maximum = max, TickFrequency = freq }
-                };
-                configure?.Invoke(c);
-                _panel.Children.Add(c);
-                return this;
-            }
-
-            public SectionBuilder AddSeparator()
-            {
-                _panel.Children.Add(new ARectangleBottom());
-                _panel.Children.Add(new ASpacer());
-                return this;
-            }
-
-            public SectionBuilder AddColorChanger(string title, Action<AColorChanger>? configure = null)
-            {
-                var c = new AColorChanger(title);
-                configure?.Invoke(c);
-                _panel.Children.Add(c);
-                return this;
-            }
-        }
+        private SectionBuilder GetBuilder(StackPanel panel) => new(panel);
     }
 }

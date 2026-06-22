@@ -1,7 +1,7 @@
 {
   "version": 3,
   "targets": {
-    "net9.0-windows7.0": {
+    "net6.0-windows7.0": {
       "AntWpf/1.0.5": {
         "type": "package",
         "dependencies": {
@@ -29,32 +29,32 @@
           }
         }
       },
-      "MaterialDesignColors/5.2.1": {
+      "MaterialDesignColors/2.1.4": {
         "type": "package",
         "compile": {
-          "lib/net8.0/MaterialDesignColors.dll": {
+          "lib/net6.0/MaterialDesignColors.dll": {
             "related": ".pdb"
           }
         },
         "runtime": {
-          "lib/net8.0/MaterialDesignColors.dll": {
+          "lib/net6.0/MaterialDesignColors.dll": {
             "related": ".pdb"
           }
         }
       },
-      "MaterialDesignThemes/5.2.1": {
+      "MaterialDesignThemes/4.9.0": {
         "type": "package",
         "dependencies": {
-          "MaterialDesignColors": "5.2.1",
+          "MaterialDesignColors": "2.1.4",
           "Microsoft.Xaml.Behaviors.Wpf": "1.1.39"
         },
         "compile": {
-          "lib/net8.0/MaterialDesignThemes.Wpf.dll": {
+          "lib/net6.0/MaterialDesignThemes.Wpf.dll": {
             "related": ".pdb;.xml"
           }
         },
         "runtime": {
-          "lib/net8.0/MaterialDesignThemes.Wpf.dll": {
+          "lib/net6.0/MaterialDesignThemes.Wpf.dll": {
             "related": ".pdb;.xml"
           }
         },
@@ -78,42 +78,42 @@
           "Microsoft.WindowsDesktop.App.WPF"
         ]
       },
-      "System.CodeDom/9.0.0": {
+      "System.CodeDom/6.0.0": {
         "type": "package",
         "compile": {
-          "lib/net9.0/System.CodeDom.dll": {
+          "lib/net6.0/System.CodeDom.dll": {
             "related": ".xml"
           }
         },
         "runtime": {
-          "lib/net9.0/System.CodeDom.dll": {
+          "lib/net6.0/System.CodeDom.dll": {
             "related": ".xml"
           }
         },
         "build": {
-          "buildTransitive/net8.0/_._": {}
+          "buildTransitive/netcoreapp3.1/_._": {}
         }
       },
-      "System.Management/9.0.0": {
+      "System.Management/6.0.2": {
         "type": "package",
         "dependencies": {
-          "System.CodeDom": "9.0.0"
+          "System.CodeDom": "6.0.0"
         },
         "compile": {
-          "lib/net9.0/System.Management.dll": {
+          "lib/net6.0/System.Management.dll": {
             "related": ".xml"
           }
         },
         "runtime": {
-          "lib/net9.0/System.Management.dll": {
+          "lib/net6.0/System.Management.dll": {
             "related": ".xml"
           }
         },
         "build": {
-          "buildTransitive/net8.0/_._": {}
+          "buildTransitive/netcoreapp3.1/_._": {}
         },
         "runtimeTargets": {
-          "runtimes/win/lib/net9.0/System.Management.dll": {
+          "runtimes/win/lib/net6.0/System.Management.dll": {
             "assetType": "runtime",
             "rid": "win"
           }
@@ -141,29 +141,30 @@
         "logos_ant-design.png"
       ]
     },
-    "MaterialDesignColors/5.2.1": {
-      "sha512": "D0HW6E2/kzsnEWCh1KDG/K09Fpkvs9mR3n91Y8YSOsEAoQmGZbVAj58ssyAxGTiIPj2zB4ZVnwxkizwO35/v8A==",
+    "MaterialDesignColors/2.1.4": {
+      "sha512": "C4Oy+qkjMoMPoZKyqYdCnIYtK8c0OSIHmNP73Vgc69NjiUG093xTkE7W/Ks54cTDS7fmWOtUHfwISTVTtb/YKg==",
       "type": "package",
-      "path": "materialdesigncolors/5.2.1",
+      "path": "materialdesigncolors/2.1.4",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
-        "docs/README.md",
         "images/MaterialDesignColors.Icon.png",
         "lib/net462/MaterialDesignColors.dll",
         "lib/net462/MaterialDesignColors.pdb",
         "lib/net6.0/MaterialDesignColors.dll",
         "lib/net6.0/MaterialDesignColors.pdb",
-        "lib/net8.0/MaterialDesignColors.dll",
-        "lib/net8.0/MaterialDesignColors.pdb",
-        "materialdesigncolors.5.2.1.nupkg.sha512",
+        "lib/net7.0/MaterialDesignColors.dll",
+        "lib/net7.0/MaterialDesignColors.pdb",
+        "lib/netcoreapp3.1/MaterialDesignColors.dll",
+        "lib/netcoreapp3.1/MaterialDesignColors.pdb",
+        "materialdesigncolors.2.1.4.nupkg.sha512",
         "materialdesigncolors.nuspec"
       ]
     },
-    "MaterialDesignThemes/5.2.1": {
-      "sha512": "x8JDqNHJcTLLxIoVts3w7AbSq5Zo0FXTw89XqPN7+n0EKqLXFwWsywiUn08HDyTGAmZVJqbQsWKxKWCI8qfWsQ==",
+    "MaterialDesignThemes/4.9.0": {
+      "sha512": "Bp9Auw70j+9V7WsUMT4pc8ulVzfL0Eav/tyGgICDirxxhKJwhqtC/6PRkTUm+R1t9611xiDuk5pSUNdDV6vfOQ==",
       "type": "package",
-      "path": "materialdesignthemes/5.2.1",
+      "path": "materialdesignthemes/4.9.0",
       "hasTools": true,
       "files": [
         ".nupkg.metadata",
@@ -187,7 +188,6 @@
         "build/Resources/Roboto/RobotoCondensed-Light.ttf",
         "build/Resources/Roboto/RobotoCondensed-LightItalic.ttf",
         "build/Resources/Roboto/RobotoCondensed-Regular.ttf",
-        "docs/README.md",
         "images/MaterialDesignThemes.Icon.png",
         "lib/net462/MaterialDesignThemes.Wpf.dll",
         "lib/net462/MaterialDesignThemes.Wpf.pdb",
@@ -195,10 +195,13 @@
         "lib/net6.0/MaterialDesignThemes.Wpf.dll",
         "lib/net6.0/MaterialDesignThemes.Wpf.pdb",
         "lib/net6.0/MaterialDesignThemes.Wpf.xml",
-        "lib/net8.0/MaterialDesignThemes.Wpf.dll",
-        "lib/net8.0/MaterialDesignThemes.Wpf.pdb",
-        "lib/net8.0/MaterialDesignThemes.Wpf.xml",
-        "materialdesignthemes.5.2.1.nupkg.sha512",
+        "lib/net7.0/MaterialDesignThemes.Wpf.dll",
+        "lib/net7.0/MaterialDesignThemes.Wpf.pdb",
+        "lib/net7.0/MaterialDesignThemes.Wpf.xml",
+        "lib/netcoreapp3.1/MaterialDesignThemes.Wpf.dll",
+        "lib/netcoreapp3.1/MaterialDesignThemes.Wpf.pdb",
+        "lib/netcoreapp3.1/MaterialDesignThemes.Wpf.xml",
+        "materialdesignthemes.4.9.0.nupkg.sha512",
         "materialdesignthemes.nuspec",
         "tools/VisualStudioToolsManifest.xml"
       ]
@@ -228,95 +231,89 @@
         "tools/Install.ps1"
       ]
     },
-    "System.CodeDom/9.0.0": {
-      "sha512": "oTE5IfuMoET8yaZP/vdvy9xO47guAv/rOhe4DODuFBN3ySprcQOlXqO3j+e/H/YpKKR5sglrxRaZ2HYOhNJrqA==",
+    "System.CodeDom/6.0.0": {
+      "sha512": "CPc6tWO1LAer3IzfZufDBRL+UZQcj5uS207NHALQzP84Vp/z6wF0Aa0YZImOQY8iStY0A2zI/e3ihKNPfUm8XA==",
       "type": "package",
-      "path": "system.codedom/9.0.0",
+      "path": "system.codedom/6.0.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "Icon.png",
         "LICENSE.TXT",
-        "PACKAGE.md",
         "THIRD-PARTY-NOTICES.TXT",
-        "buildTransitive/net461/System.CodeDom.targets",
-        "buildTransitive/net462/_._",
-        "buildTransitive/net8.0/_._",
         "buildTransitive/netcoreapp2.0/System.CodeDom.targets",
-        "lib/net462/System.CodeDom.dll",
-        "lib/net462/System.CodeDom.xml",
-        "lib/net8.0/System.CodeDom.dll",
-        "lib/net8.0/System.CodeDom.xml",
-        "lib/net9.0/System.CodeDom.dll",
-        "lib/net9.0/System.CodeDom.xml",
+        "buildTransitive/netcoreapp3.1/_._",
+        "lib/net461/System.CodeDom.dll",
+        "lib/net461/System.CodeDom.xml",
+        "lib/net6.0/System.CodeDom.dll",
+        "lib/net6.0/System.CodeDom.xml",
         "lib/netstandard2.0/System.CodeDom.dll",
         "lib/netstandard2.0/System.CodeDom.xml",
-        "system.codedom.9.0.0.nupkg.sha512",
+        "system.codedom.6.0.0.nupkg.sha512",
         "system.codedom.nuspec",
         "useSharedDesignerContext.txt"
       ]
     },
-    "System.Management/9.0.0": {
-      "sha512": "bVh4xAMI5grY5GZoklKcMBLirhC8Lqzp63Ft3zXJacwGAlLyFdF4k0qz4pnKIlO6HyL2Z4zqmHm9UkzEo6FFsA==",
+    "System.Management/6.0.2": {
+      "sha512": "s6c9x2Kghd+ncEDnT6ApYVOacDXr/Y57oSUSx6wjegMOfKxhtrXn3PdASPNU59y3kB9OJ1yb3l5k6uKr3bhqew==",
       "type": "package",
-      "path": "system.management/9.0.0",
+      "path": "system.management/6.0.2",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "Icon.png",
         "LICENSE.TXT",
-        "PACKAGE.md",
         "THIRD-PARTY-NOTICES.TXT",
-        "buildTransitive/net8.0/_._",
         "buildTransitive/netcoreapp2.0/System.Management.targets",
-        "lib/net462/_._",
-        "lib/net8.0/System.Management.dll",
-        "lib/net8.0/System.Management.xml",
-        "lib/net9.0/System.Management.dll",
-        "lib/net9.0/System.Management.xml",
+        "buildTransitive/netcoreapp3.1/_._",
+        "lib/net461/_._",
+        "lib/net6.0/System.Management.dll",
+        "lib/net6.0/System.Management.xml",
+        "lib/netcoreapp3.1/System.Management.dll",
+        "lib/netcoreapp3.1/System.Management.xml",
         "lib/netstandard2.0/System.Management.dll",
         "lib/netstandard2.0/System.Management.xml",
-        "runtimes/win/lib/net8.0/System.Management.dll",
-        "runtimes/win/lib/net8.0/System.Management.xml",
-        "runtimes/win/lib/net9.0/System.Management.dll",
-        "runtimes/win/lib/net9.0/System.Management.xml",
-        "system.management.9.0.0.nupkg.sha512",
+        "runtimes/win/lib/net6.0/System.Management.dll",
+        "runtimes/win/lib/net6.0/System.Management.xml",
+        "runtimes/win/lib/netcoreapp3.1/System.Management.dll",
+        "runtimes/win/lib/netcoreapp3.1/System.Management.xml",
+        "system.management.6.0.2.nupkg.sha512",
         "system.management.nuspec",
         "useSharedDesignerContext.txt"
       ]
     }
   },
   "projectFileDependencyGroups": {
-    "net9.0-windows7.0": [
+    "net6.0-windows7.0": [
       "AntWpf >= 1.0.5",
-      "MaterialDesignThemes >= 5.2.1",
-      "System.Management >= 9.0.0"
+      "MaterialDesignThemes >= 4.9.0",
+      "System.Management >= 6.0.2"
     ]
   },
   "packageFolders": {
-    "C:\\Users\\lkero\\.nuget\\packages\\": {}
+    "C:\\Users\\gg260\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\lkero\\OneDrive\\Documentos\\GitHub\\kn2\\ShadowCheat.csproj",
+      "projectUniqueName": "C:\\Users\\gg260\\Documents\\GitHub\\kn2\\ShadowCheat.csproj",
       "projectName": "ShadowCheat",
-      "projectPath": "C:\\Users\\lkero\\OneDrive\\Documentos\\GitHub\\kn2\\ShadowCheat.csproj",
-      "packagesPath": "C:\\Users\\lkero\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\lkero\\OneDrive\\Documentos\\GitHub\\kn2\\obj\\",
+      "projectPath": "C:\\Users\\gg260\\Documents\\GitHub\\kn2\\ShadowCheat.csproj",
+      "packagesPath": "C:\\Users\\gg260\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\gg260\\Documents\\GitHub\\kn2\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\lkero\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\gg260\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
-        "net9.0-windows"
+        "net6.0-windows"
       ],
       "sources": {
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
-        "net9.0-windows7.0": {
-          "targetAlias": "net9.0-windows",
+        "net6.0-windows7.0": {
+          "targetAlias": "net6.0-windows",
           "projectReferences": {}
         }
       },
@@ -324,17 +321,11 @@
         "warnAsError": [
           "NU1605"
         ]
-      },
-      "restoreAuditProperties": {
-        "enableAudit": "true",
-        "auditLevel": "low",
-        "auditMode": "direct"
-      },
-      "SdkAnalysisLevel": "9.0.300"
+      }
     },
     "frameworks": {
-      "net9.0-windows7.0": {
-        "targetAlias": "net9.0-windows",
+      "net6.0-windows7.0": {
+        "targetAlias": "net6.0-windows",
         "dependencies": {
           "AntWpf": {
             "target": "Package",
@@ -342,11 +333,11 @@
           },
           "MaterialDesignThemes": {
             "target": "Package",
-            "version": "[5.2.1, )"
+            "version": "[4.9.0, )"
           },
           "System.Management": {
             "target": "Package",
-            "version": "[9.0.0, )"
+            "version": "[6.0.2, )"
           }
         },
         "imports": [
@@ -371,7 +362,7 @@
             "privateAssets": "none"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.315/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.428\\RuntimeIdentifierGraph.json"
       }
     }
   }

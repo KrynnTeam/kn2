@@ -4,7 +4,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" Background="Transparent">
-    <Grid Margin="40,30,40,30">
+    <Grid Margin="48,36,48,36">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
@@ -13,15 +13,15 @@
         <!-- Center branding -->
         <StackPanel Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center">
             <!-- Logo -->
-            <Border Width="100" Height="100" CornerRadius="28" HorizontalAlignment="Center" Margin="0,0,0,28">
+            <Border Width="100" Height="100" CornerRadius="32" HorizontalAlignment="Center" Margin="0,0,0,32">
                 <Border.Background>
                     <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                        <GradientStop Offset="0" Color="#FF00A8FF"/>
-                        <GradientStop Offset="1" Color="#FF8B5CF6"/>
+                        <GradientStop Offset="0" Color="#FFCC0000"/>
+                        <GradientStop Offset="1" Color="#FF8B0000"/>
                     </LinearGradientBrush>
                 </Border.Background>
                 <Border.Effect>
-                    <DropShadowEffect x:Name="LogoBreathing" Color="#00A8FF" Opacity="0.6" BlurRadius="36" ShadowDepth="0"/>
+                    <DropShadowEffect x:Name="LogoBreathing" Color="#CC0000" Opacity="0.6" BlurRadius="36" ShadowDepth="0"/>
                 </Border.Effect>
                 <TextBlock Text="KN2" FontFamily="Segoe UI" Foreground="White" FontSize="32" FontWeight="Bold"
                            HorizontalAlignment="Center" VerticalAlignment="Center"/>
@@ -30,14 +30,14 @@
             <TextBlock Text="KN2" FontSize="36" FontWeight="Bold" Foreground="White"
                        FontFamily="Segoe UI" HorizontalAlignment="Center" Margin="0,0,0,6"/>
             <TextBlock Text="AI-Powered Gaming Performance" FontSize="15" FontWeight="Light"
-                       Foreground="#FF94A3B8" FontFamily="Segoe UI" HorizontalAlignment="Center" Margin="0,0,0,48"/>
+                       Foreground="#FFA0A0A0" FontFamily="Segoe UI" HorizontalAlignment="Center" Margin="0,0,0,32"/>
 
             <!-- Decorative line -->
-            <Border Width="200" Height="2" HorizontalAlignment="Center" Margin="0,0,0,48" CornerRadius="1">
+            <Border Width="200" Height="2" HorizontalAlignment="Center" Margin="0,0,0,32" CornerRadius="1">
                 <Border.Background>
                     <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
                         <GradientStop Offset="0" Color="Transparent"/>
-                        <GradientStop Offset="0.5" Color="#FF00A8FF"/>
+                        <GradientStop Offset="0.5" Color="#FFCC0000"/>
                         <GradientStop Offset="1" Color="Transparent"/>
                     </LinearGradientBrush>
                 </Border.Background>
@@ -46,45 +46,45 @@
             <!-- Minimal feature icons -->
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,0">
                 <!-- AI -->
-                <StackPanel Margin="0,0,40,0">
+                <StackPanel Margin="0,0,48,0">
                     <Border Width="44" Height="44" CornerRadius="12" HorizontalAlignment="Center" Margin="0,0,0,8"
-                            Background="#1200A8FF">
+                            Background="#12CC0000">
                         <TextBlock Text="&#xE99A;" FontFamily="Segoe MDL2 Assets" FontSize="18"
-                                   Foreground="#FF00A8FF" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                   Foreground="#FFCC0000" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Border>
-                    <TextBlock Text="AI Engine" FontSize="11" Foreground="#FF94A3B8" FontFamily="Segoe UI"
+                    <TextBlock Text="AI Engine" FontSize="11" Foreground="#FFA0A0A0" FontFamily="Segoe UI"
                                HorizontalAlignment="Center"/>
                 </StackPanel>
-                <!-- Speed -->
-                <StackPanel Margin="0,0,40,0">
+                <!-- Performance -->
+                <StackPanel Margin="0,0,48,0">
                     <Border Width="44" Height="44" CornerRadius="12" HorizontalAlignment="Center" Margin="0,0,0,8"
-                            Background="#128B5CF6">
+                            Background="#128B0000">
                         <TextBlock Text="&#xE945;" FontFamily="Segoe MDL2 Assets" FontSize="18"
-                                   Foreground="#FF8B5CF6" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                   Foreground="#FF8B0000" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Border>
-                    <TextBlock Text="Performance" FontSize="11" Foreground="#FF94A3B8" FontFamily="Segoe UI"
+                    <TextBlock Text="Performance" FontSize="11" Foreground="#FFA0A0A0" FontFamily="Segoe UI"
                                HorizontalAlignment="Center"/>
                 </StackPanel>
-                <!-- Shield -->
+                <!-- Protection -->
                 <StackPanel>
                     <Border Width="44" Height="44" CornerRadius="12" HorizontalAlignment="Center" Margin="0,0,0,8"
-                            Background="#1210B981">
+                            Background="#12C0C0C0">
                         <TextBlock Text="&#xE730;" FontFamily="Segoe MDL2 Assets" FontSize="18"
-                                   Foreground="#FF10B981" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                   Foreground="#FFC0C0C0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                     </Border>
-                    <TextBlock Text="Protection" FontSize="11" Foreground="#FF94A3B8" FontFamily="Segoe UI"
+                    <TextBlock Text="Protection" FontSize="11" Foreground="#FFA0A0A0" FontFamily="Segoe UI"
                                HorizontalAlignment="Center"/>
                 </StackPanel>
             </StackPanel>
         </StackPanel>
 
         <!-- Bottom status -->
-        <Grid Grid.Row="1">
+        <Grid Grid.Row="1" Margin="0,12,0,0">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Bottom">
-                <Border Width="6" Height="6" CornerRadius="3" Background="#FF10B981" Margin="0,0,8,0" VerticalAlignment="Center"/>
-                <TextBlock Text="System Active" FontSize="11" Foreground="#FF475569" FontFamily="Segoe UI" VerticalAlignment="Center"/>
+                <Border Width="8" Height="8" CornerRadius="4" Background="#FFCC0000" Margin="0,0,8,0" VerticalAlignment="Center"/>
+                <TextBlock Text="System Active" FontSize="12" Foreground="#FF663333" FontFamily="Segoe UI" VerticalAlignment="Center"/>
             </StackPanel>
-            <TextBlock Text="v1.0.0" FontSize="11" Foreground="#FF475569" FontFamily="Segoe UI"
+            <TextBlock Text="v1.0.0" FontSize="11" Foreground="#FF663333" FontFamily="Segoe UI"
                        HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
         </Grid>
     </Grid>

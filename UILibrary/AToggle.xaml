@@ -5,9 +5,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d"
              d:DesignWidth="282.5" d:DesignHeight="40">
-    <Grid Height="40">
-        <Border x:Name="ToggleBorder" Height="40" Background="#0F0F1A"
-                CornerRadius="6" BorderThickness="1" BorderBrush="#FF2A2A40">
+    <Grid Height="44" Margin="0,0,0,6">
+        <Border x:Name="ToggleBorder" Height="44" Background="#0D0505"
+                CornerRadius="10" BorderThickness="1" BorderBrush="#FF3D1A1A">
             <Border.Effect>
                 <DropShadowEffect Color="#000000" Opacity="0.4" BlurRadius="8" ShadowDepth="2"/>
             </Border.Effect>
@@ -19,17 +19,17 @@
                        HorizontalAlignment="Left" />
                 <Border x:Name="SwitchBorder" HorizontalAlignment="Right" VerticalAlignment="Center"
                         Width="44" Height="24" CornerRadius="12" Margin="0,0,12,0"
-                        BorderThickness="2" BorderBrush="#FF3A3A55"
-                        Background="#FF1A1A2E">
-                    <Border x:Name="SwitchMoving" HorizontalAlignment="Left" VerticalAlignment="Center"
-                            Width="20" Height="20" Background="#FF554C70"
+                         BorderThickness="2" BorderBrush="#FF4A2020"
+                         Background="#FF1A0A0A">
+                     <Border x:Name="SwitchMoving" HorizontalAlignment="Left" VerticalAlignment="Center"
+                             Width="20" Height="20" Background="#FF8B0000"
                             CornerRadius="10" BorderThickness="0" Margin="2,0,0,0">
                         <Border.Effect>
                             <DropShadowEffect Color="#000000" Opacity="0.5" BlurRadius="4" ShadowDepth="1"/>
                         </Border.Effect>
                     </Border>
                 </Border>
-                <Button x:Name="Reader" Style="{StaticResource GhostButtonStyle}" Height="40" Focusable="False" />
+                <Button x:Name="Reader" Style="{StaticResource GhostButtonStyle}" Height="44" Focusable="False" />
             </Grid>
         </Border>
     </Grid>
