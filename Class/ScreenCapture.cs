@@ -51,46 +51,5 @@ namespace ShadowCheat.Class
             ReleaseDC(IntPtr.Zero, hdcSrc);
             return bitmap;
         }
-
-        public static float GetPixelContrast(Bitmap bmp, int x, int y, int size)
-        {
-            int half = size / 2;
-            long totalR = 0, totalG = 0, totalB = 0;
-            int count = 0;
-
-            for (int dy = -half; dy <= half; dy++)
-            {
-                for (int dx = -half; dx <= half; dx++)
-                {
-                    int px = Math.Clamp(x + dx, 0, bmp.Width - 1);
-                    int py = Math.Clamp(y + dy, 0, bmp.Height - 1);
-                    var pixel = bmp.GetPixel(px, py);
-                    totalR += pixel.R;
-                    totalG += pixel.G;
-                    totalB += pixel.B;
-                    count++;
-                }
-            }
-
-            float avgR = totalR / (float)count;
-            float avgG = totalG / (float)count;
-            float avgB = totalB / (float)count;
-
-            float variance = 0;
-            for (int dy = -half; dy <= half; dy++)
-            {
-                for (int dx = -half; dx <= half; dx++)
-                {
-                    int px = Math.Clamp(x + dx, 0, bmp.Width - 1);
-                    int py = Math.Clamp(y + dy, 0, bmp.Height - 1);
-                    var pixel = bmp.GetPixel(px, py);
-                    variance += (pixel.R - avgR) * (pixel.R - avgR) +
-                                (pixel.G - avgG) * (pixel.G - avgG) +
-                                (pixel.B - avgB) * (pixel.B - avgB);
-                }
-            }
-            variance /= count;
-            return (float)Math.Sqrt(variance / 3);
-        }
     }
 }

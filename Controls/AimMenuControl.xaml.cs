@@ -4,6 +4,8 @@ using ShadowCheat.UILibrary;
 using System;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
+using System.Windows.Media.Animation;
 
 namespace ShadowCheat.Controls
 {
@@ -60,26 +62,73 @@ namespace ShadowCheat.Controls
 
         private void ApplyPanelState(string name, StackPanel panel)
         {
-            if (_localMinimizeState.TryGetValue(name, out bool minimized))
-                SetPanelVisibility(panel, !minimized);
-        }
-
-        private void SetPanelVisibility(StackPanel panel, bool visible)
-        {
-            foreach (UIElement child in panel.Children)
-            {
-                if (child is ATitle || child is ASpacer || child is ARectangleBottom)
-                    child.Visibility = Visibility.Visible;
-                else
-                    child.Visibility = visible ? Visibility.Visible : Visibility.Collapsed;
-            }
+            if (!_localMinimizeState.TryGetValue(name, out bool minimized)) return;
+            var wrapper = GetSectionWrapper(panel, name);
+            if (wrapper == null) return;
+            wrapper.BeginAnimation(FrameworkElement.HeightProperty, null);
+            wrapper.Height = minimized ? 0 : double.NaN;
+            wrapper.Visibility = minimized ? Visibility.Collapsed : Visibility.Visible;
         }
 
         private void TogglePanel(string name, StackPanel panel)
         {
             if (!_localMinimizeState.ContainsKey(name)) return;
             _localMinimizeState[name] = !_localMinimizeState[name];
-            SetPanelVisibility(panel, !_localMinimizeState[name]);
+            var wrapper = GetSectionWrapper(panel, name);
+            if (wrapper == null) return;
+            if (_localMinimizeState[name])
+                CollapseSection(wrapper);
+            else
+                ExpandSection(wrapper);
+        }
+
+        private static Border? GetSectionWrapper(StackPanel panel, string name)
+        {
+            for (int i = 0; i < panel.Children.Count; i++)
+            {
+                if (panel.Children[i] is ATitle t &&
+                    string.Equals(t.LabelTitle.Content?.ToString(), name, StringComparison.Ordinal) &&
+                    i + 1 < panel.Children.Count &&
+                    panel.Children[i + 1] is Border wrapper)
+                    return wrapper;
+            }
+            return null;
+        }
+
+        private static void CollapseSection(Border wrapper)
+        {
+            double h = wrapper.ActualHeight;
+            if (h <= 0) return;
+            wrapper.Height = h;
+            var anim = new DoubleAnimation(h, 0, TimeSpan.FromSeconds(0.3));
+            anim.EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseIn };
+            anim.Completed += (_, _) =>
+            {
+                wrapper.BeginAnimation(FrameworkElement.HeightProperty, null);
+                wrapper.Height = double.NaN;
+                wrapper.Visibility = Visibility.Collapsed;
+            };
+            wrapper.BeginAnimation(FrameworkElement.HeightProperty, anim);
+        }
+
+        private static void ExpandSection(Border wrapper)
+        {
+            wrapper.BeginAnimation(FrameworkElement.HeightProperty, null);
+            wrapper.Visibility = Visibility.Visible;
+            wrapper.Height = double.NaN;
+            wrapper.UpdateLayout();
+            double target = wrapper.ActualHeight;
+            if (target <= 0) return;
+            wrapper.Height = 0;
+            wrapper.UpdateLayout();
+            var anim = new DoubleAnimation(0, target, TimeSpan.FromSeconds(0.3));
+            anim.EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseOut };
+            anim.Completed += (_, _) =>
+            {
+                wrapper.BeginAnimation(FrameworkElement.HeightProperty, null);
+                wrapper.Height = double.NaN;
+            };
+            wrapper.BeginAnimation(FrameworkElement.HeightProperty, anim);
         }
 
         private void LoadDetectionConfig()
@@ -92,10 +141,14 @@ namespace ShadowCheat.Controls
             });
             b.AddToggle("Detection Enabled", t =>
             {
+                var fm = _mainWindow!.FeatureManager;
+                if (fm.Detector.Profile.MinConfidence > 0) t.EnableSwitch();
                 t.Reader.Click += (_, _) =>
                 {
-                    var fm = _mainWindow!.FeatureManager;
-                    fm.Detector.Profile.MinConfidence = fm.Detector.Profile.MinConfidence > 0 ? 0 : 0.3f;
+                    var fm2 = _mainWindow!.FeatureManager;
+                    bool enable = fm2.Detector.Profile.MinConfidence <= 0;
+                    fm2.Detector.Profile.MinConfidence = enable ? 0.3f : 0;
+                    if (enable) t.EnableSwitch(); else t.DisableSwitch();
                 };
             }, "Enable screen-based target detection.");
             b.AddSlider("Scan Radius", "px", 10, 10, 30, 400, s =>
@@ -159,7 +212,7 @@ namespace ShadowCheat.Controls
                 t.Reader.Click += (_, _) =>
                 {
                     var f = _mainWindow!.FeatureManager.GetFeature<CrosshairPlacementAssist>();
-                    if (f != null) f.Enabled = !f.Enabled;
+                    if (f != null) { f.Enabled = !f.Enabled; SetSwitch(t, f.Enabled); }
                 };
             }, "Gently pull crosshair toward head trajectory. No snap.");
             b.AddSlider("Drag Strength", "Strength", 0.01, 0.01, 0.01, 0.50, s =>
@@ -194,7 +247,7 @@ namespace ShadowCheat.Controls
                 t.Reader.Click += (_, _) =>
                 {
                     var f = _mainWindow!.FeatureManager.GetFeature<StandstillAccuracy>();
-                    if (f != null) f.Enabled = !f.Enabled;
+                    if (f != null) { f.Enabled = !f.Enabled; SetSwitch(t, f.Enabled); }
                 };
             }, "Recover accuracy 50-80ms faster after stopping.");
             b.AddSlider("Recovery Boost", "ms", 1, 0, 10, 150, s =>
@@ -229,7 +282,7 @@ namespace ShadowCheat.Controls
                 t.Reader.Click += (_, _) =>
                 {
                     var f = _mainWindow!.FeatureManager.GetFeature<ShotOverride>();
-                    if (f != null) f.Enabled = !f.Enabled;
+                    if (f != null) { f.Enabled = !f.Enabled; SetSwitch(t, f.Enabled); }
                 };
             }, "Auto-fire when enemy peeks within trigger radius.");
             b.AddSlider("Trigger Radius", "px", 1, 0, 5, 80, s =>
@@ -264,7 +317,7 @@ namespace ShadowCheat.Controls
                 t.Reader.Click += (_, _) =>
                 {
                     var f = _mainWindow!.FeatureManager.GetFeature<NoRecoilNoise>();
-                    if (f != null) f.Enabled = !f.Enabled;
+                    if (f != null) { f.Enabled = !f.Enabled; SetSwitch(t, f.Enabled); }
                 };
             }, "Recoil compensation with ±15% random noise per bullet.");
             b.AddSlider("Compensation", "%", 1, 0, 20, 100, s =>
@@ -299,7 +352,7 @@ namespace ShadowCheat.Controls
                 t.Reader.Click += (_, _) =>
                 {
                     var f = _mainWindow!.FeatureManager.GetFeature<VisibilityAimLock>();
-                    if (f != null) f.Enabled = !f.Enabled;
+                    if (f != null) { f.Enabled = !f.Enabled; SetSwitch(t, f.Enabled); }
                 };
             }, "Only aim if target is visually distinct from background.");
             b.AddSlider("Min Contrast", "%", 1, 0, 5, 100, s =>
@@ -326,7 +379,7 @@ namespace ShadowCheat.Controls
                 t.Reader.Click += (_, _) =>
                 {
                     var f = _mainWindow!.FeatureManager.GetFeature<FlickAssist>();
-                    if (f != null) f.Enabled = !f.Enabled;
+                    if (f != null) { f.Enabled = !f.Enabled; SetSwitch(t, f.Enabled); }
                 };
             }, "Only actives on 60°+ flicks. Adds 15-25% random error.");
             b.AddSlider("Short Flick °", "deg", 1, 0, 5, 60, s =>
@@ -377,7 +430,7 @@ namespace ShadowCheat.Controls
                 t.Reader.Click += (_, _) =>
                 {
                     var f = _mainWindow!.FeatureManager.GetFeature<HwidSpoofing>();
-                    if (f != null) f.Enabled = !f.Enabled;
+                    if (f != null) { f.Enabled = !f.Enabled; SetSwitch(t, f.Enabled); }
                 };
             }, "Rotate window class/title every few minutes.");
             b.AddSlider("Rotation Interval", "min", 1, 0, 1, 30, s =>
@@ -389,6 +442,11 @@ namespace ShadowCheat.Controls
                 };
             }, "Minutes between identity rotations.");
             b.AddSeparator();
+        }
+
+        private static void SetSwitch(AToggle t, bool on)
+        {
+            if (on) t.EnableSwitch(); else t.DisableSwitch();
         }
 
         private SectionBuilder GetBuilder(StackPanel panel) => new(panel);

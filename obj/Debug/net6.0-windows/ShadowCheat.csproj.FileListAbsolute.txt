@@ -68,3 +68,9 @@ C:\Users\gg260\Documents\GitHub\kn2\obj\Debug\net6.0-windows\refint\ShadowCheat.
 C:\Users\gg260\Documents\GitHub\kn2\obj\Debug\net6.0-windows\ShadowCheat.pdb
 C:\Users\gg260\Documents\GitHub\kn2\obj\Debug\net6.0-windows\ShadowCheat.genruntimeconfig.cache
 C:\Users\gg260\Documents\GitHub\kn2\obj\Debug\net6.0-windows\ref\ShadowCheat.dll
+C:\Users\gg260\Documents\GitHub\kn2\obj\Debug\net6.0-windows\Controls\TriggerMenuControl.baml
+C:\Users\gg260\Documents\GitHub\kn2\obj\Debug\net6.0-windows\Controls\VisualMenuControl.baml
+C:\Users\gg260\Documents\GitHub\kn2\obj\Debug\net6.0-windows\Controls\TriggerMenuControl.g.cs
+C:\Users\gg260\Documents\GitHub\kn2\obj\Debug\net6.0-windows\Controls\VisualMenuControl.g.cs
+C:\Users\gg260\Documents\GitHub\kn2\obj\Debug\net6.0-windows\Controls\ScreenMenuControl.baml
+C:\Users\gg260\Documents\GitHub\kn2\obj\Debug\net6.0-windows\Controls\ScreenMenuControl.g.cs

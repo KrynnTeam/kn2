@@ -26,11 +26,14 @@ namespace ShadowCheat.Class
         private Ellipse? _fovCircle;
         private System.Windows.Shapes.Rectangle? _targetBox;
         private System.Windows.Shapes.Rectangle? _targetBoxOutline;
+        private Line? _crosshairH;
+        private Line? _crosshairV;
 
         public bool ShowFov { get; set; } = true;
         public float FovRadius { get; set; } = 150f;
         public Color FovColor { get; set; } = Color.FromArgb(0x44, 0x72, 0x2E, 0xD1);
         public bool ShowTargetBox { get; set; } = true;
+        public bool ShowCrosshairLines { get; set; } = true;
         public float TargetX { get; set; }
         public float TargetY { get; set; }
         public float TargetW { get; set; }
@@ -56,6 +59,7 @@ namespace ShadowCheat.Class
 
             CreateFovCircle();
             CreateTargetBox();
+            CreateCrosshairLines();
 
             Loaded += OnLoaded;
         }
@@ -91,6 +95,27 @@ namespace ShadowCheat.Class
             _canvas.Children.Add(_targetBoxOutline);
         }
 
+        private void CreateCrosshairLines()
+        {
+            var crossColor = Color.FromArgb(0x66, 0xFF, 0x00, 0x00);
+            _crosshairH = new Line
+            {
+                Stroke = new SolidColorBrush(crossColor),
+                StrokeThickness = 1,
+                IsHitTestVisible = false,
+                Visibility = Visibility.Collapsed
+            };
+            _crosshairV = new Line
+            {
+                Stroke = new SolidColorBrush(crossColor),
+                StrokeThickness = 1,
+                IsHitTestVisible = false,
+                Visibility = Visibility.Collapsed
+            };
+            _canvas.Children.Add(_crosshairH);
+            _canvas.Children.Add(_crosshairV);
+        }
+
         public void UpdateOverlay()
         {
             if (!IsVisible) return;
@@ -119,6 +144,23 @@ namespace ShadowCheat.Class
             else if (_targetBoxOutline != null)
             {
                 _targetBoxOutline.Visibility = Visibility.Collapsed;
+            }
+
+            float cx = (float)Width / 2;
+            float cy = (float)Height / 2;
+            if (ShowCrosshairLines && _crosshairH != null && _crosshairV != null)
+            {
+                _crosshairH.Visibility = Visibility.Visible;
+                _crosshairH.X1 = cx - 20; _crosshairH.Y1 = cy;
+                _crosshairH.X2 = cx - 6; _crosshairH.Y2 = cy;
+                _crosshairV.Visibility = Visibility.Visible;
+                _crosshairV.X1 = cx; _crosshairV.Y1 = cy - 20;
+                _crosshairV.X2 = cx; _crosshairV.Y2 = cy - 6;
+            }
+            else
+            {
+                if (_crosshairH != null) _crosshairH.Visibility = Visibility.Collapsed;
+                if (_crosshairV != null) _crosshairV.Visibility = Visibility.Collapsed;
             }
         }
 

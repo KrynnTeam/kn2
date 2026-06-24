@@ -4,6 +4,7 @@ namespace ShadowCheat.Class.Features
     {
         public bool Enabled { get; set; }
         public abstract string Name { get; }
+        public virtual bool RequiresScreenDetection => false;
         public abstract void Update(GameState state);
         public virtual void Initialize() { }
         public virtual void Shutdown() { }

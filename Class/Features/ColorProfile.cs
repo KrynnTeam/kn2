@@ -2,26 +2,23 @@ namespace ShadowCheat.Class.Features
 {
     public class ColorProfile
     {
-        public byte TargetR = 255;
-        public byte TargetG = 50;
-        public byte TargetB = 50;
-        public byte Tolerance = 60;
-        public float MinConfidence = 0.3f;
-        public float MinContrast = 20f;
-        public int ScanRadius = 150;
-        public int ScanStride = 3;
-        public int MinClusterSize = 8;
-        public int MaxClusterSize = 200;
-        public bool UseFrameDifferencing = true;
-        public float ColorWeight = 0.7f;
-        public float MotionWeight = 0.3f;
+        public byte TargetR = 200;
+        public byte TargetG = 40;
+        public byte TargetB = 40;
+        public byte Tolerance = 120;
+        public float MinConfidence = 0.1f;
+        public float MinContrast = 3f;
+        public int ScanRadius = 200;
+        public int ScanStride = 2;
+        public int MinClusterSize = 2;
+        public int MaxClusterSize = 500;
 
         public bool MatchColor(byte r, byte g, byte b)
         {
             int dr = Math.Abs(r - TargetR);
             int dg = Math.Abs(g - TargetG);
             int db = Math.Abs(b - TargetB);
-            return (dr + dg + db) / 3 <= Tolerance;
+            return dr + dg + db <= Tolerance * 3;
         }
 
         public float ColorSimilarity(byte r, byte g, byte b)
