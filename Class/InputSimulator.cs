@@ -18,11 +18,14 @@ namespace ShadowCheat.Class
         private const uint MOUSEEVENTF_LEFTUP = 0x0004;
         private const uint MOUSEEVENTF_RIGHTDOWN = 0x0008;
         private const uint MOUSEEVENTF_RIGHTUP = 0x0010;
+        private const uint MOUSEEVENTF_ABSOLUTE = 0x8000;
+        private const uint MOUSEEVENTF_VIRTUALDESK = 0x4000;
 
         [StructLayout(LayoutKind.Sequential)]
         private struct INPUT
         {
             public uint type;
+            private readonly uint _unionPadding; // aligns union to 8 bytes on x64
             public MOUSEINPUT mi;
         }
 
@@ -45,6 +48,29 @@ namespace ShadowCheat.Class
             {
                 type = INPUT_MOUSE,
                 mi = new MOUSEINPUT { dx = dx, dy = dy, dwFlags = MOUSEEVENTF_MOVE, time = 0, dwExtraInfo = UIntPtr.Zero }
+            };
+            SendInput(1, new[] { input }, Marshal.SizeOf<INPUT>());
+        }
+
+        // Absolute + relative fallback — some games only respond to this
+        public static void MoveMouseAbsolute(float targetX, float targetY)
+        {
+            int screenW = (int)System.Windows.SystemParameters.PrimaryScreenWidth;
+            int screenH = (int)System.Windows.SystemParameters.PrimaryScreenHeight;
+            int absX = (int)(targetX * 65535 / screenW);
+            int absY = (int)(targetY * 65535 / screenH);
+
+            var input = new INPUT
+            {
+                type = INPUT_MOUSE,
+                mi = new MOUSEINPUT
+                {
+                    dx = absX,
+                    dy = absY,
+                    dwFlags = MOUSEEVENTF_MOVE | MOUSEEVENTF_ABSOLUTE | MOUSEEVENTF_VIRTUALDESK,
+                    time = 0,
+                    dwExtraInfo = UIntPtr.Zero
+                }
             };
             SendInput(1, new[] { input }, Marshal.SizeOf<INPUT>());
         }
@@ -78,10 +104,10 @@ namespace ShadowCheat.Class
 
         public static bool IsKeyDown(int vKey) => (GetAsyncKeyState(vKey) & 0x8000) != 0;
 
-        public static void MoveMouseRelative(float sensitivity, float targetX, float targetY, float screenCenterX, float screenCenterY)
+        public static void MoveMouseRelative(float sensitivity, float targetX, float targetY, float cursorX, float cursorY)
         {
-            float deltaX = targetX - screenCenterX;
-            float deltaY = targetY - screenCenterY;
+            float deltaX = targetX - cursorX;
+            float deltaY = targetY - cursorY;
             float moveX = deltaX * sensitivity * 0.35f;
             float moveY = deltaY * sensitivity * 0.35f;
             moveX = Math.Clamp(moveX, -30, 30);

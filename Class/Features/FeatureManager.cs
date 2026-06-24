@@ -114,8 +114,9 @@ namespace ShadowCheat.Class.Features
                 if (_state.FlickAngle > 90) _state.FlickAngle = 180 - _state.FlickAngle;
             }
 
-            // Run detection every other frame to save CPU
-            if (_frameCount % 2 == 0 && _state.AimKeyHeld)
+            // Run screen detection when needed
+            bool needsDetection = _features.Any(f => f.Enabled && f.RequiresScreenDetection);
+            if (_state.AimKeyHeld || needsDetection)
             {
                 var targets = _detector.Detect(centerX, centerY);
                 _state.DetectedTargets = targets;
@@ -142,7 +143,7 @@ namespace ShadowCheat.Class.Features
                     _state.TargetVisible = false;
                 }
             }
-            else if (!_state.AimKeyHeld)
+            else
             {
                 _state.DetectedTargets?.Clear();
                 _state.BestTarget = null;
