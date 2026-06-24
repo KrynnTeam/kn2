@@ -6,7 +6,7 @@
              xmlns:ui="clr-namespace:ShadowCheat.UILibrary"
              mc:Ignorable="d">
     <ScrollViewer x:Name="SettingsMenu" VerticalScrollBarVisibility="Hidden"
-                  Background="Transparent">
+                   Background="Transparent" Padding="12,12,12,12">
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />

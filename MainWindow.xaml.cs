@@ -22,20 +22,21 @@ namespace ShadowCheat
         private UserControl? _currentControl;
         private string _currentMenu = "HomePage";
         private bool _currentlySwitching;
-        private readonly Button[] _navTabs = new Button[5];
-        private TextBlock?[] _tabTextBlocks = new TextBlock?[5];
+        private readonly Button[] _navTabs = new Button[6];
+        private TextBlock?[] _tabTextBlocks = new TextBlock?[6];
 
         private System.Windows.Forms.NotifyIcon? _trayIcon;
 
-        private static readonly string[] MenuNames = { "HomePage", "ModelMenu", "AimMenu", "SettingsMenu", "AcercaDe" };
+        private static readonly string[] MenuNames = { "HomePage", "ModelMenu", "AimMenu", "AcercaDe", "ScreenMenu", "SettingsMenu" };
 
         private static readonly Dictionary<string, (string title, string desc, string icon)> DashboardInfo = new()
         {
             ["HomePage"] = ("Inicio", "Bienvenido a KN2", "\uE80F"),
             ["ModelMenu"] = ("Juegos", "Selecciona tu juego y configura el modelo", "\uE7AC"),
             ["AimMenu"] = ("Cheats", "Opciones de asistencia y rendimiento", "\uE768"),
-            ["SettingsMenu"] = ("Ajustes", "Configuración general de la aplicación", "\uE713"),
             ["AcercaDe"] = ("Acerca de", "Información del proyecto y créditos", "\uE946"),
+            ["ScreenMenu"] = ("Screen", "Trigger, rapid fire and visual overlay", "\uE768"),
+            ["SettingsMenu"] = ("Ajustes", "Configuración general de la aplicación", "\uE713"),
         };
 
         private FeatureManager _featureManager = new();
@@ -138,6 +139,9 @@ namespace ShadowCheat
             _featureManager.AddFeature<NoRecoilNoise>();
             _featureManager.AddFeature<VisibilityAimLock>();
             _featureManager.AddFeature<FlickAssist>();
+            _featureManager.AddFeature<TriggerBot>();
+            _featureManager.AddFeature<RapidFire>();
+            _featureManager.AddFeature<ColorAimAssist>();
             _hwidSpoofer = _featureManager.AddFeature<HwidSpoofing>();
             _hwidSpoofer.AttachToWindow(this);
             _featureManager.Start();
@@ -168,6 +172,7 @@ namespace ShadowCheat
                 "AimMenu" => new AimMenuControl(),
                 "SettingsMenu" => new SettingsMenuControl(),
                 "AcercaDe" => new AboutMenuControl(),
+                "ScreenMenu" => new ScreenMenuControl(),
                 _ => throw new ArgumentException("Unknown menu: " + menuName)
             };
 
@@ -266,6 +271,9 @@ namespace ShadowCheat
                 case AboutMenuControl about:
                     about.Initialize(this);
                     break;
+                case ScreenMenuControl screen:
+                    screen.Initialize(this);
+                    break;
             }
         }
 
@@ -301,7 +309,7 @@ namespace ShadowCheat
 
         private void UpdateTabStyles(int activeIndex)
         {
-            _navTabs[0] = Menu1B; _navTabs[1] = Menu2B; _navTabs[2] = Menu3B; _navTabs[3] = Menu4B; _navTabs[4] = Menu5B;
+            _navTabs[0] = Menu1B; _navTabs[1] = Menu2B; _navTabs[2] = Menu3B; _navTabs[3] = Menu4B; _navTabs[4] = Menu5B; _navTabs[5] = Menu6B;
             var sliderTop = 19 + activeIndex * 62;
 
             if (SliderBar.Opacity < 0.5)
@@ -398,11 +406,20 @@ namespace ShadowCheat
             return null;
         }
 
+        public OverlayWindow? GetOverlay() => _overlay;
+
         public void ToggleOverlayVisibility()
         {
             if (_overlay == null) return;
-            if (_overlay.IsVisible) _overlay.Hide();
-            else _overlay.Show();
+            if (_overlay.Dispatcher.CheckAccess())
+            {
+                if (_overlay.IsVisible) _overlay.Hide();
+                else _overlay.Show();
+            }
+            else
+            {
+                _overlay.Dispatcher.Invoke(() => ToggleOverlayVisibility());
+            }
         }
 
         public void SetProcessPriority(int level)

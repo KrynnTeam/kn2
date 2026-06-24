@@ -4,14 +4,11 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              mc:Ignorable="d"
-             d:DesignWidth="282.5" Height="76">
+             d:DesignWidth="282.5" Height="80">
     <Grid>
-        <Border Height="80" Background="#0D0505"
-                CornerRadius="10" BorderThickness="1" BorderBrush="#FF3D1A1A">
-            <Border.Effect>
-                <DropShadowEffect Color="#000000" Opacity="0.4" BlurRadius="8" ShadowDepth="2"/>
-            </Border.Effect>
-    <Grid Margin="0,0,0,6">
+        <Border Height="84" Background="#0D0505"
+                CornerRadius="0" BorderThickness="1,0,1,0" BorderBrush="#FF3D1A1A">
+    <Grid>
                 <Label x:Name="DropdownTitle" Padding="12,10,0,0"
                        FontFamily="{StaticResource AtkinsonHyperlegible}"
                        Content="File Path" Foreground="#FFF0EBF5"

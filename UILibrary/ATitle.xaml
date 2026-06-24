@@ -7,7 +7,7 @@
              d:DesignWidth="282.5" d:DesignHeight="40">
     <Grid Height="50">
         <Border Height="50" Background="#0D0505"
-                CornerRadius="12" BorderThickness="1" BorderBrush="#FF3D1A1A">
+                CornerRadius="12,12,0,0" BorderThickness="1,1,1,0" BorderBrush="#FF3D1A1A">
             <Border.Effect>
                 <DropShadowEffect Color="#000000" Opacity="0.4" BlurRadius="8" ShadowDepth="2"/>
             </Border.Effect>

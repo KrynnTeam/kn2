@@ -1,0 +1,23 @@
+<UserControl x:Class="ShadowCheat.Controls.VisualMenuControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d">
+    <ScrollViewer x:Name="VisualMenu" VerticalScrollBarVisibility="Hidden" PanningMode="VerticalOnly"
+                  Background="Transparent" Padding="12,12,12,12">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <StackPanel x:Name="VSP1" Grid.Column="0" Margin="6,0,10,0">
+                <StackPanel x:Name="OverlayPanel" />
+                <StackPanel x:Name="ScanRadiusPanel" />
+            </StackPanel>
+            <StackPanel x:Name="VSP2" Grid.Column="1" Margin="10,0,6,0">
+                <StackPanel x:Name="OverlayStylePanel" />
+            </StackPanel>
+        </Grid>
+    </ScrollViewer>
+</UserControl>
