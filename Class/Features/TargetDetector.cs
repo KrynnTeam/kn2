@@ -142,16 +142,8 @@ namespace ShadowCheat.Class.Features
                     return cluster;
             }
 
-            // Fallback: return center with distance = scanR so aim assist pulls inward
-            return new DetectedTarget
-            {
-                CenterX = screenCenterX + 10,
-                CenterY = screenCenterY + 10,
-                Width = 10, Height = 10,
-                Confidence = 0.8f,
-                Contrast = 80f,
-                DistanceFromCrosshair = 15
-            };
+            // No matching body pixels found — don't aim
+            return null;
         }
 
         private DetectedTarget? FindNearestCluster(Bitmap bmp, int offsetX, int offsetY, int centerX, int centerY, int radius)

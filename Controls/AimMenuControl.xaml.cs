@@ -257,40 +257,28 @@ namespace ShadowCheat.Controls
             {
                 var aimFeature2 = _mainWindow!.FeatureManager.GetFeature<CrosshairPlacementAssist>();
                 if (aimFeature2 != null)
-                {
                     btn.ButtonTitle.Content = $"Aim Key: {KeyName(aimFeature2.AimKey)}";
-                }
-                bool listening = false;
-                System.Windows.Input.KeyEventHandler? kh = null;
-                System.Windows.Input.MouseButtonEventHandler? mh = null;
                 btn.Reader.Click += (_, _) =>
                 {
-                    if (listening) return;
-                    listening = true;
                     btn.ButtonTitle.Content = "Press a key...";
-                    _ = _mainWindow!.Dispatcher.BeginInvoke(new Action(() =>
+                    var timer = new System.Windows.Threading.DispatcherTimer
                     {
-                        kh = (_, ke) => CaptureKey(ke.Key, 0);
-                        mh = (_, me) => CaptureKey(null, (int)me.ChangedButton);
-                        System.Windows.Input.Keyboard.AddKeyDownHandler(_mainWindow!, kh);
-                        System.Windows.Input.Mouse.AddMouseDownHandler(_mainWindow!, mh);
-                    }));
-                };
-                void CaptureKey(System.Windows.Input.Key? key, int mouseBtn)
-                {
-                    if (!listening) return;
-                    listening = false;
-                    if (kh != null) System.Windows.Input.Keyboard.RemoveKeyDownHandler(_mainWindow!, kh);
-                    if (mh != null) System.Windows.Input.Mouse.RemoveMouseDownHandler(_mainWindow!, mh);
-                    int vk = mouseBtn switch
-                    {
-                        1 => 0x01, 2 => 0x02, 3 => 0x04,
-                        _ => key.HasValue ? System.Windows.Input.KeyInterop.VirtualKeyFromKey(key.Value) : 0x02
+                        Interval = TimeSpan.FromMilliseconds(80)
                     };
-                    var f = _mainWindow!.FeatureManager.GetFeature<CrosshairPlacementAssist>();
-                    if (f != null) f.AimKey = vk;
-                    btn.ButtonTitle.Content = $"Aim Key: {KeyName(vk)}";
-                }
+                    timer.Tick += (_, _) =>
+                    {
+                        for (int vk = 1; vk <= 254; vk++)
+                        {
+                            if (!InputSimulator.IsKeyDown(vk)) continue;
+                            timer.Stop();
+                            var f = _mainWindow!.FeatureManager.GetFeature<CrosshairPlacementAssist>();
+                            if (f != null) f.AimKey = vk;
+                            btn.ButtonTitle.Content = $"Aim Key: {KeyName(vk)}";
+                            return;
+                        }
+                    };
+                    timer.Start();
+                };
             });
             b.AddToggle("Automatic (Experimental)", t =>
             {
