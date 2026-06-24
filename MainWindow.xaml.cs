@@ -475,6 +475,24 @@ namespace ShadowCheat
             else toggle.DisableSwitch();
         }
 
+        public void ShowNotification(string featureName, bool enabled)
+        {
+            var toast = new ToastNotification(featureName, enabled);
+            NotificationLayer.Children.Insert(0, toast);
+            toast.ShowAnimation();
+
+            var timer = new System.Windows.Threading.DispatcherTimer
+            {
+                Interval = TimeSpan.FromMilliseconds(2500)
+            };
+            timer.Tick += (s, _) =>
+            {
+                timer.Stop();
+                toast.Dismiss();
+            };
+            timer.Start();
+        }
+
         public void ApplyThemeColor(Color color)
         {
             GradientThemeStop.Color = color;

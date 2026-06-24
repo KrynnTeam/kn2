@@ -27,7 +27,7 @@ namespace ShadowCheat.UILibrary
             SwitchBorder.BorderBrush = new SolidColorBrush(EnableColor);
             SwitchBorder.Background = new SolidColorBrush(EnableTrackColor);
             SwitchMoving.Background = new SolidColorBrush(EnableColor);
-            AnimObjectShift(SwitchMoving, new Thickness(0, 0, 2, 0));
+            AnimObjectShift(SwitchMoving, 22);
         }
 
         public void DisableSwitch()
@@ -36,14 +36,14 @@ namespace ShadowCheat.UILibrary
             SwitchBorder.BorderBrush = new SolidColorBrush(DisableColor);
             SwitchBorder.Background = new SolidColorBrush(DisableTrackColor);
             SwitchMoving.Background = new SolidColorBrush(DisableColor);
-            AnimObjectShift(SwitchMoving, new Thickness(2, 0, 0, 0));
+            AnimObjectShift(SwitchMoving, 2);
         }
 
-        private void AnimObjectShift(FrameworkElement element, Thickness to)
+        private void AnimObjectShift(FrameworkElement element, double leftMargin)
         {
             ThicknessAnimation anim = new()
             {
-                To = to,
+                To = new Thickness(leftMargin, 0, 0, 0),
                 Duration = AnimationDuration,
                 EasingFunction = new QuarticEase { EasingMode = EasingMode.EaseInOut }
             };

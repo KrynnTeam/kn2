@@ -21,6 +21,10 @@
         <WindowChrome ResizeBorderThickness="2" CaptionHeight="0" />
     </WindowChrome.WindowChrome>
     <Grid>
+        <!-- Notification overlay -->
+        <StackPanel x:Name="NotificationLayer" HorizontalAlignment="Center" VerticalAlignment="Top"
+                    Margin="0,12,0,0" ZIndex="100" IsHitTestVisible="False"/>
+
         <Border x:Name="MainBorder" CornerRadius="24" BorderBrush="#22CC0000" BorderThickness="1" SizeChanged="MainBorder_SizeChanged">
             <Border.Effect>
                 <DropShadowEffect Color="#000000" Opacity="0.25" BlurRadius="8" ShadowDepth="5"/>

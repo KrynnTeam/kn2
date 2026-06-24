@@ -5,7 +5,7 @@ namespace ShadowCheat.Class.Features
         public override string Name => "Shot Override";
         public float TriggerRadius { get; set; } = 30f;
         public int TriggerDelayMs { get; set; } = 5;
-        public bool RequirePeekDetection { get; set; } = true;
+        public bool RequirePeekDetection { get; set; } = false;
         private DateTime _lastShotTime;
 
         public override void Update(GameState state)

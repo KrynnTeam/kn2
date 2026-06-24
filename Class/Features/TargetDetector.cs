@@ -61,6 +61,102 @@ namespace ShadowCheat.Class.Features
             return results;
         }
 
+        public DetectedTarget? DetectCrosshair(float screenCenterX, float screenCenterY)
+        {
+            int x = Math.Max(0, (int)screenCenterX);
+            int y = Math.Max(0, (int)screenCenterY);
+
+            using var bmp = CaptureRegion(x, y, 1, 1);
+            if (bmp == null) return null;
+
+            var pixel = bmp.GetPixel(0, 0);
+
+            if (Profile.BaselineFrames < ColorProfile.BaselineSampleFrames)
+            {
+                Profile.BaselineFrames++;
+                if (Profile.BaselineColor == null)
+                    Profile.BaselineColor = pixel;
+                else
+                {
+                    int br = (Profile.BaselineColor.Value.R * (Profile.BaselineFrames - 1) + pixel.R) / Profile.BaselineFrames;
+                    int bg = (Profile.BaselineColor.Value.G * (Profile.BaselineFrames - 1) + pixel.G) / Profile.BaselineFrames;
+                    int bb = (Profile.BaselineColor.Value.B * (Profile.BaselineFrames - 1) + pixel.B) / Profile.BaselineFrames;
+                    Profile.BaselineColor = Color.FromArgb(br, bg, bb);
+                }
+                return null;
+            }
+
+            if (!Profile.IsCrosshairColorDifferent(pixel)) return null;
+
+            // Center pixel changed — scan a tight ring around center for a target body
+            int scanR = 40;
+            int captureX = Math.Max(0, (int)screenCenterX - scanR);
+            int captureY = Math.Max(0, (int)screenCenterY - scanR);
+            int captureW = Math.Min(scanR * 2, (int)System.Windows.SystemParameters.PrimaryScreenWidth - captureX);
+            int captureH = Math.Min(scanR * 2, (int)System.Windows.SystemParameters.PrimaryScreenHeight - captureY);
+
+            using var ring = CaptureRegion(captureX, captureY, captureW, captureH);
+            if (ring != null)
+            {
+                int midX = (int)screenCenterX - captureX;
+                int midY = (int)screenCenterY - captureY;
+                int searchRadius = 35;
+                var cluster = FindNearestCluster(ring, captureX, captureY, midX, midY, searchRadius);
+                if (cluster != null)
+                    return cluster;
+            }
+
+            // Fallback: return center with distance = scanR so aim assist pulls inward
+            return new DetectedTarget
+            {
+                CenterX = screenCenterX + 10,
+                CenterY = screenCenterY + 10,
+                Width = 10, Height = 10,
+                Confidence = 0.8f,
+                Contrast = 80f,
+                DistanceFromCrosshair = 15
+            };
+        }
+
+        private DetectedTarget? FindNearestCluster(Bitmap bmp, int offsetX, int offsetY, int centerX, int centerY, int radius)
+        {
+            int w = bmp.Width;
+            int h = bmp.Height;
+            float bestDist = float.MaxValue;
+            DetectedTarget? best = null;
+
+            for (int y = 0; y < h; y += 2)
+            {
+                for (int x = 0; x < w; x += 2)
+                {
+                    float dx = x - centerX;
+                    float dy = y - centerY;
+                    float dist = dx * dx + dy * dy;
+                    if (dist > radius * radius) continue;
+
+                    var px = bmp.GetPixel(x, y);
+                    if (!Profile.MatchColor(px.R, px.G, px.B)) continue;
+
+                    float worldX = x + offsetX;
+                    float worldY = y + offsetY;
+                    float dFromCrosshair = MathF.Sqrt(dx * dx + dy * dy);
+                    if (dFromCrosshair < bestDist)
+                    {
+                        bestDist = dFromCrosshair;
+                        best = new DetectedTarget
+                        {
+                            CenterX = worldX, CenterY = worldY,
+                            Width = 8, Height = 8,
+                            Confidence = 0.9f, Contrast = 70f,
+                            DistanceFromCrosshair = dFromCrosshair
+                        };
+                    }
+                }
+            }
+
+            return best;
+        }
+
         private Bitmap? CaptureRegion(int x, int y, int w, int h)
         {
             IntPtr hdcSrc = NativeMethods.GetDC(IntPtr.Zero);
