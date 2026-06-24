@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-C:\Users\gg260\Documents\GitHub\kn2\obj\Release\net6.0-windows\
+C:\Users\lkero\OneDrive\Documentos\GitHub\kn2\obj\Release\net6.0-windows\
 ShadowCheat
 none
 false
-TRACE;RELEASE;NET;NET6_0;NETCOREAPP
-C:\Users\gg260\Documents\GitHub\kn2\App.xaml
-211550178188
-22131478605
-45996242593
-207-1081476721
-Controls\AboutMenuControl.xaml;Controls\AimMenuControl.xaml;Controls\ColorPicker.xaml;Controls\HomePageControl.xaml;Controls\JuegosPage.xaml;Controls\ModelMenuControl.xaml;Controls\SettingsMenuControl.xaml;LoginWindow.xaml;MainWindow.xaml;UILibrary\AColorChanger.xaml;UILibrary\AColorWheel.xaml;UILibrary\ADisplaySelector.xaml;UILibrary\ADropdown.xaml;UILibrary\AFileLocator.xaml;UILibrary\AKeyChanger.xaml;UILibrary\APButton.xaml;UILibrary\ARectangleBottom.xaml;UILibrary\ASlider.xaml;UILibrary\ASpacer.xaml;UILibrary\ATitle.xaml;UILibrary\AToggle.xaml;
+TRACE;RELEASE;NET;NET6_0;NETCOREAPP;WINDOWS;WINDOWS7_0;NET5_0_OR_GREATER;NET6_0_OR_GREATER;NETCOREAPP3_0_OR_GREATER;NETCOREAPP3_1_OR_GREATER;WINDOWS7_0_OR_GREATER
+C:\Users\lkero\OneDrive\Documentos\GitHub\kn2\App.xaml
+23-815513662
+2-1824708773
+47-271812893
+207-2002135247
+Controls\AboutMenuControl.xaml;Controls\AboutPage.xaml;Controls\AimMenuControl.xaml;Controls\ColorPicker.xaml;Controls\HomePageControl.xaml;Controls\JuegosPage.xaml;Controls\ModelMenuControl.xaml;Controls\SettingsMenuControl.xaml;LoginWindow.xaml;MainWindow.xaml;UILibrary\AColorChanger.xaml;UILibrary\AColorWheel.xaml;UILibrary\ADisplaySelector.xaml;UILibrary\ADropdown.xaml;UILibrary\AFileLocator.xaml;UILibrary\AKeyChanger.xaml;UILibrary\APButton.xaml;UILibrary\ARectangleBottom.xaml;UILibrary\ASlider.xaml;UILibrary\ASpacer.xaml;UILibrary\ATitle.xaml;UILibrary\AToggle.xaml;UILibrary\ToastNotification.xaml;
 
 False
 

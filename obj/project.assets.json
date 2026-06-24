@@ -291,19 +291,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\gg260\\.nuget\\packages\\": {}
+    "C:\\Users\\lkero\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\gg260\\Documents\\GitHub\\kn2\\ShadowCheat.csproj",
+      "projectUniqueName": "C:\\Users\\lkero\\OneDrive\\Documentos\\GitHub\\kn2\\ShadowCheat.csproj",
       "projectName": "ShadowCheat",
-      "projectPath": "C:\\Users\\gg260\\Documents\\GitHub\\kn2\\ShadowCheat.csproj",
-      "packagesPath": "C:\\Users\\gg260\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\gg260\\Documents\\GitHub\\kn2\\obj\\",
+      "projectPath": "C:\\Users\\lkero\\OneDrive\\Documentos\\GitHub\\kn2\\ShadowCheat.csproj",
+      "packagesPath": "C:\\Users\\lkero\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\lkero\\OneDrive\\Documentos\\GitHub\\kn2\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\gg260\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\lkero\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net6.0-windows"
@@ -321,7 +321,13 @@
         "warnAsError": [
           "NU1605"
         ]
-      }
+      },
+      "restoreAuditProperties": {
+        "enableAudit": "true",
+        "auditLevel": "low",
+        "auditMode": "direct"
+      },
+      "SdkAnalysisLevel": "9.0.300"
     },
     "frameworks": {
       "net6.0-windows7.0": {
@@ -351,6 +357,24 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
+        "downloadDependencies": [
+          {
+            "name": "Microsoft.AspNetCore.App.Ref",
+            "version": "[6.0.36, 6.0.36]"
+          },
+          {
+            "name": "Microsoft.NETCore.App.Host.win-x64",
+            "version": "[6.0.36, 6.0.36]"
+          },
+          {
+            "name": "Microsoft.NETCore.App.Ref",
+            "version": "[6.0.36, 6.0.36]"
+          },
+          {
+            "name": "Microsoft.WindowsDesktop.App.Ref",
+            "version": "[6.0.36, 6.0.36]"
+          }
+        ],
         "frameworkReferences": {
           "Microsoft.NETCore.App": {
             "privateAssets": "all"
@@ -362,7 +386,7 @@
             "privateAssets": "none"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.428\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.315\\RuntimeIdentifierGraph.json"
       }
     }
   }

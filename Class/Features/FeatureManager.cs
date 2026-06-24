@@ -89,7 +89,12 @@ namespace ShadowCheat.Class.Features
 
             _state.InGame = true;
             _state.CrosshairPosition = new System.Numerics.Vector2(centerX, centerY);
-            _state.AimKeyHeld = InputSimulator.IsKeyDown(0x02) ||
+
+            var aimAssist = GetFeature<CrosshairPlacementAssist>();
+            int aimKey = aimAssist?.AimKey ?? 0x02;
+            bool requireKey = aimAssist?.RequireAimKey ?? true;
+            _state.AimKeyHeld = !requireKey ||
+                                InputSimulator.IsKeyDown(aimKey) ||
                                 InputSimulator.IsKeyDown(0xA0) ||
                                 InputSimulator.IsKeyDown(0xA1);
 
@@ -118,29 +123,49 @@ namespace ShadowCheat.Class.Features
             bool needsDetection = _features.Any(f => f.Enabled && f.RequiresScreenDetection);
             if (_state.AimKeyHeld || needsDetection)
             {
-                var targets = _detector.Detect(centerX, centerY);
-                _state.DetectedTargets = targets;
-
-                // Pick best target (closest to center with sufficient confidence)
-                var best = targets
-                    .Where(t => t.Confidence >= _detector.Profile.MinConfidence)
-                    .OrderBy(t => t.DistanceFromCrosshair)
-                    .FirstOrDefault();
-
-                if (best != null && best.Contrast >= _detector.Profile.MinContrast)
+                if (_detector.Profile.Mode == DetectionMode.Crosshair)
                 {
-                    _state.BestTarget = best;
-                    _state.AimTarget = new System.Numerics.Vector2(best.CenterX, best.CenterY);
-                    _state.TargetDistance = best.DistanceFromCrosshair;
-                    _state.TargetAngle = (float)(Math.Atan2(
-                        best.CenterY - centerY, best.CenterX - centerX) * 180 / Math.PI);
-                    _state.TargetVisible = true;
-                    _state.TargetContrast = best.Contrast;
+                    var crosshairTarget = _detector.DetectCrosshair(centerX, centerY);
+                    if (crosshairTarget != null)
+                    {
+                        _state.BestTarget = crosshairTarget;
+                        _state.AimTarget = new System.Numerics.Vector2(centerX, centerY);
+                        _state.TargetDistance = 0;
+                        _state.TargetAngle = 0;
+                        _state.TargetVisible = true;
+                        _state.TargetContrast = 100f;
+                    }
+                    else
+                    {
+                        _state.BestTarget = null;
+                        _state.TargetVisible = false;
+                    }
                 }
                 else
                 {
-                    _state.BestTarget = null;
-                    _state.TargetVisible = false;
+                    var targets = _detector.Detect(centerX, centerY);
+                    _state.DetectedTargets = targets;
+
+                    var best = targets
+                        .Where(t => t.Confidence >= _detector.Profile.MinConfidence)
+                        .OrderBy(t => t.DistanceFromCrosshair)
+                        .FirstOrDefault();
+
+                    if (best != null && best.Contrast >= _detector.Profile.MinContrast)
+                    {
+                        _state.BestTarget = best;
+                        _state.AimTarget = new System.Numerics.Vector2(best.CenterX, best.CenterY);
+                        _state.TargetDistance = best.DistanceFromCrosshair;
+                        _state.TargetAngle = (float)(Math.Atan2(
+                            best.CenterY - centerY, best.CenterX - centerX) * 180 / Math.PI);
+                        _state.TargetVisible = true;
+                        _state.TargetContrast = best.Contrast;
+                    }
+                    else
+                    {
+                        _state.BestTarget = null;
+                        _state.TargetVisible = false;
+                    }
                 }
             }
             else

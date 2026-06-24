@@ -2,10 +2,10 @@ using ShadowCheat.Class;
 using ShadowCheat.Class.Features;
 using ShadowCheat.UILibrary;
 using System;
+using System.Drawing;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
 
 namespace ShadowCheat.Controls
 {
@@ -62,73 +62,39 @@ namespace ShadowCheat.Controls
 
         private void ApplyPanelState(string name, StackPanel panel)
         {
-            if (!_localMinimizeState.TryGetValue(name, out bool minimized)) return;
-            var wrapper = GetSectionWrapper(panel, name);
-            if (wrapper == null) return;
-            wrapper.BeginAnimation(FrameworkElement.HeightProperty, null);
-            wrapper.Height = minimized ? 0 : double.NaN;
-            wrapper.Visibility = minimized ? Visibility.Collapsed : Visibility.Visible;
+            if (_localMinimizeState.TryGetValue(name, out bool minimized))
+                SetPanelVisibility(panel, !minimized);
+        }
+
+        private void SetPanelVisibility(StackPanel panel, bool visible)
+        {
+            foreach (UIElement child in panel.Children)
+            {
+                if (child is ATitle || child is ASpacer || child is ARectangleBottom)
+                    child.Visibility = Visibility.Visible;
+                else
+                    child.Visibility = visible ? Visibility.Visible : Visibility.Collapsed;
+            }
         }
 
         private void TogglePanel(string name, StackPanel panel)
         {
             if (!_localMinimizeState.ContainsKey(name)) return;
             _localMinimizeState[name] = !_localMinimizeState[name];
-            var wrapper = GetSectionWrapper(panel, name);
-            if (wrapper == null) return;
-            if (_localMinimizeState[name])
-                CollapseSection(wrapper);
-            else
-                ExpandSection(wrapper);
+            SetPanelVisibility(panel, !_localMinimizeState[name]);
         }
 
-        private static Border? GetSectionWrapper(StackPanel panel, string name)
+        private void WireToggle<T>(AToggle t, string displayName) where T : FeatureBase, new()
         {
-            for (int i = 0; i < panel.Children.Count; i++)
+            t.Reader.Click += (_, _) =>
             {
-                if (panel.Children[i] is ATitle t &&
-                    string.Equals(t.LabelTitle.Content?.ToString(), name, StringComparison.Ordinal) &&
-                    i + 1 < panel.Children.Count &&
-                    panel.Children[i + 1] is Border wrapper)
-                    return wrapper;
-            }
-            return null;
-        }
-
-        private static void CollapseSection(Border wrapper)
-        {
-            double h = wrapper.ActualHeight;
-            if (h <= 0) return;
-            wrapper.Height = h;
-            var anim = new DoubleAnimation(h, 0, TimeSpan.FromSeconds(0.3));
-            anim.EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseIn };
-            anim.Completed += (_, _) =>
-            {
-                wrapper.BeginAnimation(FrameworkElement.HeightProperty, null);
-                wrapper.Height = double.NaN;
-                wrapper.Visibility = Visibility.Collapsed;
+                var f = _mainWindow!.FeatureManager.GetFeature<T>();
+                if (f == null) return;
+                bool newState = !f.Enabled;
+                f.Enabled = newState;
+                if (newState) t.EnableSwitch(); else t.DisableSwitch();
+                _mainWindow.ShowNotification(displayName, newState);
             };
-            wrapper.BeginAnimation(FrameworkElement.HeightProperty, anim);
-        }
-
-        private static void ExpandSection(Border wrapper)
-        {
-            wrapper.BeginAnimation(FrameworkElement.HeightProperty, null);
-            wrapper.Visibility = Visibility.Visible;
-            wrapper.Height = double.NaN;
-            wrapper.UpdateLayout();
-            double target = wrapper.ActualHeight;
-            if (target <= 0) return;
-            wrapper.Height = 0;
-            wrapper.UpdateLayout();
-            var anim = new DoubleAnimation(0, target, TimeSpan.FromSeconds(0.3));
-            anim.EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseOut };
-            anim.Completed += (_, _) =>
-            {
-                wrapper.BeginAnimation(FrameworkElement.HeightProperty, null);
-                wrapper.Height = double.NaN;
-            };
-            wrapper.BeginAnimation(FrameworkElement.HeightProperty, anim);
         }
 
         private void LoadDetectionConfig()
@@ -141,14 +107,23 @@ namespace ShadowCheat.Controls
             });
             b.AddToggle("Detection Enabled", t =>
             {
-                var fm = _mainWindow!.FeatureManager;
-                if (fm.Detector.Profile.MinConfidence > 0) t.EnableSwitch();
                 t.Reader.Click += (_, _) =>
                 {
-                    var fm2 = _mainWindow!.FeatureManager;
-                    bool enable = fm2.Detector.Profile.MinConfidence <= 0;
-                    fm2.Detector.Profile.MinConfidence = enable ? 0.3f : 0;
-                    if (enable) t.EnableSwitch(); else t.DisableSwitch();
+                    var fm = _mainWindow!.FeatureManager;
+                    var profile = fm.Detector.Profile;
+                    bool isEnabled = profile.MinConfidence < 1.0f;
+                    if (isEnabled)
+                    {
+                        profile.MinConfidence = 1.01f;
+                        t.DisableSwitch();
+                        _mainWindow.ShowNotification("Target Detection", false);
+                    }
+                    else
+                    {
+                        profile.MinConfidence = 0.3f;
+                        t.EnableSwitch();
+                        _mainWindow.ShowNotification("Target Detection", true);
+                    }
                 };
             }, "Enable screen-based target detection.");
             b.AddSlider("Scan Radius", "px", 10, 10, 30, 400, s =>
@@ -186,14 +161,69 @@ namespace ShadowCheat.Controls
                     System.Windows.Media.Color.FromRgb(profile.TargetR, profile.TargetG, profile.TargetB));
                 c.Reader.Click += (_, _) =>
                 {
-                    var picker = new ColorPicker(
-                        ((System.Windows.Media.SolidColorBrush)c.ColorChangingBorder.Background).Color, "Enemy Color");
-                    picker.ColorChanged += color =>
+                    try
                     {
-                        c.ColorChangingBorder.Background = new System.Windows.Media.SolidColorBrush(color);
-                        _mainWindow!.FeatureManager.Detector.SetColor(color.R, color.G, color.B);
-                    };
-                    picker.Show();
+                        var picker = new ColorPicker(
+                            ((System.Windows.Media.SolidColorBrush)c.ColorChangingBorder.Background).Color, "Enemy Color");
+                        picker.ColorChanged += color =>
+                        {
+                            c.ColorChangingBorder.Background = new System.Windows.Media.SolidColorBrush(color);
+                            _mainWindow!.FeatureManager.Detector.SetColor(color.R, color.G, color.B);
+                        };
+                        picker.ShowDialog();
+                    }
+                    catch
+                    {
+                        using var cd = new System.Windows.Forms.ColorDialog
+                        {
+                            Color = System.Drawing.Color.FromArgb(profile.TargetR, profile.TargetG, profile.TargetB),
+                            FullOpen = true
+                        };
+                        if (cd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                        {
+                            var wpfColor = System.Windows.Media.Color.FromRgb(cd.Color.R, cd.Color.G, cd.Color.B);
+                            c.ColorChangingBorder.Background = new System.Windows.Media.SolidColorBrush(wpfColor);
+                            _mainWindow!.FeatureManager.Detector.SetColor(cd.Color.R, cd.Color.G, cd.Color.B);
+                        }
+                    }
+                };
+            });
+            b.AddButton("Pick from Screen", btn =>
+            {
+                btn.Reader.Click += async (_, _) =>
+                {
+                    btn.ButtonTitle.Content = "3...";
+                    await Task.Delay(1000);
+                    btn.ButtonTitle.Content = "2...";
+                    await Task.Delay(1000);
+                    btn.ButtonTitle.Content = "1...";
+                    await Task.Delay(1000);
+
+                    var cursorPos = System.Windows.Forms.Cursor.Position;
+                    using var bmp = new System.Drawing.Bitmap(1, 1);
+                    using var g = System.Drawing.Graphics.FromImage(bmp);
+                    g.CopyFromScreen(cursorPos.X, cursorPos.Y, 0, 0, new System.Drawing.Size(1, 1));
+                    var pixel = bmp.GetPixel(0, 0);
+
+                    var profile = _mainWindow!.FeatureManager.Detector.Profile;
+                    profile.TargetR = pixel.R;
+                    profile.TargetG = pixel.G;
+                    profile.TargetB = pixel.B;
+
+                    foreach (var child in DetectionPanel.Children)
+                    {
+                        if (child is AColorChanger acc)
+                        {
+                            acc.ColorChangingBorder.Background =
+                                new System.Windows.Media.SolidColorBrush(
+                                    System.Windows.Media.Color.FromRgb(pixel.R, pixel.G, pixel.B));
+                            break;
+                        }
+                    }
+
+                    btn.ButtonTitle.Content = $"Sampled RGB({pixel.R},{pixel.G},{pixel.B})";
+                    _ = Task.Delay(2000).ContinueWith(_ =>
+                        btn.Dispatcher.Invoke(() => btn.ButtonTitle.Content = "Pick from Screen"));
                 };
             });
             b.AddSeparator();
@@ -202,35 +232,107 @@ namespace ShadowCheat.Controls
         private void LoadCrosshairPlacement()
         {
             var b = GetBuilder(CrosshairAssistPanel);
-            b.AddTitle("Crosshair Placement", true, t => t.Minimize.Click += (_, _) =>
+            b.AddTitle("Aim Assist", true, t => t.Minimize.Click += (_, _) =>
             {
                 TogglePanel("Crosshair Placement", CrosshairAssistPanel);
                 t.SetMinimizedIcon(_localMinimizeState["Crosshair Placement"]);
             });
-            b.AddToggle("Placement Assist", t =>
+            b.AddToggle("Aim Assist", t =>
             {
+                WireToggle<CrosshairPlacementAssist>(t, "Aim Assist");
+            }, "Gently pull crosshair toward target. No snap.");
+            var isCross = _mainWindow!.FeatureManager.Detector.Profile.Mode == DetectionMode.Crosshair;
+            b.AddButton(isCross ? "Mode: Crosshair" : "Mode: Color", btn =>
+            {
+                btn.ButtonTitle.Content = isCross ? "Mode: Crosshair" : "Mode: Color";
+                btn.Reader.Click += (_, _) =>
+                {
+                    var profile = _mainWindow!.FeatureManager.Detector.Profile;
+                    profile.Mode = profile.Mode == DetectionMode.Color ? DetectionMode.Crosshair : DetectionMode.Color;
+                    profile.ResetBaseline();
+                    btn.ButtonTitle.Content = profile.Mode == DetectionMode.Crosshair ? "Mode: Crosshair" : "Mode: Color";
+                };
+            });
+            b.AddButton("Aim Key: Right Click", btn =>
+            {
+                var aimFeature2 = _mainWindow!.FeatureManager.GetFeature<CrosshairPlacementAssist>();
+                if (aimFeature2 != null)
+                    btn.ButtonTitle.Content = $"Aim Key: {KeyName(aimFeature2.AimKey)}";
+                btn.Reader.Click += (_, _) =>
+                {
+                    btn.ButtonTitle.Content = "Press a key...";
+                    var timer = new System.Windows.Threading.DispatcherTimer
+                    {
+                        Interval = TimeSpan.FromMilliseconds(80)
+                    };
+                    timer.Tick += (_, _) =>
+                    {
+                        for (int vk = 1; vk <= 254; vk++)
+                        {
+                            if (!InputSimulator.IsKeyDown(vk)) continue;
+                            timer.Stop();
+                            var f = _mainWindow!.FeatureManager.GetFeature<CrosshairPlacementAssist>();
+                            if (f != null) f.AimKey = vk;
+                            btn.ButtonTitle.Content = $"Aim Key: {KeyName(vk)}";
+                            return;
+                        }
+                    };
+                    timer.Start();
+                };
+            });
+            b.AddToggle("Automatic (Experimental)", t =>
+            {
+                var aimFeature3 = _mainWindow!.FeatureManager.GetFeature<CrosshairPlacementAssist>();
+                if (aimFeature3 != null && !aimFeature3.RequireAimKey)
+                    t.EnableSwitch();
                 t.Reader.Click += (_, _) =>
                 {
                     var f = _mainWindow!.FeatureManager.GetFeature<CrosshairPlacementAssist>();
-                    if (f != null) { f.Enabled = !f.Enabled; SetSwitch(t, f.Enabled); }
+                    if (f == null) return;
+                    f.RequireAimKey = !f.RequireAimKey;
+                    if (!f.RequireAimKey) t.EnableSwitch(); else t.DisableSwitch();
+                    _mainWindow.ShowNotification("Automatic Aim", !f.RequireAimKey);
                 };
-            }, "Gently pull crosshair toward head trajectory. No snap.");
-            b.AddSlider("Drag Strength", "Strength", 0.01, 0.01, 0.01, 0.50, s =>
+            }, "No key required. Experimental — may cause unintended movement.");
+            b.AddSlider("Crosshair Tolerance", "%", 1, 1, 10, 100, s =>
+            {
+                s.Slider.ValueChanged += (_, _) =>
+                {
+                    _mainWindow!.FeatureManager.Detector.Profile.CrosshairTolerance = (byte)s.Slider.Value;
+                };
+            }, "Higher = more sensitive to center pixel changes.");
+            b.AddSlider("Aim FOV", "px", 10, 0, 30, 400, s =>
+            {
+                s.Slider.ValueChanged += (_, _) =>
+                {
+                    var f = _mainWindow!.FeatureManager.GetFeature<CrosshairPlacementAssist>();
+                    if (f != null) f.AimFov = (float)s.Slider.Value;
+                };
+            }, "Radius around crosshair to assist aiming.");
+            b.AddSlider("Smoothing", "%", 1, 0, 15, 100, s =>
+            {
+                s.Slider.ValueChanged += (_, _) =>
+                {
+                    var f = _mainWindow!.FeatureManager.GetFeature<CrosshairPlacementAssist>();
+                    if (f != null) f.Smoothing = (float)s.Slider.Value / 100f;
+                };
+            }, "Higher = faster aim, Lower = smoother human-like.");
+            b.AddSlider("Drag Strength", "x", 0.01, 0, 0.01, 0.60, s =>
             {
                 s.Slider.ValueChanged += (_, _) =>
                 {
                     var f = _mainWindow!.FeatureManager.GetFeature<CrosshairPlacementAssist>();
                     if (f != null) f.DragStrength = (float)s.Slider.Value;
                 };
-            }, "How strong the micro-drag feels.");
-            b.AddSlider("Activation Radius", "px", 1, 0, 10, 200, s =>
+            }, "How strong the pull feels per frame.");
+            b.AddSlider("Deadzone", "px", 1, 0, 5, 30, s =>
             {
                 s.Slider.ValueChanged += (_, _) =>
                 {
                     var f = _mainWindow!.FeatureManager.GetFeature<CrosshairPlacementAssist>();
-                    if (f != null) f.ActivationRadius = (float)s.Slider.Value;
+                    if (f != null) f.Deadzone = (float)s.Slider.Value;
                 };
-            }, "Distance from target before assist kicks in.");
+            }, "Deadzone from center — no assist if target is this close.");
             b.AddSeparator();
         }
 
@@ -244,11 +346,7 @@ namespace ShadowCheat.Controls
             });
             b.AddToggle("Faster Recovery", t =>
             {
-                t.Reader.Click += (_, _) =>
-                {
-                    var f = _mainWindow!.FeatureManager.GetFeature<StandstillAccuracy>();
-                    if (f != null) { f.Enabled = !f.Enabled; SetSwitch(t, f.Enabled); }
-                };
+                WireToggle<StandstillAccuracy>(t, "Standstill Accuracy");
             }, "Recover accuracy 50-80ms faster after stopping.");
             b.AddSlider("Recovery Boost", "ms", 1, 0, 10, 150, s =>
             {
@@ -279,11 +377,7 @@ namespace ShadowCheat.Controls
             });
             b.AddToggle("Peek Trigger", t =>
             {
-                t.Reader.Click += (_, _) =>
-                {
-                    var f = _mainWindow!.FeatureManager.GetFeature<ShotOverride>();
-                    if (f != null) { f.Enabled = !f.Enabled; SetSwitch(t, f.Enabled); }
-                };
+                WireToggle<ShotOverride>(t, "Shot Override");
             }, "Auto-fire when enemy peeks within trigger radius.");
             b.AddSlider("Trigger Radius", "px", 1, 0, 5, 80, s =>
             {
@@ -314,11 +408,7 @@ namespace ShadowCheat.Controls
             });
             b.AddToggle("Noise Recoil Control", t =>
             {
-                t.Reader.Click += (_, _) =>
-                {
-                    var f = _mainWindow!.FeatureManager.GetFeature<NoRecoilNoise>();
-                    if (f != null) { f.Enabled = !f.Enabled; SetSwitch(t, f.Enabled); }
-                };
+                WireToggle<NoRecoilNoise>(t, "No-Recoil Noise");
             }, "Recoil compensation with ±15% random noise per bullet.");
             b.AddSlider("Compensation", "%", 1, 0, 20, 100, s =>
             {
@@ -349,11 +439,7 @@ namespace ShadowCheat.Controls
             });
             b.AddToggle("Contrast-Based Lock", t =>
             {
-                t.Reader.Click += (_, _) =>
-                {
-                    var f = _mainWindow!.FeatureManager.GetFeature<VisibilityAimLock>();
-                    if (f != null) { f.Enabled = !f.Enabled; SetSwitch(t, f.Enabled); }
-                };
+                WireToggle<VisibilityAimLock>(t, "Visibility Lock");
             }, "Only aim if target is visually distinct from background.");
             b.AddSlider("Min Contrast", "%", 1, 0, 5, 100, s =>
             {
@@ -376,11 +462,7 @@ namespace ShadowCheat.Controls
             });
             b.AddToggle("Long Flick Assist", t =>
             {
-                t.Reader.Click += (_, _) =>
-                {
-                    var f = _mainWindow!.FeatureManager.GetFeature<FlickAssist>();
-                    if (f != null) { f.Enabled = !f.Enabled; SetSwitch(t, f.Enabled); }
-                };
+                WireToggle<FlickAssist>(t, "Flick Assist");
             }, "Only actives on 60°+ flicks. Adds 15-25% random error.");
             b.AddSlider("Short Flick °", "deg", 1, 0, 5, 60, s =>
             {
@@ -427,11 +509,7 @@ namespace ShadowCheat.Controls
             });
             b.AddToggle("Rotate Identity", t =>
             {
-                t.Reader.Click += (_, _) =>
-                {
-                    var f = _mainWindow!.FeatureManager.GetFeature<HwidSpoofing>();
-                    if (f != null) { f.Enabled = !f.Enabled; SetSwitch(t, f.Enabled); }
-                };
+                WireToggle<HwidSpoofing>(t, "HWID Spoofing");
             }, "Rotate window class/title every few minutes.");
             b.AddSlider("Rotation Interval", "min", 1, 0, 1, 30, s =>
             {
@@ -444,11 +522,17 @@ namespace ShadowCheat.Controls
             b.AddSeparator();
         }
 
-        private static void SetSwitch(AToggle t, bool on)
-        {
-            if (on) t.EnableSwitch(); else t.DisableSwitch();
-        }
-
         private SectionBuilder GetBuilder(StackPanel panel) => new(panel);
+
+        private static string KeyName(int vk) => vk switch
+        {
+            0x01 => "Left Click",
+            0x02 => "Right Click",
+            0x04 => "Middle Click",
+            0x05 => "X1 Click",
+            0x06 => "X2 Click",
+            >= 0x07 and <= 0xA5 => ((System.Windows.Input.Key)vk).ToString(),
+            _ => $"VK 0x{vk:X}"
+        };
     }
 }
