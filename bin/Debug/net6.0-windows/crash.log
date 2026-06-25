@@ -3,8 +3,8 @@ System.InvalidOperationException: The calling thread cannot access this object b
    at System.Windows.DependencyObject.SetValue(DependencyProperty dp, Object value)
    at System.Windows.UIElement.set_Visibility(Visibility value)
    at ShadowCheat.Class.OverlayWindow.UpdateOverlay() in C:\Users\lkero\OneDrive\Documentos\GitHub\kn2\Class\OverlayWindow.cs:line 125
-   at ShadowCheat.MainWindow.UpdateOverlay() in C:\Users\lkero\OneDrive\Documentos\GitHub\kn2\MainWindow.xaml.cs:line 131
-   at ShadowCheat.MainWindow.<ShowOverlay>b__25_1(Object s, EventArgs e) in C:\Users\lkero\OneDrive\Documentos\GitHub\kn2\MainWindow.xaml.cs:line 105
+   at ShadowCheat.MainWindow.UpdateOverlay() in C:\Users\lkero\OneDrive\Documentos\GitHub\kn2\MainWindow.xaml.cs:line 130
+   at ShadowCheat.MainWindow.<ShowOverlay>b__24_1(Object s, EventArgs e) in C:\Users\lkero\OneDrive\Documentos\GitHub\kn2\MainWindow.xaml.cs:line 104
    at System.Windows.Threading.DispatcherTimer.FireTick()
    at System.Windows.Threading.DispatcherTimer.<>c.<Restart>b__21_0(Object state)
    at System.Windows.Threading.ExceptionWrapper.InternalRealCall(Delegate callback, Object args, Int32 numArgs)

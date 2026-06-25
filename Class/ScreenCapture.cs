@@ -32,6 +32,26 @@ namespace ShadowCheat.Class
 
         private const int SRCCOPY = 0x00CC0020;
 
+        public static Bitmap? CaptureRegion(int x, int y, int w, int h)
+        {
+            IntPtr hdcSrc = GetDC(IntPtr.Zero);
+            IntPtr hdcDest = CreateCompatibleDC(hdcSrc);
+            IntPtr hBitmap = CreateCompatibleBitmap(hdcSrc, w, h);
+            if (hBitmap == IntPtr.Zero) return null;
+
+            SelectObject(hdcDest, hBitmap);
+            BitBlt(hdcDest, 0, 0, w, h, hdcSrc, x, y, SRCCOPY);
+
+            Bitmap bitmap;
+            try { bitmap = Image.FromHbitmap(hBitmap); }
+            catch { bitmap = new Bitmap(w, h); }
+
+            DeleteObject(hBitmap);
+            DeleteDC(hdcDest);
+            ReleaseDC(IntPtr.Zero, hdcSrc);
+            return bitmap;
+        }
+
         public static Bitmap? CaptureScreen()
         {
             int screenX = (int)System.Windows.SystemParameters.PrimaryScreenWidth;

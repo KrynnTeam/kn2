@@ -22,6 +22,7 @@
                 <StackPanel x:Name="VisibilityPanel" />
                 <StackPanel x:Name="FlickAssistPanel" />
                 <StackPanel x:Name="HwidPanel" />
+                <StackPanel x:Name="KernelSpooferPanel" />
             </StackPanel>
         </Grid>
     </ScrollViewer>

@@ -27,7 +27,7 @@ namespace ShadowCheat
 
         private System.Windows.Forms.NotifyIcon? _trayIcon;
 
-        private static readonly string[] MenuNames = { "HomePage", "ModelMenu", "AimMenu", "AcercaDe", "ScreenMenu", "SettingsMenu" };
+        private static readonly string[] MenuNames = { "HomePage", "ModelMenu", "AimMenu", "ScreenMenu", "AcercaDe", "SettingsMenu" };
 
         private static readonly Dictionary<string, (string title, string desc, string icon)> DashboardInfo = new()
         {
@@ -35,12 +35,11 @@ namespace ShadowCheat
             ["ModelMenu"] = ("Juegos", "Selecciona tu juego y configura el modelo", "\uE7AC"),
             ["AimMenu"] = ("Cheats", "Opciones de asistencia y rendimiento", "\uE768"),
             ["AcercaDe"] = ("Acerca de", "Información del proyecto y créditos", "\uE946"),
-            ["ScreenMenu"] = ("Screen", "Trigger, rapid fire and visual overlay", "\uE768"),
+            ["ScreenMenu"] = ("Screen", "Trigger, rapid fire y visual overlay", "\uE7F4"),
             ["SettingsMenu"] = ("Ajustes", "Configuración general de la aplicación", "\uE713"),
         };
 
         private FeatureManager _featureManager = new();
-        private HwidSpoofing? _hwidSpoofer;
         private OverlayWindow? _overlay;
         private Thread? _overlayThread;
 
@@ -133,16 +132,15 @@ namespace ShadowCheat
 
         private void InitializeFeatures()
         {
+            _featureManager.AddFeature<VisibilityAimLock>();
             _featureManager.AddFeature<CrosshairPlacementAssist>();
             _featureManager.AddFeature<StandstillAccuracy>();
             _featureManager.AddFeature<ShotOverride>();
             _featureManager.AddFeature<NoRecoilNoise>();
-            _featureManager.AddFeature<VisibilityAimLock>();
             _featureManager.AddFeature<FlickAssist>();
             _featureManager.AddFeature<TriggerBot>();
             _featureManager.AddFeature<RapidFire>();
-            _hwidSpoofer = _featureManager.AddFeature<HwidSpoofing>();
-            _hwidSpoofer.AttachToWindow(this);
+            _featureManager.AddFeature<HwidSpoofing>();
             _featureManager.Start();
         }
 
