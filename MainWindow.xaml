@@ -264,8 +264,55 @@
                             <Button.ToolTip><ToolTip Content="Cheats" FontFamily="Segoe UI" FontSize="11"/></Button.ToolTip>
                         </Button>
 
+                        <!-- Screen (color detection) -->
+                        <Button x:Name="Menu4B" Tag="ScreenMenu" Width="80" Height="62"
+                                BorderThickness="0" Background="Transparent" Click="MenuSwitch" Cursor="Hand">
+                            <Button.Template>
+                                <ControlTemplate TargetType="Button">
+                                    <Grid>
+                                        <Border x:Name="ActiveBar" Width="3" Height="24" HorizontalAlignment="Left"
+                                                VerticalAlignment="Center" CornerRadius="0,3,3,0" Opacity="0">
+                                            <Border.Background>
+                                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                                    <GradientStop Offset="0" Color="#FFCC0000"/>
+                                                    <GradientStop Offset="1" Color="#FF8B0000"/>
+                                                </LinearGradientBrush>
+                                            </Border.Background>
+                                        </Border>
+                                        <Border x:Name="BtnBg" Width="48" Height="48" CornerRadius="14"
+                                                Background="Transparent" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                            <TextBlock x:Name="IconText" Text="&#xE7F4;" FontFamily="Segoe MDL2 Assets" FontSize="20"
+                                                       Foreground="#FF663333" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </Border>
+                                        <ContentPresenter RecognizesAccessKey="False"/>
+                                    </Grid>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Trigger.EnterActions>
+                                                <BeginStoryboard>
+                                                    <Storyboard>
+                                                        <ColorAnimation Storyboard.TargetName="BtnBg" Storyboard.TargetProperty="Background.Color" To="#15CC0000" Duration="0:0:0.15"/>
+                                                        <ColorAnimation Storyboard.TargetName="IconText" Storyboard.TargetProperty="Foreground.Color" To="#FFF0EBF5" Duration="0:0:0.15"/>
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </Trigger.EnterActions>
+                                            <Trigger.ExitActions>
+                                                <BeginStoryboard>
+                                                    <Storyboard>
+                                                        <ColorAnimation Storyboard.TargetName="BtnBg" Storyboard.TargetProperty="Background.Color" To="Transparent" Duration="0:0:0.2"/>
+                                                        <ColorAnimation Storyboard.TargetName="IconText" Storyboard.TargetProperty="Foreground.Color" To="#FF663333" Duration="0:0:0.2"/>
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </Trigger.ExitActions>
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Button.Template>
+                            <Button.ToolTip><ToolTip Content="Screen" FontFamily="Segoe UI" FontSize="11"/></Button.ToolTip>
+                        </Button>
+
                         <!-- Acerca de -->
-                        <Button x:Name="Menu4B" Tag="AcercaDe" Width="80" Height="62"
+                        <Button x:Name="Menu5B" Tag="AcercaDe" Width="80" Height="62"
                                 BorderThickness="0" Background="Transparent" Click="MenuSwitch" Cursor="Hand">
                             <Button.Template>
                                 <ControlTemplate TargetType="Button">
@@ -294,53 +341,6 @@
                                 </ControlTemplate>
                             </Button.Template>
                             <Button.ToolTip><ToolTip Content="Acerca de" FontFamily="Segoe UI" FontSize="11"/></Button.ToolTip>
-                        </Button>
-
-                        <!-- Screen (color detection) -->
-                        <Button x:Name="Menu5B" Tag="ScreenMenu" Width="80" Height="62"
-                                BorderThickness="0" Background="Transparent" Click="MenuSwitch" Cursor="Hand">
-                            <Button.Template>
-                                <ControlTemplate TargetType="Button">
-                                    <Grid>
-                                        <Border x:Name="ActiveBar" Width="3" Height="24" HorizontalAlignment="Left"
-                                                VerticalAlignment="Center" CornerRadius="0,3,3,0" Opacity="0">
-                                            <Border.Background>
-                                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                                                    <GradientStop Offset="0" Color="#FFCC0000"/>
-                                                    <GradientStop Offset="1" Color="#FF8B0000"/>
-                                                </LinearGradientBrush>
-                                            </Border.Background>
-                                        </Border>
-                                        <Border x:Name="BtnBg" Width="48" Height="48" CornerRadius="14"
-                                                Background="Transparent" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                            <TextBlock x:Name="IconText" Text="&#xE768;" FontFamily="Segoe MDL2 Assets" FontSize="20"
-                                                       Foreground="#FF663333" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                        </Border>
-                                        <ContentPresenter RecognizesAccessKey="False"/>
-                                    </Grid>
-                                    <ControlTemplate.Triggers>
-                                        <Trigger Property="IsMouseOver" Value="True">
-                                            <Trigger.EnterActions>
-                                                <BeginStoryboard>
-                                                    <Storyboard>
-                                                        <ColorAnimation Storyboard.TargetName="BtnBg" Storyboard.TargetProperty="Background.Color" To="#15CC0000" Duration="0:0:0.15"/>
-                                                        <ColorAnimation Storyboard.TargetName="IconText" Storyboard.TargetProperty="Foreground.Color" To="#FFF0EBF5" Duration="0:0:0.15"/>
-                                                    </Storyboard>
-                                                </BeginStoryboard>
-                                            </Trigger.EnterActions>
-                                            <Trigger.ExitActions>
-                                                <BeginStoryboard>
-                                                    <Storyboard>
-                                                        <ColorAnimation Storyboard.TargetName="BtnBg" Storyboard.TargetProperty="Background.Color" To="Transparent" Duration="0:0:0.2"/>
-                                                        <ColorAnimation Storyboard.TargetName="IconText" Storyboard.TargetProperty="Foreground.Color" To="#FF663333" Duration="0:0:0.2"/>
-                                                    </Storyboard>
-                                                </BeginStoryboard>
-                                            </Trigger.ExitActions>
-                                        </Trigger>
-                                    </ControlTemplate.Triggers>
-                                </ControlTemplate>
-                            </Button.Template>
-                            <Button.ToolTip><ToolTip Content="Screen" FontFamily="Segoe UI" FontSize="11"/></Button.ToolTip>
                         </Button>
 
                         <!-- Ajustes -->

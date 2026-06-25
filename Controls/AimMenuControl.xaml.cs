@@ -2,10 +2,11 @@ using ShadowCheat.Class;
 using ShadowCheat.Class.Features;
 using ShadowCheat.UILibrary;
 using System;
-using System.Drawing;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
+using System.Windows.Media.Animation;
 
 namespace ShadowCheat.Controls
 {
@@ -15,9 +16,10 @@ namespace ShadowCheat.Controls
         private bool _isInitialized;
         private readonly Dictionary<string, bool> _localMinimizeState = new()
         {
-            { "Detection Config", false }, { "Crosshair Placement", false }, { "Standstill Accuracy", false },
+            { "Detection Config", false }, { "Aim Assist", false }, { "Standstill Accuracy", false },
             { "Shot Override", false }, { "No-Recoil", false },
-            { "Visibility Lock", false }, { "Flick Assist", false }, { "HWID Spoofing", false }
+            { "Visibility Lock", false }, { "Flick Assist", false }, { "HWID Spoofing", false },
+            { "Kernel Driver Spoofer", false }
         };
 
         public StackPanel DetectionConfigPanel => DetectionPanel;
@@ -28,6 +30,7 @@ namespace ShadowCheat.Controls
         public StackPanel VisibilityPanel_ => VisibilityPanel;
         public StackPanel FlickAssistPanel_ => FlickAssistPanel;
         public StackPanel HwidPanel_ => HwidPanel;
+        public StackPanel KernelSpooferPanel_ => KernelSpooferPanel;
 
         public AimMenuControl() { InitializeComponent(); }
 
@@ -45,43 +48,92 @@ namespace ShadowCheat.Controls
             LoadVisibilityLock();
             LoadFlickAssist();
             LoadHwidSpoofing();
+            LoadKernelSpoofer();
             ApplyMinimizeStates();
         }
 
         private void ApplyMinimizeStates()
         {
             ApplyPanelState("Detection Config", DetectionPanel);
-            ApplyPanelState("Crosshair Placement", CrosshairAssistPanel);
+            ApplyPanelState("Aim Assist", CrosshairAssistPanel);
             ApplyPanelState("Standstill Accuracy", StandstillPanel);
             ApplyPanelState("Shot Override", ShotOverridePanel);
             ApplyPanelState("No-Recoil", NoRecoilPanel);
             ApplyPanelState("Visibility Lock", VisibilityPanel);
             ApplyPanelState("Flick Assist", FlickAssistPanel);
             ApplyPanelState("HWID Spoofing", HwidPanel);
+            ApplyPanelState("Kernel Driver Spoofer", KernelSpooferPanel);
         }
 
         private void ApplyPanelState(string name, StackPanel panel)
         {
-            if (_localMinimizeState.TryGetValue(name, out bool minimized))
-                SetPanelVisibility(panel, !minimized);
-        }
-
-        private void SetPanelVisibility(StackPanel panel, bool visible)
-        {
-            foreach (UIElement child in panel.Children)
-            {
-                if (child is ATitle || child is ASpacer || child is ARectangleBottom)
-                    child.Visibility = Visibility.Visible;
-                else
-                    child.Visibility = visible ? Visibility.Visible : Visibility.Collapsed;
-            }
+            if (!_localMinimizeState.TryGetValue(name, out bool minimized)) return;
+            var wrapper = GetSectionWrapper(panel, name);
+            if (wrapper == null) return;
+            wrapper.BeginAnimation(FrameworkElement.HeightProperty, null);
+            wrapper.Height = minimized ? 0 : double.NaN;
+            wrapper.Visibility = minimized ? Visibility.Collapsed : Visibility.Visible;
         }
 
         private void TogglePanel(string name, StackPanel panel)
         {
             if (!_localMinimizeState.ContainsKey(name)) return;
             _localMinimizeState[name] = !_localMinimizeState[name];
-            SetPanelVisibility(panel, !_localMinimizeState[name]);
+            var wrapper = GetSectionWrapper(panel, name);
+            if (wrapper == null) return;
+            if (_localMinimizeState[name])
+                CollapseSection(wrapper);
+            else
+                ExpandSection(wrapper);
+        }
+
+        private static Border? GetSectionWrapper(StackPanel panel, string name)
+        {
+            for (int i = 0; i < panel.Children.Count; i++)
+            {
+                if (panel.Children[i] is ATitle t &&
+                    string.Equals(t.LabelTitle.Content?.ToString(), name, StringComparison.Ordinal) &&
+                    i + 1 < panel.Children.Count &&
+                    panel.Children[i + 1] is Border wrapper)
+                    return wrapper;
+            }
+            return null;
+        }
+
+        private static void CollapseSection(Border wrapper)
+        {
+            double h = wrapper.ActualHeight;
+            if (h <= 0) return;
+            wrapper.Height = h;
+            var anim = new DoubleAnimation(h, 0, TimeSpan.FromSeconds(0.3));
+            anim.EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseIn };
+            anim.Completed += (_, _) =>
+            {
+                wrapper.BeginAnimation(FrameworkElement.HeightProperty, null);
+                wrapper.Height = double.NaN;
+                wrapper.Visibility = Visibility.Collapsed;
+            };
+            wrapper.BeginAnimation(FrameworkElement.HeightProperty, anim);
+        }
+
+        private static void ExpandSection(Border wrapper)
+        {
+            wrapper.BeginAnimation(FrameworkElement.HeightProperty, null);
+            wrapper.Visibility = Visibility.Visible;
+            wrapper.Height = double.NaN;
+            wrapper.UpdateLayout();
+            double target = wrapper.ActualHeight;
+            if (target <= 0) return;
+            wrapper.Height = 0;
+            wrapper.UpdateLayout();
+            var anim = new DoubleAnimation(0, target, TimeSpan.FromSeconds(0.3));
+            anim.EasingFunction = new QuadraticEase { EasingMode = EasingMode.EaseOut };
+            anim.Completed += (_, _) =>
+            {
+                wrapper.BeginAnimation(FrameworkElement.HeightProperty, null);
+                wrapper.Height = double.NaN;
+            };
+            wrapper.BeginAnimation(FrameworkElement.HeightProperty, anim);
         }
 
         private void WireToggle<T>(AToggle t, string displayName) where T : FeatureBase, new()
@@ -234,8 +286,8 @@ namespace ShadowCheat.Controls
             var b = GetBuilder(CrosshairAssistPanel);
             b.AddTitle("Aim Assist", true, t => t.Minimize.Click += (_, _) =>
             {
-                TogglePanel("Crosshair Placement", CrosshairAssistPanel);
-                t.SetMinimizedIcon(_localMinimizeState["Crosshair Placement"]);
+                TogglePanel("Aim Assist", CrosshairAssistPanel);
+                t.SetMinimizedIcon(_localMinimizeState["Aim Assist"]);
             });
             b.AddToggle("Aim Assist", t =>
             {
@@ -378,7 +430,7 @@ namespace ShadowCheat.Controls
             b.AddToggle("Peek Trigger", t =>
             {
                 WireToggle<ShotOverride>(t, "Shot Override");
-            }, "Auto-fire when enemy peeks within trigger radius.");
+            }, "Auto-fire when target appears within trigger radius. Detects peeks.");
             b.AddSlider("Trigger Radius", "px", 1, 0, 5, 80, s =>
             {
                 s.Slider.ValueChanged += (_, _) =>
@@ -440,7 +492,7 @@ namespace ShadowCheat.Controls
             b.AddToggle("Contrast-Based Lock", t =>
             {
                 WireToggle<VisibilityAimLock>(t, "Visibility Lock");
-            }, "Only aim if target is visually distinct from background.");
+            }, "Blocks aim if contrast is low or target area looks like smoke.");
             b.AddSlider("Min Contrast", "%", 1, 0, 5, 100, s =>
             {
                 s.Slider.ValueChanged += (_, _) =>
@@ -507,18 +559,114 @@ namespace ShadowCheat.Controls
                 TogglePanel("HWID Spoofing", HwidPanel);
                 t.SetMinimizedIcon(_localMinimizeState["HWID Spoofing"]);
             });
-            b.AddToggle("Rotate Identity", t =>
+            b.AddToggle("HWID Spoofing", t =>
             {
-                WireToggle<HwidSpoofing>(t, "HWID Spoofing");
-            }, "Rotate window class/title every few minutes.");
-            b.AddSlider("Rotation Interval", "min", 1, 0, 1, 30, s =>
-            {
-                s.Slider.ValueChanged += (_, _) =>
+                t.Reader.Click += (_, _) =>
                 {
                     var f = _mainWindow!.FeatureManager.GetFeature<HwidSpoofing>();
-                    if (f != null) f.RotationIntervalMinutes = (int)s.Slider.Value;
+                    if (f == null) return;
+
+                    if (!f.Enabled && !HwidSpoofing.IsAdministrator())
+                    {
+                        HwidSpoofing.RequestElevationOrExit();
+                        return;
+                    }
+
+                    bool newState = !f.Enabled;
+                    f.Enabled = newState;
+                    if (newState) t.EnableSwitch(); else t.DisableSwitch();
+                    _mainWindow.ShowNotification("HWID Spoofing", newState);
                 };
-            }, "Minutes between identity rotations.");
+            }, "Spoofea MachineGuid, ProductId, BIOS serial, MAC address y elimina rastros de anti-cheats. Requiere Admin.");
+            b.AddButton("Verificar", btn =>
+            {
+                btn.Reader.Click += (_, _) =>
+                {
+                    var f = _mainWindow!.FeatureManager.GetFeature<HwidSpoofing>();
+                    if (f == null) return;
+                    MessageBox.Show(f.GetVerificationText(), "HWID Spoofing — Verificación", MessageBoxButton.OK, MessageBoxImage.Information);
+                };
+            });
+            b.AddSeparator();
+        }
+
+        private void LoadKernelSpoofer()
+        {
+            var b = GetBuilder(KernelSpooferPanel);
+            b.AddTitle("Kernel Driver Spoofer", true, t => t.Minimize.Click += (_, _) =>
+            {
+                TogglePanel("Kernel Driver Spoofer", KernelSpooferPanel);
+                t.SetMinimizedIcon(_localMinimizeState["Kernel Driver Spoofer"]);
+            });
+            // Custom card con badge "Próximamente" integrado a la derecha
+            var card = new Grid { Height = 48 };
+            card.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+            card.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
+            card.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
+            var border = new Border
+            {
+                Height = 48,
+                Background = new SolidColorBrush(Color.FromRgb(0x0D, 0x05, 0x05)),
+                BorderBrush = new SolidColorBrush(Color.FromRgb(0x3D, 0x1A, 0x1A)),
+                BorderThickness = new Thickness(1, 0, 1, 0),
+                Child = card
+            };
+            var label = new Label
+            {
+                Content = "Kernel Driver",
+                FontFamily = new FontFamily("Atkinson Hyperlegible"),
+                Foreground = new SolidColorBrush(Color.FromRgb(0xF0, 0xEB, 0xF5)),
+                VerticalContentAlignment = VerticalAlignment.Center,
+                FontSize = 13,
+                Padding = new Thickness(12, 0, 0, 0)
+            };
+            Grid.SetColumn(label, 0);
+            card.Children.Add(label);
+            var badge = new Border
+            {
+                Background = new SolidColorBrush(Color.FromArgb(0x1A, 0x0A, 0x0A, 0x0A)),
+                CornerRadius = new CornerRadius(6),
+                Padding = new Thickness(8, 4, 8, 4),
+                Margin = new Thickness(0, 0, 8, 0),
+                VerticalAlignment = VerticalAlignment.Center,
+                Child = new TextBlock
+                {
+                    Text = "Próximamente",
+                    FontSize = 9,
+                    Foreground = new SolidColorBrush(Color.FromArgb(0xFF, 0x66, 0x33, 0x33)),
+                    FontFamily = new FontFamily("Segoe UI")
+                }
+            };
+            Grid.SetColumn(badge, 1);
+            card.Children.Add(badge);
+            var switchBorder = new Border
+            {
+                Width = 44, Height = 24, CornerRadius = new CornerRadius(12),
+                Margin = new Thickness(0, 0, 12, 0),
+                BorderThickness = new Thickness(2),
+                BorderBrush = new SolidColorBrush(Color.FromArgb(0xFF, 0x4A, 0x20, 0x20)),
+                Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x1A, 0x0A, 0x0A)),
+                VerticalAlignment = VerticalAlignment.Center,
+                Child = new Border
+                {
+                    Width = 20, Height = 20,
+                    Background = new SolidColorBrush(Color.FromArgb(0xFF, 0x66, 0x33, 0x33)),
+                    CornerRadius = new CornerRadius(10),
+                    Margin = new Thickness(2, 0, 0, 0),
+                    HorizontalAlignment = HorizontalAlignment.Left,
+                    VerticalAlignment = VerticalAlignment.Center
+                }
+            };
+            Grid.SetColumn(switchBorder, 2);
+            card.Children.Add(switchBorder);
+            var contentStack = new StackPanel();
+            contentStack.Children.Add(border);
+            KernelSpooferPanel.Children.Add(new Border
+            {
+                ClipToBounds = true,
+                Child = contentStack,
+                Background = Brushes.Transparent
+            });
             b.AddSeparator();
         }
 
