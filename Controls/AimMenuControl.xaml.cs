@@ -463,7 +463,7 @@ namespace ShadowCheat.Controls
             b.AddToggle("Long Flick Assist", t =>
             {
                 WireToggle<FlickAssist>(t, "Flick Assist");
-            }, "Only actives on 60°+ flicks. Adds 15-25% random error.");
+            }, "Assists when target is in flick direction cone (±35°). Adds error to appear human.");
             b.AddSlider("Short Flick °", "deg", 1, 0, 5, 60, s =>
             {
                 s.Slider.ValueChanged += (_, _) =>
@@ -471,7 +471,7 @@ namespace ShadowCheat.Controls
                     var f = _mainWindow!.FeatureManager.GetFeature<FlickAssist>();
                     if (f != null) f.ShortFlickThreshold = (float)s.Slider.Value;
                 };
-            }, "Flicks below this angle get zero assist.");
+            }, "Flicks below this angle get zero assist (micro-adjustments).");
             b.AddSlider("Long Flick °", "deg", 1, 0, 30, 120, s =>
             {
                 s.Slider.ValueChanged += (_, _) =>
@@ -479,7 +479,7 @@ namespace ShadowCheat.Controls
                     var f = _mainWindow!.FeatureManager.GetFeature<FlickAssist>();
                     if (f != null) f.LongFlickThreshold = (float)s.Slider.Value;
                 };
-            }, "Flicks above this angle get full deadzone bypass.");
+            }, "Flicks above this angle get full assist strength.");
             b.AddSlider("Error Amount", "%", 1, 0, 0, 50, s =>
             {
                 s.Slider.ValueChanged += (_, _) =>
