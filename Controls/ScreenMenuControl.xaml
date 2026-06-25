@@ -13,7 +13,6 @@
             </Grid.ColumnDefinitions>
             <StackPanel x:Name="SSP1" Grid.Column="0" Margin="6,0,10,0">
                 <StackPanel x:Name="TriggerBotPanel" />
-                <StackPanel x:Name="AimAssistPanel" />
             </StackPanel>
             <StackPanel x:Name="SSP2" Grid.Column="1" Margin="10,0,6,0">
                 <StackPanel x:Name="RapidFirePanel" />

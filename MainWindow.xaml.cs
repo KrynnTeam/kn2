@@ -141,7 +141,6 @@ namespace ShadowCheat
             _featureManager.AddFeature<FlickAssist>();
             _featureManager.AddFeature<TriggerBot>();
             _featureManager.AddFeature<RapidFire>();
-            _featureManager.AddFeature<ColorAimAssist>();
             _hwidSpoofer = _featureManager.AddFeature<HwidSpoofing>();
             _hwidSpoofer.AttachToWindow(this);
             _featureManager.Start();

@@ -15,11 +15,10 @@ namespace ShadowCheat.Controls
         private bool _isInitialized;
         private readonly Dictionary<string, bool> _localMinimizeState = new()
         {
-            { "Trigger Bot", false }, { "Aim Assist", false }, { "Rapid Fire", false }, { "Visual Overlay", false }
+            { "Trigger Bot", false }, { "Rapid Fire", false }, { "Visual Overlay", false }
         };
 
         public StackPanel TriggerBotPanel_ => TriggerBotPanel;
-        public StackPanel AimAssistPanel_ => AimAssistPanel;
         public StackPanel RapidFirePanel_ => RapidFirePanel;
         public StackPanel VisualPanel_ => VisualPanel;
 
@@ -32,7 +31,6 @@ namespace ShadowCheat.Controls
             _isInitialized = true;
 
             LoadTriggerBot();
-            LoadAimAssist();
             LoadRapidFire();
             LoadVisual();
             ApplyMinimizeStates();
@@ -41,7 +39,6 @@ namespace ShadowCheat.Controls
         private void ApplyMinimizeStates()
         {
             ApplyPanelState("Trigger Bot", TriggerBotPanel);
-            ApplyPanelState("Aim Assist", AimAssistPanel);
             ApplyPanelState("Rapid Fire", RapidFirePanel);
             ApplyPanelState("Visual Overlay", VisualPanel);
         }
@@ -190,42 +187,6 @@ namespace ShadowCheat.Controls
                     if (f != null) f.ConfirmationFrames = (int)s.Slider.Value;
                 };
             }, "Consecutive detections required before firing (anti-spoof).");
-            b.AddSeparator();
-        }
-
-        private void LoadAimAssist()
-        {
-            var b = new SectionBuilder(AimAssistPanel);
-            b.AddTitle("Aim Assist", true, t => t.Minimize.Click += (_, _) =>
-            {
-                TogglePanel("Aim Assist", AimAssistPanel);
-                t.SetMinimizedIcon(_localMinimizeState["Aim Assist"]);
-            });
-            b.AddToggle("Aim Assist", t =>
-            {
-                t.Reader.Click += (_, _) =>
-                {
-                    var f = _mainWindow!.FeatureManager.GetFeature<ColorAimAssist>();
-                    if (f != null) { f.Enabled = !f.Enabled; SetSwitch(t, f.Enabled); }
-                };
-            }, "Smoothly move crosshair toward detected targets.");
-            b.AddToggle("Require Aim Key", t =>
-            {
-                t.DisableSwitch();
-                t.Reader.Click += (_, _) =>
-                {
-                    var f = _mainWindow!.FeatureManager.GetFeature<ColorAimAssist>();
-                    if (f != null) { f.RequireAimKey = !f.RequireAimKey; SetSwitch(t, f.RequireAimKey); }
-                };
-            }, "Only assist when aim key (RMB) is held.");
-            b.AddSlider("Max Distance", "px", 10, 1, 50, 600, s =>
-            {
-                s.Slider.ValueChanged += (_, _) =>
-                {
-                    var f = _mainWindow!.FeatureManager.GetFeature<ColorAimAssist>();
-                    if (f != null) f.MaxDistance = (float)s.Slider.Value;
-                };
-            }, "Maximum distance for aim assist to activate.");
             b.AddSeparator();
         }
 
